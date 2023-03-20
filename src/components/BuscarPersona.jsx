@@ -1,5 +1,6 @@
 import React,{useState, useEffect} from 'react'
 import { addAgente } from '../dominio/store/agente-slice'
+import { getMaterias } from '../dominio/store/datosfce-thunk'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
 import {Wrapper, Button} from '../styles-components/vistas/Personas'
@@ -23,7 +24,7 @@ const BuscarPersona = () => {
     const [rutap, setRutap] = useState(`${uri}agente_name/A`)
     const [patronb, setPatronb] = useState('') 
 
-
+    
     useEffect(()=>{
 
         const traerPersonas =async()=>{
@@ -41,10 +42,15 @@ const BuscarPersona = () => {
         }
 
         traerPersonas()
-
-
+      
+        
     },[rutap])
 
+
+    useEffect(()=>{
+        
+        dispatch(getMaterias(1,1))
+    },[])
     useEffect(()=>{
         
         setRutap (`${uri}agente_name/${patronb}`)

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {Button} from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 
 
 const Formulario = styled.form` 
@@ -13,7 +13,7 @@ const Formulario = styled.form`
 
 const Wrapper = styled.section`
 padding: 10px;
-background:bisque;
+background:lightgray;
 margin:10px;
 border:1px solid peachpuff;
 border-radius: 10px;
@@ -35,7 +35,7 @@ transition: .1s ease all;
     box-shadow: 3px 0px 30px rgba(0,150,150,1);
 }`
 
-export{
+export {
     Formulario,
     Wrapper,
     Button

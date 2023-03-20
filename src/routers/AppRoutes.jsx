@@ -12,6 +12,7 @@ import FindClaustroComponent from '../pagesComponents/horarios/FindClaustroCompo
 import FindPersonaComponent from '../pagesComponents/horarios/FindPersonaComponent'
 import InasistenciaPage from '../pagesComponents/inasistencias/InasistenciaPage'
 import CargosInterinos from '../components/cargos/CargosInterinos'
+import LincenciaPage from '../pagesComponents/inasistencias/LincenciaPage'
 
 const AppRoutes = () => {
   return (
@@ -28,7 +29,8 @@ const AppRoutes = () => {
             <Route exact path='/horarioClaustro' element={<FindClaustroComponent />} />
             <Route exact path='/horarioArea' element={<FindAreaComponent />} />
 
-            <Route exact path="/inasistencia" element={<InasistenciaPage/>} />
+            <Route exact path='/inasistencia' element={<InasistenciaPage/>} />
+            <Route exact path='/licencia' element={<LincenciaPage />} />
             <Route path='*' element={<NotFoundPage />} />
 
         </Routes>

@@ -20,13 +20,7 @@ return (
     <div className='container'>
 
         <div className="row">
-              <div className='col-md-1'>
-                Legajo<Label>{agente.legajo}</Label>
-              </div>
-
-            <div className='col-md-4'>
-              Nombre<Label> {agente.apellido}</Label>
-            </div>
+             
 
             <div className='col-md-1'>
             T.Doc.<Label> {agente.tipodocumento==='1'?'DNI':agente.tipodocumento==='2'?'LE':'LC'}</Label>
@@ -45,6 +39,12 @@ return (
             
             <div className='col-md-2'>
             Claustro<Label>{agente.condicion==='1'?'Docente':'No Docente'}</Label>
+            </div>
+
+            
+
+            <div className='col-md-4'>
+              Area Trabajo<Label> {agente.area}</Label>
             </div>
 
            

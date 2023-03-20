@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react'
-import {SelectorV, LabelF, Boton, ContenedorBoton, Formulario} from '../../styles-components/formularios/FormAgente'
+import {SelectorV, LabelF, Boton, ContenedorBoton, Formulario, BotonC} from '../../styles-components/formularios/FormAgente'
 import InputC from '../../elementos/InputComponent'
 
 import { useGetMaterias } from '../../hooks/useGetMaterias'
@@ -15,7 +15,7 @@ const FormularioCargo = () => {
     const {legajo}=useSelector(state=>state.agente)    
     
     const expresiones = {
-        resoA: /^[a-zA-Z0-9\_\ \-/]{4,60}$/, // Letras, numeros, guion y guion_bajo
+        resoA: /^[a-zA-Z0-9\_\ \-/]{4,20}$/, // Letras, numeros, guion y guion_bajo
         // resolucionA: /^[,a-zA-ZÀ-ÿ\s]{1,50}$/, // Letras y espacios, pueden llevar acentos.
         fechaA:/^\d{4}([-/.])(0?[1-9]|1[0-1-2])\1(3[01]|[12][0-9]|0?[1-9])$/,
         fechaB:/^\d{4}([-/.])(0?[1-9]|1[0-1-2])\1(3[01]|[12][0-9]|0?[1-9])$/,
@@ -130,8 +130,9 @@ const FormularioCargo = () => {
     }
 
     const changeMat=()=>{
-        setPlan(document.getElementById('materia').value.substring(0,1))
-        setMatcod(document.getElementById('materia').value.substring(1,4))
+        setPlan(document.getElementById('matecod').value.substring(0,1))
+        setMatcod(document.getElementById('matecod').value.substring(1,4))
+        console.log(document.getElementById('matecod').value)
         
 
     }
@@ -170,7 +171,7 @@ const FormularioCargo = () => {
             titu:titular
  
          }
-
+        console.log(cargoNew)
          Swal
          .fire({
              title: `Agente Legajo:${cargoNew.legajo}`,
@@ -185,6 +186,7 @@ const FormularioCargo = () => {
                  // Hicieron click en "Sí"
                  console.warn(cargoNew)
                  grabarCargo(cargoNew)
+                 cerrarForm()
                    
                  
              } else {
@@ -255,6 +257,10 @@ const FormularioCargo = () => {
     setMostrarF(true)
    }
    
+   const cerrarForm =()=>{
+    console.log('Hola')
+    setMostrarF(false)
+   }
    
    const{loading,error,materias, cargospl}=useGetMaterias()
    if(loading) return <p>Cargando datos .....</p>
@@ -331,7 +337,7 @@ const FormularioCargo = () => {
             <SelectorV name="nivel" id='nivel' onChange={changeNivel}>
                     <option>Elegir Nivel</option>
                     {cargos.map((nv,index)=>(
-                    <option value={nv.nv} key={index}>{nv.cargo} </option>
+                    <option value={nv.nv} key={index}>{nv.cargo} - {nv.nv} </option>
                     ))}
                 </SelectorV>
 
@@ -358,10 +364,11 @@ const FormularioCargo = () => {
                     <option value="33">LICENCIATURA EN ADMINISTRACION(98)</option>
                     <option value="34">LICENCIATURA EN ADMINISTRACION(19)</option>
                     <option value="43">LICENCIATURA EN ECONOMIA(98)</option>
-                    <option value="43">LICENCIATURA EN ECONOMIA(19)</option>
+                    <option value="44">LICENCIATURA EN ECONOMIA(19)</option>
                     <option value="6">LGNR(12)</option>
                     <option value="73">LICENCIADO EN LOGISTICA(1)</option>
                     <option value="84">CONTADOR PUBLICO(19)</option>
+                    <option value="03">PERSONAL APOYO (0)</option>
                 </SelectorV>
 
             </div>
@@ -379,9 +386,10 @@ const FormularioCargo = () => {
             </div>
 */}
             <div>
-                <LabelF htmlFor='materia'>Actividad Academica</LabelF>
-                <SelectorV name="materia" id='materia' onChange={changeMat}>
+                <LabelF htmlFor='matecod'>Actividad Academica</LabelF>
+                <SelectorV name="matecod" id='matecod' onChange={changeMat}>
                 <option>Elegir Actividad</option>
+                
                     {actividades?
                     actividades.map((ele,index)=>(
                     <option value={ele.id_materia} key={index}>({ele.id_materia}){ele.materia}</option>
@@ -439,17 +447,25 @@ const FormularioCargo = () => {
                 />        
 
             <ContenedorBoton>
-                <Boton type='submit'>Enviar</Boton>
+                <Boton type='submit'>Grabar Nuevo Cargo</Boton>
                 
              </ContenedorBoton>
 
+                 
             </Formulario>
-
+            <ContenedorBoton>
+                <BotonC onClick={()=>cerrarForm()}>Cerrar Formulario</BotonC>
+                
+             </ContenedorBoton>      
         </main>
         
     </div>
-    :<button onClick={mostrar}>Nuevo Cargo</button>
-    
+    :
+    <div className='container'>
+    <ContenedorBoton>
+        <Boton onClick={mostrar}>Nuevo Cargo</Boton>
+    </ContenedorBoton>
+    </div>                    
     }
   </>
   )

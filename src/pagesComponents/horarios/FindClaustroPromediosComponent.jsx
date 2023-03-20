@@ -143,6 +143,7 @@ const FindClaustroPromediosComponent = () => {
           </Col>
         </Row>
         <hr />
+      
         <Row>
         {promedios.length > 0 ? <ReportePromediosPage datospromedios={promedios} />:null} 
         </Row>

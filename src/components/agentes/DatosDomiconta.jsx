@@ -1,25 +1,29 @@
 import React from 'react'
 import {useAgenteInfoDomiConta} from '../../hooks/useAgenteInfoDomiConta'
 
-import { Label } from '../../styles-components/formularios/FormAgente'
+import { CabSubTitulo, Label } from '../../styles-components/formularios/FormAgente'
 const DatosDomiconta = () => {
 
     const {loading,error,datosDomiContaAgente} = useAgenteInfoDomiConta()
    
     if(loading) return <p>Cargando datos .....</p>
     if(error) return <p>Error de Carga</p> 
-    
+    console.log(datosDomiContaAgente)
   return (
-    <div className='container'>
-    <hr/>
+    <div className='container-fluid'>
+    
     {datosDomiContaAgente?
     <>
+    <div className='row'>
+          <CabSubTitulo>Datos de Contacto </CabSubTitulo>
+    </div>
+
     <div className="row">
-          <div className='col-md-3'>
+          <div className='col-md-4'>
             Domicilio<Label>{datosDomiContaAgente.domicilio}</Label>
           </div>
 
-        <div className='col-md-3'>
+        <div className='col-md-4'>
           Localidad<Label> {datosDomiContaAgente.localidad}</Label>
         </div>
 
@@ -30,19 +34,24 @@ const DatosDomiconta = () => {
           Telefono<Label>{datosDomiContaAgente.telefonoFijo}</Label>
         </div>
        
-        <div className='col-md-2'>
-           Tel.Movil<Label>{datosDomiContaAgente.telefonoCelular}</Label>
-        </div>
+        
        </div>
      
      <div className='row'>
-       
-            
-        <div className='col-md-3'>
-        Email Personal<Label>{datosDomiContaAgente.emailPersonal}</Label>
+     
+     <div className='col-md-2'>
+           Tel.Movil<Label>{datosDomiContaAgente.telefonoCelular}</Label>
         </div>
-        <div className='col-md-3'>
-        Email Institu.<Label>{datosDomiContaAgente.emailfe}</Label>
+       
+        <div className='col-md-2'>
+           Tel.Contacto<Label>{datosDomiContaAgente.telefoncontacto}</Label>
+        </div>
+            
+        <div className='col-md-4'>
+        Email Personal<Label>{datosDomiContaAgente.emailpersonal}</Label>
+        </div>
+        <div className='col-md-4'>
+        Email Institu.<Label>{datosDomiContaAgente.emailinstitucional}</Label>
         </div>
        
 

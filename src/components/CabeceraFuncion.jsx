@@ -10,7 +10,7 @@ const CabeceraFuncion = ({titulo}) => {
   const nombre = useSelector(state=>state.agente.nombre)
 return (
 
-    <div className='container'>
+    <div className='container-fluid'>
       <CabTitulo>{titulo}</CabTitulo>
 
       <CabTituloAgente>Colaborador:{nombre}, Legajo:{legajo}</CabTituloAgente>

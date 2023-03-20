@@ -1,6 +1,8 @@
 import axios from 'axios'
 import React,{useState, useEffect} from 'react'
-import { Row, Table } from 'react-bootstrap'
+import { Button, Row, Table } from 'react-bootstrap'
+import { CSVLink } from 'react-csv'
+import { CabTitulo } from '../../styles-components/formularios/FormAgente'
 
 const uri = 'http://200.12.136.74:4000/'
 const CargosInterinos = () => {
@@ -26,7 +28,10 @@ const CargosInterinos = () => {
     return (
     <div className="table-wrapper-scroll-y my-custom-scrollbar m-4">
       <Row className='cargos'>
-          <h4>Cargos Vigentes Interinos</h4>   
+          <CabTitulo>Cargos Vigentes Interinos</CabTitulo>   
+          <Button variant='outline'>
+        <CSVLink data={cargos} filename={"cargosInterinos" + "_" + Date.now() + ".csv"}>Exportar</CSVLink>
+        </Button>
       <Table striped bordered hover size='sm'>
   <thead>
     <tr>
@@ -43,8 +48,10 @@ const CargosInterinos = () => {
       <th>MAT</th>
       <th>FECHA ALTA</th>
       <th>Nro.Res.A</th>
+    {/*
       <th>Baja</th>
       <th>Reno.</th>
+    */}
     </tr>
   </thead>
   <tbody>
@@ -64,9 +71,10 @@ const CargosInterinos = () => {
       <td>{ele.mat}</td>
       <td>{ele.fechaAlta}</td>
       <td>{ele.nresa}</td>
+      {/*
       <td><input type={'checkbox'} /></td>
       <td><input type={'checkbox'} /></td>        
-
+  */}
   </tr>
   
   )}

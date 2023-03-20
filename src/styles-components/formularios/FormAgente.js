@@ -1,10 +1,10 @@
 import styled, { css } from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-const colores={
-    borde:"#0075FF",
-    error:"#BB2929",
-    exito:"#1ED12D",
+const colores = {
+    borde: "#0075FF",
+    error: "#BB2929",
+    exito: "#1ED12D",
 }
 
 const Formulario = styled.form`
@@ -25,7 +25,7 @@ const Label = styled.label`
     padding: 10px;
     min-height: 40px;
     cursor: pointer;
-    ${props => props.valido==='false' && css`
+    ${props => props.valido === 'false' && css`
         color:${colores.error};
     `}
 `
@@ -52,16 +52,16 @@ const Input = styled.input`
         box-shadow: 3px 0px 30px rgba(170,170,170,0.5);
     }
 
-    ${props => props.valido==='true' && css`
+    ${props => props.valido === 'true' && css`
         border:3px solid transparent;
     `}
 
-    ${props => props.valido==='false' && css`
+    ${props => props.valido === 'false' && css`
         border:3px solid ${colores.error} !important
     `}
     
     `
-    const LeyendaError=styled.p`
+const LeyendaError = styled.p`
         font-size: 12px;
         margin-bottom: 0px;
         color: ${colores.error};
@@ -77,7 +77,7 @@ const Input = styled.input`
         
     `
 
-    const IconoValidacion=styled(FontAwesomeIcon)` 
+const IconoValidacion = styled(FontAwesomeIcon)` 
         position: absolute;
         right: 10px;
         bottom: 14px;
@@ -98,17 +98,19 @@ const Input = styled.input`
 
     `
 
-    const ContenedorBoton=styled.div`
+const ContenedorBoton = styled.div`
         margin-top: 35px;
-        margin-left: 100px;
+        margin-left: 50px;
         display: flex;
         flex-direction: column;
         justify-content: center;
     `
-    const Boton = styled.button`
+
+
+const Boton = styled.button`
         height: 45px;
         line-height:45px;
-        width:50% ;
+        width:70% ;
         color: #FFF;
         background: #04B;
         font-weight: bold;
@@ -123,13 +125,32 @@ const Input = styled.input`
 
     `
 
-    const MensageExito=styled.p`
+const BotonC = styled.button`
+        height: 45px;
+        line-height:45px;
+        width:30% ;
+        color: #FFF;
+        background: #88B;
+        font-weight: bold;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: .1s ease all;
+
+        &:hover{
+            box-shadow: 3px 0px 30px rgba(120,150,150,1);
+        }
+
+    `
+
+
+const MensageExito = styled.p`
         font-size: 16px;
         color: ${colores.exito};
         display:none;
     `
 
-    const SelectorV = styled.select`
+const SelectorV = styled.select`
         
         width:100%;
         background:'#FFF';
@@ -138,49 +159,64 @@ const Input = styled.input`
         line-height: 35px;
         padding: 0 20px 0 10px; 
     
-    `    
-    const CabTitulo =styled.h4`
+    `
+const CabTitulo = styled.h4`
         width: 90%;
         text-align:center;
   
-        background-color:aquamarine;
+        background-color:blue;
         padding: 5px;
+        color:white;
         
 `
-    const CabTituloAgente =styled.h5`
+const CabSubTitulo = styled.h5`
+        width: 90%;
+        text-align:center;
+        margin-left: 10px;
+        background-color:lightblue;
+        padding: 5px;
+        color:black;
+        
+`
+
+const CabTituloAgente = styled.h5`
         width: 90%;
         text-align:left;
         background-color:blue;
         padding: 5px;
         color: white;
     `
-    const CabTituloCargo =styled.h5`
+const CabTituloCargo = styled.h6`
         width: 90%;
+        
         text-align:left;
         background-color:blue;
         padding: 5px;
         color: white;
     `
 
-    const LabelF = styled.label`
+const LabelF = styled.label`
         font-weight: bold;
         
         margin-top: 5px;
         margin-bottom: 12px;
     `
-export {Formulario,
-        Label,
-        GroupInput,
-        Input, 
-        IconoValidacion,
-        LeyendaError, 
-        ContenedorBoton, 
-        Boton,
-        MensageExito,
-        SelectorV,
-        LabelF,
-        CabTitulo,
-        CabTituloAgente,
-        CabTituloCargo
-    
-    }
+export {
+    Formulario,
+    Label,
+    GroupInput,
+    Input,
+    IconoValidacion,
+    LeyendaError,
+    ContenedorBoton,
+    Boton,
+    MensageExito,
+    SelectorV,
+    LabelF,
+    CabTitulo,
+    CabTituloAgente,
+    CabTituloCargo,
+    BotonC,
+    CabSubTitulo
+
+}

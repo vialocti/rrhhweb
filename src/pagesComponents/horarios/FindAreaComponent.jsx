@@ -6,8 +6,10 @@ import es from 'date-fns/locale/es'
 import axios from 'axios'
 
 import '../../css/estilospage.css'
+
 import { CSVLink } from 'react-csv';
 import ReporteAsistenciaPage from '../../components/asistencia/ReporteAsistenciaPage'
+import { CabTitulo } from '../../styles-components/formularios/FormAgente';
 
 registerLocale("es", es)
 
@@ -100,8 +102,15 @@ const FindAreaComponent = () => {
   return (
     <Container fluid>
       <br />
-      <Row className='busqueda'>
+      <Row className='busqueda'
+        style={{
+          backgroundColor:'lightgrey',
+          padding:'10px',
+          margin:'10px'
+        }}>
         <Col xs={12} md={4}>
+        
+
         <Form.Label htmlFor="area"> Area:Asistencia </Form.Label>
           <Form.Select id="area">
             <option>SELECCIONE UN AREA</option>
@@ -165,10 +174,17 @@ const FindAreaComponent = () => {
         <Button variant='outline'>
         <CSVLink data={asistencia} filename={"asistenciaArea_" + document.getElementById('area').value +"_" + Date.now() + ".csv"}>Exportar</CSVLink>
         </Button>
+      
+
         :null}
         </Col>
+        
       </Row>
-      <hr />
+      
+      
+      <Row>
+      <CabTitulo style={{marginLeft:'20px'}}>Información Asistencia Por Area de Trabajo</CabTitulo>
+      </Row>
       <Row>
       {asistencia.length > 0 ? <ReporteAsistenciaPage datosasistencia={asistencia} />:null} 
       </Row>

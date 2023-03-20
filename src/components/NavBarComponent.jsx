@@ -5,9 +5,9 @@ const NavBarComponent = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark  bg-dark">
       <div className="container-fluid">
-        <a className="navbar-brand" href="/">
+      <Link to="/">
           FCE RRHH
-        </a>
+        </Link>
         <button
           className="navbar-toggler"
           type="button"
@@ -47,7 +47,7 @@ const NavBarComponent = () => {
               
                 <li>
                   <Link to="/interinosCargos" className="dropdown-item" >
-                    Renovaciones
+                    Listado de Cargos Interinos
                   </Link>
                 </li>
                 
@@ -75,11 +75,7 @@ const NavBarComponent = () => {
                   </Link>
                  
                 </li>
-                <li>
-                <a className="dropdown-item" href="/">
-                    Baja
-                  </a>
-                </li>
+               
                 
               </ul>
             </li>
@@ -95,15 +91,26 @@ const NavBarComponent = () => {
               </a>
               <ul className="dropdown-menu">
               <li>
-              <Link to="/inasistencia" className="dropdown-item" >
+                  <Link to="/inasistencia" className="dropdown-item" >
                     Registrar Inasistencia
                   </Link>
                 </li>
                 <li>
-                  <a className="dropdown-item" href="/">
+                  <Link to="/licencia" className="dropdown-item" >
                     Registrar Licencia
-                  </a>
-                </li>         
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/consuInasistencia" className="dropdown-item" >
+                    Consulta Inasistencia
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/consuLicencia" className="dropdown-item" >
+                    Consulta Licencia
+                  </Link>
+                </li>
+                        
                  </ul>
             </li>
 
@@ -139,7 +146,7 @@ const NavBarComponent = () => {
 
             <li className="nav-item">
               <a className="nav-link" href="/">
-                Login
+                Salir
               </a>
             </li>
           </ul>

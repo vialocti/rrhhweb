@@ -9,6 +9,7 @@ import '../../css/estilospage.css'
 import { CSVLink } from 'react-csv';
 
 import ReporteAsistenciaPage from '../../components/asistencia/ReporteAsistenciaPage'
+import { CabTitulo } from '../../styles-components/formularios/FormAgente';
 registerLocale("es", es)
 
 const FindPersonaComponent = () => {
@@ -141,7 +142,13 @@ const FindPersonaComponent = () => {
   return (
     <Container fluid>
       <br />
-      <Row className='busqueda'>
+      <Row className='busqueda'
+      style={{
+        backgroundColor:'lightgrey',
+        padding:'10px',
+        margin:'10px'
+      }}
+      >
         <Col xs={12} md={2}>
         <Form.Label htmlFor="busqueda"> Buscar </Form.Label>
           <FormControl 
@@ -197,7 +204,10 @@ const FindPersonaComponent = () => {
         :null}
         </Col>
       </Row>
-      <hr />
+     
+      <Row>
+      <CabTitulo style={{marginLeft:'20px'}}>Información Asistencia Colaborador</CabTitulo>
+      </Row>
       <Row>
       {asistencia.length > 0 ? <ReporteAsistenciaPage datosasistencia={asistencia} />: null} 
       </Row>

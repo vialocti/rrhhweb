@@ -5,15 +5,19 @@ import {useSelector, useDispatch} from 'react-redux'
 import axios from 'axios'
 import { addAgente } from '../../dominio/store/agente-slice'
 import '../../css/estilosforminasistencia.css'
-import FormBusqueda from '../../components/inasistencia/FormBusqueda'
+
 import FormInasistencia from '../../components/inasistencia/FormInasistencia'
+import BuscarPersona from '../../components/BuscarPersona'
+import { CabTitulo } from '../../styles-components/formularios/FormAgente'
+import { useMotivosInasistencia } from '../../hooks/useMotivosInasistencia'
 
 const InasistenciaPage = () => {
   //const uri = 'http://localhost:4000/'
   const uri = 'http://200.12.136.74:4000/'
    const dispatch = useDispatch()  
    const legajo = useSelector((state) => state.agente.legajo)
-   const [motivos, setMotivos]= useState(['Incompatibilidad',
+   
+   const [motivos, setMotivos]= useState([])/*'Incompatibilidad',
     'Estudio',
    'Asistencia técnica',
     'Razones particulares',
@@ -48,41 +52,48 @@ const InasistenciaPage = () => {
    'Licencia unificación',
    'Renuncia condicionada',
    'Comisión de servicio',
-])
+])*/
 
-
+   const {motivosLI, loading,error} = useMotivosInasistencia()
    useEffect(()=>{
       //traer motivos de inasistencias
       
-      const getMotivos =async ()=>{
-        let url=`${uri}cargos/motina`
-        try {
-          const resu =  await axios.get(url)
-          console.log(resu.data)
-          setMotivos(resu.data)
-      } catch (error) {
-        console.log(error) 
+      if(motivosLI){
+        setMotivos(motivosLI)
       }
-    }
-    
       dispatch(addAgente(null))
-     // getMotivos()
-    },[dispatch])
+     
+    },[dispatch,motivosLI])
+
+
+    if(loading) return <p>Cargando datos .....</p>
+    if(error) return <p>Error de Carga</p>
+    //console.log(motivosLI)
+
   
   return (
-    <div className="container">
-
+    <div className="container-fluid">
+    
+    <BuscarPersona />
+    {/**
     <div className="row" style={{height:'50px', alignItems:'center'}}>
       <FormBusqueda />
     </div>
     
       <hr/>
- 
+  */}
+  <div className='row'>
+  <CabTitulo style={{marginLeft:'20px'}}>Registro de Inasistencia</CabTitulo>
+  </div>  
     <div className="inasistencia">
       {legajo &&
+      <>
       <FormInasistencia agente={legajo} motivos={motivos}/>
+      
+      </>
       }
       </div>
+
     </div>
   )
 }

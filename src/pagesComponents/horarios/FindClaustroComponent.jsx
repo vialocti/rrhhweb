@@ -8,6 +8,7 @@ import axios from 'axios'
 import '../../css/estilospage.css'
 import { CSVLink } from 'react-csv';
 import ReporteAsistenciaPage from '../../components/asistencia/ReporteAsistenciaPage'
+import { CabTitulo } from '../../styles-components/formularios/FormAgente';
 
 registerLocale("es", es)
 
@@ -102,7 +103,13 @@ const FindClaustroComponent = () => {
   return (
     <Container fluid>
       <br />
-      <Row className='busqueda'>
+      <Row className='busqueda'
+      style={{
+        backgroundColor:'lightgrey',
+        padding:'10px',
+        margin:'10px'
+      }}
+      >
         <Col xs={12} md={4}>
         <Form.Label htmlFor="condi"> Claustro: Asistencia </Form.Label>
           <Form.Select id="condi">
@@ -148,7 +155,10 @@ const FindClaustroComponent = () => {
         :null}
         </Col>
       </Row>
-      <hr />
+      
+      <Row>
+        <CabTitulo style={{marginLeft:'20px'}}>Información Asistencia Por Claustro</CabTitulo>
+        </Row>
       <Row>
       {asistencia.length > 0 ? <ReporteAsistenciaPage datosasistencia={asistencia} />:null} 
       </Row>

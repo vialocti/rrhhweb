@@ -1,10 +1,12 @@
 import * as Yup from 'yup';
 
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-
+//import { useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
-import { SelectorV } from '../styles-components/formularios/FormAgente';
+//import { SelectorV } from '../styles-components/formularios/FormAgente';
 import { darBajaCargo, grabarCargo } from '../services/f_axioscargos';
+import { useGetMaterias } from '../hooks/useGetMaterias';
+import { LabelF, SelectorV } from '../styles-components/formularios/FormAgente';
 
 
 
@@ -15,6 +17,8 @@ const RenovacionCargoForm = ({ dato, nrocargoG, funcion }) => {
 
   const [nroReg, setnroReg] = useState(0)
   const [legajo, setlegajo] = useState('')
+  const [actividades, setActividades] = useState([])
+  //const navigate = useNavigate();
 
   //const [fechaB, setfechaB] = useState('')
 
@@ -34,15 +38,17 @@ const RenovacionCargoForm = ({ dato, nrocargoG, funcion }) => {
       setlegajo(dato.legajo)
 
     }
+    if (materias) {
+      setActividades(materias.filter(materia => materia.pl == 4))
+    }
 
-
-  }, [dato])
+  }, [dato, materias])
 
   const changemotivo = () => {
 
   }
 
-  const grabarNuevo = (values) => {
+  const grabarNuevo = async (values) => {
     console.log(values)
     let cargoNew = {
       legajo: dato.legajo,
@@ -62,17 +68,28 @@ const RenovacionCargoForm = ({ dato, nrocargoG, funcion }) => {
       titu: dato.titular
 
     }
-    grabarCargo(cargoNew)
+    let resu = await grabarCargo(cargoNew)
+    console.log(resu.statusText)
     funcion()
+    //navigate('/fichaAgente')
 
   }
-  const preparardatosnuevos = (values) => {
-    darBajaCargo(nroReg, legajo, '9', values.resubaja, values.fechabaja)
+  const preparardatosnuevos = async (values) => {
+    let resu = await darBajaCargo(nroReg, legajo, '09', values.resubaja, values.fechabaja)
+    console.log(resu.statusText)
   }
+
+
+  const changeMat = () => {
+
+  }
+
 
   const valueinitial = { fechabaja: '', fechaalta: '', resubaja: '', resualta: '', newfechabaja: '' }
 
-
+  const { loading, error, materias, cargospl } = useGetMaterias()
+  if (loading) return <p>Cargando datos .....</p>
+  if (error) return <p>Error de Carga</p>
 
   return (
 
@@ -80,22 +97,34 @@ const RenovacionCargoForm = ({ dato, nrocargoG, funcion }) => {
     <Formik
       initialValues={valueinitial}
 
+
       validationSchema={Yup.object({
+
+        fechabaja: Yup.date()
+          .typeError('YYYY-MM-DD)')
+          .required(('This field is required')),
+
         resualta: Yup.string()
-          .min(5, 'deben ser 5 al menos caracteres').max(11, 'no mas de 11 caracters')
+          .min(5, 'deben ser 5 al menos caracteres').max(20, 'no mas de 11 caracters')
           .required('Required'),
         resubaja: Yup.string()
-          .min(5, 'deben ser 5 al menos caracteres').max(11, 'no mas de 11 caracters')
+          .min(5, 'deben ser 5 al menos caracteres').max(20, 'no mas de 11 caracters')
           .required('Required'),
-        fechaalta: Yup.string()
-          .min(10, 'deben ser diez caracteres')
-          .required('Required'),
+        fechaalta: Yup.date()
+
+          .typeError(('The value must be a date (YYYY-MM-DD)'))
+          .required(('This field is required')),
         newfechabaja: Yup.string()
-          .min(10, 'deben ser diez caracteres')
-          .required('Required'),
+          .typeError(('The value must be a date (YYYY-MM-DD)'))
+          .required(('This field is required')),
+
+      })
 
 
-      })}
+
+      }
+
+
       onSubmit={(values, { setSubmitting }) => {
 
         preparardatosnuevos(values);
@@ -124,73 +153,97 @@ const RenovacionCargoForm = ({ dato, nrocargoG, funcion }) => {
 
             <div className='col-md-3'>
 
-              <div className="form-group">
-                <h5>Datos Cargo</h5>
-              </div>
-              <br />
               <table className='table table-striped bordered'>
                 <tbody>
                   <tr>
-                    <td><stronger>Legajo</stronger></td> <td>{dato ? dato.legajo : null}</td>
+                    <td>Legajo</td> <td>{dato ? dato.legajo : "s/d"}</td>
                   </tr>
 
                   <tr>
-
-                    <td>N°Cargo</td><td>{dato ? dato.nc : null}</td>
+                    <td>N°Cargo</td><td>{dato ? dato.nc : "s/d"}</td>
                   </tr>
 
                   <tr>
-                    <td>Cargo</td> <td>{dato ? dato.ca : null}</td>
+                    <td>Cargo</td> <td>{dato ? dato.ca : "s/d"}</td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+
+            <div className='col-md-3'>
+
+              <table className='table table-striped bordered'>
+                <tbody>
+
+
+                  <tr>
+                    <td>Claustro</td><td>{dato ? dato.es : "s/d"}</td>
                   </tr>
 
                   <tr>
-                    <td>Claustro</td><td>{dato ? dato.es : null}</td>
+                    <td>PPAL</td><td>{dato ? dato.ppal : "s/d"}</td>
                   </tr>
 
                   <tr>
-                    <td>PPAL</td><td>{dato ? dato.ppal : null}</td>
+                    <td>Nivel</td><td>{dato ? dato.nv : "s/d"}</td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+
+
+
+            <div className='col-md-3'>
+
+              <table className='table table-striped bordered'>
+                <tbody>
+
+                  <tr>
+                    <td>Plan</td> <td>{dato ? dato.pl : "s/d"}</td>
                   </tr>
 
                   <tr>
-                    <td>Nivel</td><td>{dato ? dato.nv : null}</td>
-                  </tr>
-                  <tr>
-                    <td>Plan</td> <td>{dato ? dato.pl : null}</td>
+                    <td>CodMat</td><td>{dato ? dato.mat : "s/d"}</td>
                   </tr>
 
                   <tr>
-                    <td>CodMat</td><td>{dato ? dato.mat : null}</td>
+                    <td>Adicional</td> <td>{dato ? dato.ad : "s/d"}</td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+
+            <div className='col-md-3'>
+
+
+              <table className='table table-striped bordered'>
+                <tbody>
+
+                  <tr>
+                    <td>Fecha Alta</td> <td>{dato ? dato.fechaAlta : "s/d"}</td>
                   </tr>
 
                   <tr>
-                    <td>Adicional</td> <td>{dato ? dato.ad : null}</td>
-                  </tr>
-
-                  <tr>
-                    <td>Fecha Alta</td> <td>{dato ? dato.fechaAlta : null}</td>
-                  </tr>
-
-                  <tr>
-                    <td>N.Res.Alta</td> <td>{dato ? dato.nresa : null}</td>
+                    <td>N.Res.Alta</td> <td>{dato ? dato.nresa : "s/d"}</td>
                   </tr>
                   <tr>
-                    <td>Fecha Baja</td> <td>{dato ? dato.fechaBaja : null}</td>
+                    <td>Fecha Baja</td> <td>{dato ? dato.fechaBaja : "s/d"}</td>
                   </tr>
                 </tbody>
               </table>
             </div>
 
-            <div className='col-md-1'>
+          </div>
 
+          <div className='row'>
+            <div className="form-group">
+              <h5>Datos a Ingresar</h5>
             </div>
-
-
             <div className='col-md-3'>
 
-              <div className="form-group">
-                <h5>Datos a Ingresar</h5>
-              </div>
-              <br />
               <div className="form-group">
                 <label>Fecha de Baja</label>
                 <Field className="form-control" name="fechabaja" type="text" />
@@ -203,7 +256,8 @@ const RenovacionCargoForm = ({ dato, nrocargoG, funcion }) => {
                 <Field className="form-control" name="resubaja" type="text" />
                 <ErrorMessage name="resubaja" />
               </div>
-              <br />
+            </div>
+            <div className='col-md-3'>
 
               <div className="form-group">
                 <label>Nueva Fecha Alta</label>
@@ -217,80 +271,71 @@ const RenovacionCargoForm = ({ dato, nrocargoG, funcion }) => {
                 <Field className="form-control" name="resualta" type="text" />
                 <ErrorMessage name="resualta" />
               </div>
-              <br />
-
-
-            </div>
-            <div className='col-md-1'>
-
             </div>
 
 
             <div className='col-md-3'>
-              <div className="form-group">
-                <br />
-              </div>
-              <br />
+
               <div className="form-group">
                 <label>Nueva Fecha Baja</label>
                 <Field className="form-control" name="newfechabaja" type="text" />
                 <ErrorMessage name="newfechabaja" />
               </div>
               <br />
-
-
-
-              <label htmlFor='motibaja'>Motivo Baja</label>
-              <div className="form-group">
-                <SelectorV name="motibaja" id='motibaja' onChange={changemotivo}>
-                  <option value="1">Término de Funciones</option>
-                  <option value="2">Renuncia</option>
-                  <option value="3">Cesantia</option>
-                  <option value="4">Prescindibilidad</option>
-                  <option value="5">Exoneración</option>
-                  <option value="6">Jubilación</option>
-                  <option value="7">Traslado</option>
-                  <option value="8">Edad límite</option>
-                  <option value="9">Renovación</option>
+            </div>
+            <div className='col-md-3'>
+              <br />
+              <div className="form-check">
+                <input className="form-check-input" type="checkbox" value="s/d" id="chcp" />
+                <label className="form-check-label">
+                  Por Cambio Plan
+                </label>
+              </div>
+              <div>
+                <LabelF htmlFor='materia'>Actividad Academica</LabelF>
+                <SelectorV name="materia" id='materia' onChange={changeMat}>
+                  <option>Elegir Actividad</option>
+                  {actividades ?
+                    actividades.map((ele, index) => (
+                      <option value={ele.id_materia} key={index}>({ele.id_materia}){ele.materia}</option>
+                    ))
+                    : null}
                 </SelectorV>
-              </div>
-              <br />
-
-
-              <div className="form-group">
-                <label htmlFor="plan">Plan</label>
-                <Field className="form-control" name="plan" type="text" />
-                <ErrorMessage name="plan" />
-              </div>
-
-              <br />
-              <div className="form-group">
-                <label htmlFor="codmat">Cod.Mat</label>
-                <Field className="form-control" name="codmat" type="text" />
-                <ErrorMessage name="codmat" />
-              </div>
-              <br />
-              <div className="form-group">
-
-                <button className="btn btn-primary" type="submit">Renovar</button>
 
               </div>
+
+
 
             </div>
 
 
 
           </div>
+          <div className='row'>
 
+            <div className='col-md-3'>
 
+              <br />
+              <div className="form-group">
+
+                <button className="btn btn-primary" type="submit">Renovar Cargo</button>
+
+              </div>
+            </div>
+          </div>
         </div>
+
+
+
+
+
 
 
 
 
         {/* */}
       </Form>
-    </Formik>
+    </Formik >
   );
 };
 export default RenovacionCargoForm

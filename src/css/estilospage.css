@@ -7,10 +7,14 @@
     padding: 50;
 }
 .busqueda{
+   
+    border:1px solid peachpuff;
+    border-radius: 10px;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+  
 }
 
 .table{

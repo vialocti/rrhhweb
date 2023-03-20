@@ -10,6 +10,7 @@ const CargosHistoricos = () => {
   if(loading) return <p>Cargando datos .....</p>
   if(error) return <p>Error de Carga</p> 
   //console.log(cargoshAgente)
+
   return (
     <>
     {cargoshAgente.length > 0?<CargosConsulta  cargos={cargoshAgente} title={'Cargos Historicos'} tipo={2}/>:null

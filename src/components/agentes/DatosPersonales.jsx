@@ -1,7 +1,7 @@
 import React from 'react'
 import {useAgenteInfoPersonal} from '../../hooks/useAgenteInfoPersonal'
 
-import { Label } from '../../styles-components/formularios/FormAgente'
+import { CabSubTitulo, Label } from '../../styles-components/formularios/FormAgente'
 
 const DatosPersonales = () => {
   
@@ -12,9 +12,13 @@ const DatosPersonales = () => {
   
     
     return (
-    <div className='container'>
-        <hr/>
+    <div className='container-fluid'>
+        
         {datosAgente?
+        <>
+        <div className='row'>
+          <CabSubTitulo>Datos Personales</CabSubTitulo>
+        </div>
         <div className="row">
               <div className='col-md-2'>
                 Fecha Nacimiento<Label>{datosAgente.fechanac}</Label>
@@ -44,12 +48,14 @@ const DatosPersonales = () => {
             </div>
 
            
-
-         </div>:
+            
+         </div>
+         </>:
          <div className='row'>
             <label>Sin Datos Personales</label>
             <button className='button'>Agregar</button>
          </div>
+         
          }
     </div>
   )

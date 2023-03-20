@@ -10,6 +10,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 import Swal from 'sweetalert2'
 import InasistenciaMuestra from './InasistenciaMuestra'
+import { CabTitulo } from '../../styles-components/formularios/FormAgente'
 
 //esquema de validacion
 const SchemaYup = yup.object({
@@ -173,22 +174,23 @@ const onChangeFf = (fecha)=>{
  return (
  
       <>
-          <form>
+          <div className='container'>
+              <form>
                 
-              
+                   
             <div className="row"> 
 
               <div className="col-md-4">
-                <label htmlFor="motivo" className='h5'> Motivo </label>
+                <label className='h5'> Motivo </label>
                 <select id="motivo" className='form-control'>
                   {motivos.map((ele,index)=>(
-                      <option key={index} value={index + 1}>{ele}</option>
+                      <option key={index} value={ele.motina}>{ele.Motivo}</option>
                     ))}
             
 
                 </select>  
             
-                <label htmlFor='nroesu' className='h5'>Nro.Resolu</label>
+                <label className='h5'>Nro.Resolu</label>
                   <input
                       className='form-control'
                       type="text" 
@@ -202,7 +204,7 @@ const onChangeFf = (fecha)=>{
             
               <div className="col-md-3">
                 <div style={{marginBottom:10}}>
-                  <label htmlFor="fechaini" className='h5'> Fecha Inicio </label>
+                  <label className='h5'> Fecha Inicio </label>
                   <ReactDatePicker 
                     id='fechaini' 
                     selected={fechaini}
@@ -212,7 +214,7 @@ const onChangeFf = (fecha)=>{
                   />
                 </div>
                 <div>
-                  <label htmlFor="fechafin" className='h5'> Fecha Finalizacion </label>
+                  <label className='h5'> Fecha Finalizacion </label>
                   <ReactDatePicker
                     id='fechafin' 
                     selected={fechafin}
@@ -225,7 +227,7 @@ const onChangeFf = (fecha)=>{
 
             <div className="col-md-5">       
             
-              <label htmlFor="habersn" className='h5'> Afectación de Haberes </label>
+              <label className='h5'> Afectación de Haberes </label>
                 <select id="habersn" className='form-control'>
                               <option value='1'>Sin Afectación de Haberes</option>
                               <option value='2'>Con Afectación de Haberes</option>
@@ -244,10 +246,14 @@ const onChangeFf = (fecha)=>{
           </div>
           
           </form>           
-             
-
-        
+          </div>
+ 
+        <br/>
+        <CabTitulo style={{marginLeft:'10px'}}>Inasistencias Registradas</CabTitulo>
         <div className="row" id="inasistencialist">
+          
+          
+          
             {inasistencias.length > 0  ? <InasistenciaMuestra inasistenciasag={inasistencias}/>: null} 
         </div>
     </>
