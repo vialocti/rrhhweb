@@ -121,6 +121,7 @@ const grabarDatos=(e)=>{
   }else if (document.getElementById('nroresu').value.trim()===''){
     alert('el nro de resolucion no puede ser vacio')
   }else{
+    //console.log(document.getElementById('motivo').value)
     let mot=''
     if(document.getElementById('motivo').value < 10 ){
       mot ='0' + document.getElementById('motivo').value  
@@ -134,7 +135,7 @@ const grabarDatos=(e)=>{
   values.ncargo = 999
   values.nr=document.getElementById('habersn').value
   values.nrores=document.getElementById('nroresu').value.trim()
-  console.log(values)
+  //console.log(values)
   let urlpost=`${uri}cargos/cargarinasistencia`
   axios.post(urlpost,values)
   .then((response)=>{
@@ -184,7 +185,7 @@ const onChangeFf = (fecha)=>{
                 <label className='h5'> Motivo </label>
                 <select id="motivo" className='form-control'>
                   {motivos.map((ele,index)=>(
-                      <option key={index} value={ele.motina}>{ele.Motivo}</option>
+                      <option key={index} value={ele.codina}>{ele.Motivo}</option>
                     ))}
             
 
