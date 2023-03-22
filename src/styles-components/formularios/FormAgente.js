@@ -17,6 +17,17 @@ const Formulario = styled.form`
     @media(max-width:900px){
         grid-template-columns: 1fr;
     }
+`
+const FormularioD = styled.form`
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 40px;
+    padding: 8px;
+    border: solid 2px rgb(10,10,126);
+
+    @media(max-width:900px){
+        grid-template-columns: 1fr;
+    }
 
 `
 const Label = styled.label`
@@ -217,6 +228,7 @@ export {
     CabTituloAgente,
     CabTituloCargo,
     BotonC,
-    CabSubTitulo
+    CabSubTitulo,
+    FormularioD
 
 }

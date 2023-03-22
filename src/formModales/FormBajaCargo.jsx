@@ -222,7 +222,7 @@ const FormBajaCargo = ({dato,funcion,materias,idmat}) => {
             </tr>
 
             <tr>
-              <td>Adicional</td> <td>{dato ? dato.ad : "s/d"}</td>
+              <td>Carrera</td> <td>{dato ? dato.car : "s/d"}</td>
             </tr>
 
           </tbody>

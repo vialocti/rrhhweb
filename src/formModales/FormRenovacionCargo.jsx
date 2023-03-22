@@ -36,6 +36,7 @@ const FormRenovacionCargo = ({dato, nrocargoG,funcion,materias,idmat}) => {
     const [actividades, setActividades] = useState([])
     const [matname, setMatname] = useState('')
     const [propuesta, setPropuesta]=useState('')
+    const [car, setCar]=useState('')
     
 
     const buscarMat=(idm)=>{
@@ -45,16 +46,21 @@ const FormRenovacionCargo = ({dato, nrocargoG,funcion,materias,idmat}) => {
         setPropuesta('CONTADOR PUBLICO NACIONAL')
       }else if(materia.car === 3){
         setPropuesta('LICENCIATURA EN ADMINISTRACION')
+        setCar('3')
       }else if(materia.car === 4){
         setPropuesta('LICENCIATURA EN ECONOMIA')
+        setCar('4')
       }else if(materia.car === 6){
         setPropuesta('CICLO LIC.EN NEGOCIOS REGIONALES')
       }else if(materia.car === 7){
         setPropuesta('LICENCIATURA EN LOGISTICA')
+        
       }else if(materia.car === 8){
         setPropuesta('CONTADOR PUBLICO')
+        setCar('8')
       }
-      
+      // console.log(matname)
+      //console.log(propuesta)
     }
 
 
@@ -87,14 +93,15 @@ const FormRenovacionCargo = ({dato, nrocargoG,funcion,materias,idmat}) => {
     }
    
     const darBajaC = async (tipoReno) => {
-      let resu = await darBajaCargo(nroReg, legajo, tipoReno, resoB.campo, convertirFecha(fechaB.campo))
+      let resu = await darBajaCargo(nroReg, legajo, tipoReno, resoB.campo,fechaB.campo)
       console.log(resu.statusText)
     }
   
-
+    //console.log(materias)
     //grabar cargo renovacion
     const grabarNuevoCargo =async ()=>{
       let miCheckbox = document.getElementById('cp')
+      let carrera=''
       let pl=''
       let matc=''
       let tprenovacion=''
@@ -102,12 +109,14 @@ const FormRenovacionCargo = ({dato, nrocargoG,funcion,materias,idmat}) => {
         pl=plan
         matc=mat
         tprenovacion='14'
+        carrera=car
       }else{
         pl=dato.pl
         matc=dato.mat
         tprenovacion='09'
+        carrera=dato.car
       }
-      console.log(tprenovacion)
+      //console.log(tprenovacion)
       let nrocg = nrocargoG[0].nroCg  
       let cargoNew ={
         legajo: dato.legajo,
@@ -117,7 +126,8 @@ const FormRenovacionCargo = ({dato, nrocargoG,funcion,materias,idmat}) => {
         claustro: dato.es,
         ppal: dato.ppal,
         nivel: dato.nv,
-        adic: dato.ad,
+        adic: dato.adic,
+        car:carrera,
         plan: pl,
         codmat: matc,
         fechaA: fechaA.campo,
@@ -190,6 +200,7 @@ const FormRenovacionCargo = ({dato, nrocargoG,funcion,materias,idmat}) => {
       let materia = (document.getElementById('materia').value).toString()
       setPlan(materia.substring(0,1))
       setMat(materia.substring(1,4))
+      buscarMat(materia)
     }
    
     
@@ -274,7 +285,7 @@ const FormRenovacionCargo = ({dato, nrocargoG,funcion,materias,idmat}) => {
                   </tr>
 
                   <tr>
-                    <td>Adicional</td> <td>{dato ? dato.ad : "s/d"}</td>
+                    <td>Carrera</td> <td>{dato ? dato.car : "s/d"}</td>
                   </tr>
 
                 </tbody>
@@ -367,7 +378,7 @@ const FormRenovacionCargo = ({dato, nrocargoG,funcion,materias,idmat}) => {
                   <option>Elegir Actividad</option>
                   {actividades ?
                     actividades.map((ele, index) => (
-                      <option value={ele.id_materia} key={index}>({ele.id_materia}){ele.materia}</option>
+                      <option value={ele.id_materia} key={index}>({ele.id_materia}){ele.car}:{ele.materia}</option>
                     ))
                     : null}
                 </SelectorV>

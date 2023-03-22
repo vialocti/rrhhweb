@@ -1,17 +1,36 @@
 import React from 'react'
+import FormDomiContacto from '../../formModales/FormDomiContacto'
 import {useAgenteInfoDomiConta} from '../../hooks/useAgenteInfoDomiConta'
+import { useModal } from '../../hooks/useModal'
 
 import { CabSubTitulo, Label } from '../../styles-components/formularios/FormAgente'
+import { ModalComponente } from '../ModalComponente'
+
 const DatosDomiconta = () => {
+
+  const [isOpen,openModal,closeModal] = useModal()
+  
+    const handleNewDato=()=>{
+      openModal()
+    }
+
 
     const {loading,error,datosDomiContaAgente} = useAgenteInfoDomiConta()
    
     if(loading) return <p>Cargando datos .....</p>
     if(error) return <p>Error de Carga</p> 
     console.log(datosDomiContaAgente)
-  return (
+
+
+
+    return (
     <div className='container-fluid'>
     
+    <ModalComponente isOpen={isOpen} closeModal={closeModal}>
+        <FormDomiContacto  />
+    </ModalComponente>
+
+
     {datosDomiContaAgente?
     <>
     <div className='row'>
@@ -60,7 +79,7 @@ const DatosDomiconta = () => {
      :
      <div className='row'>
      <label>Sin Datos Domicilio y Contacto</label>
-     <button className='button'>Agregar</button>
+     <button className='button' onClick={handleNewDato}>Agregar</button>
   </div>
      }
 </div>

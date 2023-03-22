@@ -20,11 +20,11 @@ export async function getLastNroCargo(legajo) {
 
 export async function grabarCargo(cargoNew) {
 
-    //console.log(cargoNew)
+    console.log(cargoNew)
     try {
         //console.log(`${uri}addCargo`)
         const resu = await axios.post(`${uri}addCargo`, cargoNew)
-        return resu
+        console.log(resu)
     } catch (error) {
         console.log(error)
     }

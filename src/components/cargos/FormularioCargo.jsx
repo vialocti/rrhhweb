@@ -41,6 +41,7 @@ const FormularioCargo = () => {
     const [ppal, setPpal] = useState('10')
     const [actividades, setActividades]=useState(null)
     const [mostrarF, setMostrarF] = useState(false)
+    const [carrera, setCarrera]=useState('')
 
     
    
@@ -127,6 +128,15 @@ const FormularioCargo = () => {
             let prop= document.getElementById('propuesta').value.substring(0,1)
             let plan = document.getElementById('propuesta').value.substring(1,2)
             setActividades(materias.filter(materia=>materia.pl==plan && materia.car==prop))
+           /* if(prop===2){
+                setCarrera('1')
+            }else if(prop===3){
+                setCarrera('2')
+            }else if (prop===4){
+                setCarrera('3')
+            }else{*/
+                setCarrera(prop)
+            
     }
 
     const changeMat=()=>{
@@ -168,7 +178,8 @@ const FormularioCargo = () => {
             nroresA:resoA.campo,
             fechaB:fechaB.campo,
             ncg:ncargoGen,
-            titu:titular
+            titu:titular,
+            car:carrera
  
          }
         console.log(cargoNew)
@@ -294,8 +305,7 @@ const FormularioCargo = () => {
                 <SelectorV name="claustro" id='claustro' onChange={changeClaustro}>
                     <option value="1">Docente</option> 
                     <option value="2">No Docente</option>
-                    <option value="3">Gestion Coordinador</option>
-                    <option value="4">Gestion Org.Ejecutores</option>
+                    
                 </SelectorV>
 
             </div>
@@ -311,6 +321,7 @@ const FormularioCargo = () => {
                     <option value="7">Suplente</option>
                     <option value="8">Asignacion</option>
                     <option value="9">Beca Nv JTP </option>
+                    <option value="10">Cargo Función Crítica</option>
                 </SelectorV>
 
             </div>
@@ -365,7 +376,7 @@ const FormularioCargo = () => {
                     <option value="34">LICENCIATURA EN ADMINISTRACION(19)</option>
                     <option value="43">LICENCIATURA EN ECONOMIA(98)</option>
                     <option value="44">LICENCIATURA EN ECONOMIA(19)</option>
-                    <option value="6">LGNR(12)</option>
+                    <option value="61">LGNR(12)</option>
                     <option value="73">LICENCIADO EN LOGISTICA(1)</option>
                     <option value="84">CONTADOR PUBLICO(19)</option>
                     <option value="03">PERSONAL APOYO (0)</option>

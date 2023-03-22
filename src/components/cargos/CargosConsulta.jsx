@@ -61,7 +61,7 @@ const CargosConsulta = (props) => {
     }
     
     Swal.fire({
-      title: `${carrera}`,
+      
       text: `(${id_mat})${materia.materia}`,
       icon: 'info',
       showCancelButton: true,})
@@ -117,7 +117,7 @@ const CargosConsulta = (props) => {
             <th>ES</th>
             <th>PPAL</th>
             <th>NV</th>
-            <th>AD</th>
+            <th>CAR</th>
             <th>PL</th>
             <th>MAT</th>
             <th>FECHA ALTA</th>
@@ -139,7 +139,7 @@ const CargosConsulta = (props) => {
               <td>{ele.es}</td>
               <td>{ele.ppal}</td>
               <td>{ele.nv}</td>
-              <td>{ele.ad}</td>
+              <td>{ele.car}</td>
               <td>{ele.pl}</td>
               <td onMouseOver={ele.pl?()=>mostrarmat(ele.pl+ele.mat):null}>{ele.mat}</td>
               
