@@ -42,4 +42,27 @@ export async function darBajaCargo(nroreg, legajo, motbj, nroresub, fechab) {
     }
 }
 
+//varios consulta
+export async function getEdadAnio(edad) {
 
+
+    try {
+        //console.log(`${uri}${legajo}`)
+        const data = await axios.get(`${uri}cumpleEdad/${edad}`)
+        return data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export async function getAniosIngreso(anioI, tipoI) {
+
+
+    try {
+        //console.log(`${uri}${legajo}`)
+        const data = await axios.get(`${uri}ingreanioagentes/${anioI}/${tipoI}`)
+        return data
+    } catch (error) {
+        console.log(error)
+    }
+}

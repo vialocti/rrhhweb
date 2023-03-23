@@ -63,8 +63,9 @@ const CargosConsulta = (props) => {
     Swal.fire({
       
       text: `(${id_mat})${materia.materia}`,
-      icon: 'info',
-      showCancelButton: true,})
+      
+      timer: 2000
+    })
 
     }catch(error){
       console.log(error)

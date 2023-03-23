@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 import { Formulario, LabelF, SelectorV } from '../styles-components/formularios/FormAgente'
-import { useGetMaterias } from '../hooks/useGetMaterias';
+//import { useGetMaterias } from '../hooks/useGetMaterias';
 import Swal from 'sweetalert2';
 import { darBajaCargo, grabarCargo } from '../services/f_axioscargos';
 import { useSelector } from 'react-redux';
@@ -142,7 +142,7 @@ const FormRenovacionCargo = ({dato, nrocargoG,funcion,materias,idmat}) => {
         Swal
         .fire({
             title: `Agente Legajo:${cargoNew.legajo}`,
-            text: `Grabar El Cargo`,
+            text: `Grabar La Renovacion de Cargo`,
             icon: 'info',
             showCancelButton: true,
             confirmButtonText: "Sí, Grabar",
@@ -155,6 +155,7 @@ const FormRenovacionCargo = ({dato, nrocargoG,funcion,materias,idmat}) => {
               darBajaC(tprenovacion) 
               grabarCargo(cargoNew)
                // cerrarForm()
+               funcion()
                   
                 
             } else {
