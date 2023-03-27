@@ -13,6 +13,8 @@ import FindPersonaComponent from '../pagesComponents/horarios/FindPersonaCompone
 import InasistenciaPage from '../pagesComponents/inasistencias/InasistenciaPage'
 import CargosInterinos from '../components/cargos/CargosInterinos'
 import LincenciaPage from '../pagesComponents/inasistencias/LincenciaPage'
+import FormEdadAgentesPage from '../pagesComponents/reportsv/FormEdadAgentesPage'
+import FormIngresoAgentePage from '../pagesComponents/reportsv/FormIngresoAgentePage'
 
 const AppRoutes = () => {
   return (
@@ -31,6 +33,12 @@ const AppRoutes = () => {
 
             <Route exact path='/inasistencia' element={<InasistenciaPage/>} />
             <Route exact path='/licencia' element={<LincenciaPage />} />
+
+            <Route exact path='/edadCumple' element={<FormEdadAgentesPage />} />
+            <Route exact path='/LugarIngreso' element={<FormIngresoAgentePage />} />
+
+
+
             <Route path='*' element={<NotFoundPage />} />
 
         </Routes>

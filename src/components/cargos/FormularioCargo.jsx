@@ -377,7 +377,7 @@ const FormularioCargo = () => {
                     <option value="43">LICENCIATURA EN ECONOMIA(98)</option>
                     <option value="44">LICENCIATURA EN ECONOMIA(19)</option>
                     <option value="61">LGNR(12)</option>
-                    <option value="73">LICENCIADO EN LOGISTICA(1)</option>
+                    <option value="71">LICENCIADO EN LOGISTICA(1)</option>
                     <option value="84">CONTADOR PUBLICO(19)</option>
                     <option value="03">PERSONAL APOYO (0)</option>
                 </SelectorV>
