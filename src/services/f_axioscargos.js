@@ -30,17 +30,32 @@ export async function grabarCargo(cargoNew) {
     }
 }
 
-//darbajacargo
-export async function darBajaCargo(nroreg, legajo, motbj, nroresub, fechab) {
-    console.log(nroreg, legajo, motbj, nroresub, fechab)
-
+export async function grabarCargoHistorico(cargoHist, nroreg, legajo) {
+    //console.log(cargoHist)
     try {
-        const resu = await axios.put(`${uri}bajacargo/${nroreg}/${legajo}`, { motbj, nroresub, fechab })
-        return resu
+        const resu = await axios.post(`${uri}addcargoH`, cargoHist)
+        if (resu.statusText === 'OK') {
+            console.log('Mayonesa')
+            darBajaCargo(nroreg, legajo)
+        }
     } catch (error) {
         console.log(error)
     }
 }
+
+
+//darbajacargo
+export async function darBajaCargo(nroreg, legajo) {
+    console.log(nroreg, legajo)
+
+    try {
+        const resu = await axios.put(`${uri}bajacargo/${nroreg}/${legajo}`)
+        console.log(resu)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 
 //varios consulta
 export async function getEdadAnio(edad) {

@@ -1,5 +1,6 @@
 import React,{useEffect,useState} from 'react'
 import { Button, Form, FormControl } from 'react-bootstrap'
+import { CSVLink } from 'react-csv'
 import { getEdadAnio } from '../../services/f_axioscargos'
 import { CabTitulo } from '../../styles-components/formularios/FormAgente'
 import { Wrapper } from '../../styles-components/vistas/Personas'
@@ -68,7 +69,14 @@ const FormEdadAgentesPage = () => {
                 Ver Información
             </Button>
           </div>
-        </div>                     
+        </div>    
+
+        {datosper?
+          <div className='col-md-2'>
+            <br />
+          <CSVLink data={datosper} filename={"edadaniocorriente" + "_" + Date.now() + ".csv"}>Exportar</CSVLink>
+          </div>:null
+        }                 
 
 
     </div>  

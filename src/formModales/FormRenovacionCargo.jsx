@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { Formulario, LabelF, SelectorV } from '../styles-components/formularios/FormAgente'
 //import { useGetMaterias } from '../hooks/useGetMaterias';
 import Swal from 'sweetalert2';
-import { darBajaCargo, grabarCargo } from '../services/f_axioscargos';
+import { darBajaCargo, grabarCargo, grabarCargoHistorico } from '../services/f_axioscargos';
 import { useSelector } from 'react-redux';
 
 const FormRenovacionCargo = ({dato, nrocargoG,funcion,materias,idmat}) => {
@@ -135,7 +135,29 @@ const FormRenovacionCargo = ({dato, nrocargoG,funcion,materias,idmat}) => {
         fechaB: fechaBN.campo,
         ncg: nrocg + 1,
         titu: dato.titular
-  
+        
+      }
+      let cargoHis={
+
+        legajo: dato.legajo,
+        ncargo: dato.nc,
+        sede: dato.inst,
+        tcargo: dato.ca,
+        claustro: dato.es,
+        ppal: dato.ppal,
+        nivel: dato.nv,
+        adic: dato.adic,
+        car:dato.car,
+        plan: dato.pl,
+        codmat: matc,
+        fechaA: convertirFecha(dato.fechaAlta),
+        nroresA: dato.nresa,
+        fechaB: fechaB.campo,
+        nroresB:resoB.campo,
+        ncg: nrocg,
+        titu: dato.titular,
+        sit:dato.st,
+        motbj:tprenovacion
       }
         
 
@@ -152,8 +174,9 @@ const FormRenovacionCargo = ({dato, nrocargoG,funcion,materias,idmat}) => {
             if (resultado.value) {
                 // Hicieron click en "Sí"
               //console.warn(cargoNew)
-              darBajaC(tprenovacion) 
+              //darBajaC(tprenovacion) 
               grabarCargo(cargoNew)
+              grabarCargoHistorico(cargoHis,nroReg,legajo)
                // cerrarForm()
                funcion()
                   

@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import InputC from '../elementos/InputComponent'
-import { useGetMaterias } from '../hooks/useGetMaterias'
-import { darBajaCargo } from '../services/f_axioscargos'
+//import { useGetMaterias } from '../hooks/useGetMaterias'
+import { grabarCargoHistorico } from '../services/f_axioscargos'
 import { Formulario, Label, SelectorV } from '../styles-components/formularios/FormAgente'
 
 const FormBajaCargo = ({dato,funcion,materias,idmat}) => {
@@ -79,7 +79,30 @@ const FormBajaCargo = ({dato,funcion,materias,idmat}) => {
     
     
     const darBaja = async () => {
-        let resu = await darBajaCargo(nroReg, legajo, motivoB, resoB.campo, fechaB.campo)
+     
+      let cargoHis={
+
+        legajo: dato.legajo,
+        ncargo: dato.nc,
+        sede: dato.inst,
+        tcargo: dato.ca,
+        claustro: dato.es,
+        ppal: dato.ppal,
+        nivel: dato.nv,
+        adic: dato.adic,
+        car:dato.car,
+        plan: dato.pl,
+        codmat: dato.mat,
+        fechaA: convertirFecha(dato.fechaAlta),
+        nroresA: dato.nresa,
+        fechaB: fechaB.campo,
+        nroresB:resoB.campo,
+        ncg: dato.ncg,
+        titu: dato.titular,
+        sit:dato.st,
+        motbj:motivoB
+      }
+      grabarCargoHistorico(cargoHis,nroReg,legajo)        
         funcion()
       }
     
