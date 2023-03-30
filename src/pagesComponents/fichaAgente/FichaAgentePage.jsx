@@ -22,7 +22,7 @@ const FichaAgentePage = () => {
      <DatosDomiconta />
      <DatosFamilia />
      <DatosAntiguedad />
-     <CargosVigentes />
+     <CargosVigentes page={2} />
      <CargosHistoricos />
      
       </>:null

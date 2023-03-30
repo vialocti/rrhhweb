@@ -332,6 +332,7 @@ const FormularioCargo = () => {
                     <option>PPAL</option>
                     <option value="110">10-Superior</option>
                     <option value="137">37-Docentes</option>
+                    <option value="138">38-Cargos Gestión</option>
                     <option value="148">48-Docentes Sec</option>
                     <option value="221">21-Administrativos</option>
                     <option value="222">22-Tecnico</option>

@@ -9,7 +9,7 @@ const DatosFamilia = () => {
 
   if(loading) return <p>Cargando datos .....</p>
   if(error) return <p>Error de Carga</p>
-  console.log(datosFamiliaAgente)
+  //console.log(datosFamiliaAgente)
   
   const convertir =(fn)=>{
     return fn.substring(0,10)
@@ -40,10 +40,10 @@ const DatosFamilia = () => {
                     <tr key={index}>
                         
                         <td>{ele.nombre}</td>
-                        <td>{ele.vinculo}</td>
-                        <td>{ele.tdoc}</td>
-                        <td>{ele.nrodoc}</td>
-                        <td>{convertir(ele.fechanac)}</td>
+                        <td>{ele.vinculo?ele.vinculo:'Sin dato'}</td>
+                        <td>{ele.tdoc?ele.tdoc:'Sin dato'}</td>
+                        <td>{ele.nrodoc?ele.nrodoc:'Sin dato'}</td>
+                        <td>{ele.fechanac?convertir(ele.fechanac):'Sin dato'}</td>
                        
                     </tr>
                 )}

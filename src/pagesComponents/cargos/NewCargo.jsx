@@ -19,7 +19,7 @@ const NewCargo = () => {
     <BuscarPersona />
     {legajo?<>
       <CabeceraFuncion titulo={`Operación: Alta, Baja o Renovación de Cargos`} />
-      <CargosVigentes />
+      <CargosVigentes page={1}/>
       <FormularioCargo />
       <br/>
     </>:null
