@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, {useState,useEffect} from 'react'
-import { faDownload, faRegistered} from '@fortawesome/free-solid-svg-icons'
+import { faAngleDoubleUp, faDownload, faE, faExpand, faFish, faRegistered} from '@fortawesome/free-solid-svg-icons'
 import {  CabTituloCargo } from '../../styles-components/formularios/FormAgente'
 
 //import { Container, Row, Table } from 'react-bootstrap'
@@ -14,6 +14,7 @@ import { useSelector } from 'react-redux'
 import FormRenovacionCargo from '../../formModales/FormRenovacionCargo'
 import FormBajaCargo from '../../formModales/FormBajaCargo'
 import Swal from 'sweetalert2'
+import FormAltaExtension from '../../formModales/FormAltaExtension'
 
 
 const CargosConsulta = (props) => {
@@ -89,19 +90,35 @@ const CargosConsulta = (props) => {
         openModal()
       }
    }
+
+
+   const CargoExtension =(ele)=>{
+    if(ele.legajo > 0){
+        setDato(ele)
+        setIdMat(ele.pl+ele.mat)
+        setTipoOpera('E')
+        openModal()
+      }
+   }
   
-  
+  const mostrarAgente = (legr)=>{
+    if(legr !== '0'){
+      alert('buscando agente')
+    }
+  }
   
    return (
-    <div className='container'>
+    <div className='container-fluid'>
 
       <ModalComponente isOpen={isOpen} closeModal={closeModal}>
           
          { tipoOpera==='R'?
          <FormRenovacionCargo dato={dato}  nrocargoG={nrocargos} funcion={closeModal} materias={materias} idmat={idMat} />
         
-          :
+          :tipoOpera==='B'?
           <FormBajaCargo dato={dato} funcion={closeModal} materias={materias} idmat={idMat}/>
+          
+          :<FormAltaExtension dato={dato}  nrocargoG={nrocargos} funcion={closeModal} materias={materias} idmat={idMat}/>
         }
       </ModalComponente> 
     <CabTituloCargo>{title}</CabTituloCargo>   
@@ -127,6 +144,7 @@ const CargosConsulta = (props) => {
             <th>Nro.Res.B</th>
             <th>M.Baja</th>
             <th>Sit.</th>
+            <th>LegR</th>
             <th>NCG</th>
           </tr>
         </thead>
@@ -150,6 +168,7 @@ const CargosConsulta = (props) => {
               <td>{ele.nresb}</td>
               <td>{ele.mb}</td>
               <td>{ele.st}</td>
+              <td onMouseOver={ele.rempla !==0  ? ()=>mostrarAgente(ele.rempla):null}>{ele.rempla !==0?ele.rempla:''}</td>
               <td>{ele.ncg}</td>
               {tipo===1?<>
 
@@ -169,6 +188,17 @@ const CargosConsulta = (props) => {
                <FontAwesomeIcon icon={faDownload} />
               </button>
               </td>
+
+             {ele.es==='1' && ele.nv < 17 ?
+              <td>
+                <button
+              onClick={()=>CargoExtension(ele)}
+            >
+               <FontAwesomeIcon icon={faE} />
+              </button>
+              </td>
+              :null
+              }
                 </>
               :null}
 

@@ -231,7 +231,7 @@ const NewAgente = () => {
                 <LabelF htmlFor='area'>Area Trabajo</LabelF>
                     <SelectorV name="area" id='area' onChange={changeArea}>
                          <option value="">AREA TRABAJO</option>
-                        <option value="Docente">Docente</option>
+                        <option value="Docentes">Docente</option>
                         <option value="Carrera_Licenciatura_en_Administracion">Carrera Licenciatura en  Administracion</option>
                         <option value="Carrera_Licenciatura_en_Economia">Carrera Licenciatura en Economia</option>
                         <option value="Carrera_Contador_Publico">Carrera Contador Público</option>

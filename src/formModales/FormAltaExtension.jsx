@@ -1,19 +1,19 @@
 import React,{useState,useEffect} from 'react'
 import InputC from '../elementos/InputComponent'
-//import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 import { Formulario, LabelF, SelectorV } from '../styles-components/formularios/FormAgente'
 //import { useGetMaterias } from '../hooks/useGetMaterias';
 import Swal from 'sweetalert2';
-import { darBajaCargo, grabarCargo, grabarCargoHistorico } from '../services/f_axioscargos';
+import {grabarCargo} from '../services/f_axioscargos';
 import { useSelector } from 'react-redux';
+import { useGetMaterias } from '../hooks/useGetMaterias';
 
-
-const FormRenovacionCargo = ({dato, nrocargoG,funcion,materias,idmat}) => {
+const FormAltaExtension = ({dato, nrocargoG,funcion,materias,idmat}) => {
 
     const nombre = useSelector(state=>state.agente.nombre)
-    //const navigate = useNavigate()
+    const navigate = useNavigate()
     const expresiones = {
         resoA: /^[a-zA-Z0-9\_\ \-/]{4,20}$/, // Letras, numeros, guion y guion_bajo
         resoB: /^[a-zA-Z0-9\_\ \-/]{4,20}$/, // Letras, numeros, guion y guion_bajo
@@ -38,28 +38,32 @@ const FormRenovacionCargo = ({dato, nrocargoG,funcion,materias,idmat}) => {
     const [matname, setMatname] = useState('')
     const [propuesta, setPropuesta]=useState('')
     const [car, setCar]=useState('')
-    
+    const [cargo, setCargo]=useState('')
+    //const [cargosdoc, setCargosdoc]=useState([])
 
     const buscarMat=(idm)=>{
-      let [materia] =materias.filter(materia => materia.id_materia == idm)
-      setMatname(materia.materia)
-      if(materia.car ===2){
-        setPropuesta('CONTADOR PUBLICO NACIONAL')
-      }else if(materia.car === 3){
-        setPropuesta('LICENCIATURA EN ADMINISTRACION')
-        setCar('3')
-      }else if(materia.car === 4){
-        setPropuesta('LICENCIATURA EN ECONOMIA')
-        setCar('4')
-      }else if(materia.car === 6){
-        setPropuesta('CICLO LIC.EN NEGOCIOS REGIONALES')
-      }else if(materia.car === 7){
-        setPropuesta('LICENCIATURA EN LOGISTICA')
-        
-      }else if(materia.car === 8){
-        setPropuesta('CONTADOR PUBLICO')
-        setCar('8')
-      }
+      if (idm !=='0'){
+        let [materia] =materias.filter(materia => materia.id_materia == idm)
+        setMatname(materia.materia)
+        if(materia.car ===2){
+          setPropuesta('CONTADOR PUBLICO NACIONAL')
+        }else if(materia.car === 3){
+          setPropuesta('LICENCIATURA EN ADMINISTRACION')
+          setCar('3')
+        }else if(materia.car === 4){
+          setPropuesta('LICENCIATURA EN ECONOMIA')
+          setCar('4')
+        }else if(materia.car === 6){
+          setPropuesta('CICLO LIC.EN NEGOCIOS REGIONALES')
+        }else if(materia.car === 7){
+          setPropuesta('LICENCIATURA EN LOGISTICA')
+          
+        }else if(materia.car === 8){
+          setPropuesta('CONTADOR PUBLICO')
+          setCar('8')
+        }
+
+    }
       // console.log(matname)
       //console.log(propuesta)
     }
@@ -92,21 +96,8 @@ const FormRenovacionCargo = ({dato, nrocargoG,funcion,materias,idmat}) => {
     const convertirFecha =(fe)=>{
       return fe.substring(6,10) + "-" + fe.substring(3,5) + "-" + fe.substring(0,2)
     }
-
-    const verificarfechas=(falta,fbajan)=>{
-        if(falta >= fbajan){
-          alert('La Fecha de baja no puede ser menor o igual a la fecha de Alta')
-          return false
-        }else{
-          
-          return true
-        }
-    }
    
-    const darBajaC = async (tipoReno) => {
-      let resu = await darBajaCargo(nroReg, legajo, tipoReno, resoB.campo,fechaB.campo)
-      console.log(resu.statusText)
-    }
+
   
     //console.log(materias)
     //grabar cargo renovacion
@@ -115,18 +106,11 @@ const FormRenovacionCargo = ({dato, nrocargoG,funcion,materias,idmat}) => {
       let carrera=''
       let pl=''
       let matc=''
-      let tprenovacion=''
-      if(miCheckbox.checked){
-        pl=plan
-        matc=mat
-        tprenovacion='14'
-        carrera=car
-      }else{
-        pl=dato.pl
-        matc=dato.mat
-        tprenovacion='09'
-        carrera=dato.car
-      }
+      
+       pl=plan
+       matc=mat
+       carrera=car
+      
       //console.log(tprenovacion)
       let nrocg = nrocargoG[0].nroCg  
       let cargoNew ={
@@ -135,8 +119,8 @@ const FormRenovacionCargo = ({dato, nrocargoG,funcion,materias,idmat}) => {
         sede: dato.inst,
         tcargo: dato.ca,
         claustro: dato.es,
-        ppal: dato.ppal,
-        nivel: dato.nv,
+        ppal: '37',
+        nivel: cargo,
         adic: dato.adic,
         car:carrera,
         plan: pl,
@@ -149,35 +133,13 @@ const FormRenovacionCargo = ({dato, nrocargoG,funcion,materias,idmat}) => {
         rempl:dato.rempla
         
       }
-      let cargoHis={
-
-        legajo: dato.legajo,
-        ncargo: dato.nc,
-        sede: dato.inst,
-        tcargo: dato.ca,
-        claustro: dato.es,
-        ppal: dato.ppal,
-        nivel: dato.nv,
-        adic: dato.adic,
-        car:dato.car,
-        plan: dato.pl,
-        codmat: matc,
-        fechaA: convertirFecha(dato.fechaAlta),
-        nroresA: dato.nresa,
-        fechaB: fechaB.campo,
-        nroresB:resoB.campo,
-        ncg: nrocg,
-        titu: dato.titular,
-        sit:dato.st,
-        motbj:tprenovacion,
-        rempl:dato.rempla
-      }
+      
         
 
         Swal
         .fire({
             title: `Agente Legajo:${cargoNew.legajo}`,
-            text: `Grabar La Renovacion de Cargo`,
+            text: `Grabar Extension Cargo`,
             icon: 'info',
             showCancelButton: true,
             confirmButtonText: "Sí, Grabar",
@@ -186,13 +148,9 @@ const FormRenovacionCargo = ({dato, nrocargoG,funcion,materias,idmat}) => {
         .then(resultado => {
             if (resultado.value) {
                 // Hicieron click en "Sí"
-              //console.warn(cargoNew)
-              //darBajaC(tprenovacion) 
               grabarCargo(cargoNew)
-              grabarCargoHistorico(cargoHis,nroReg,legajo)
-               // cerrarForm()
-               funcion()
-               //navigate('/fichaAgente')
+              // console.log(cargoNew)
+              funcion()
                   
                 
             } else {
@@ -212,8 +170,8 @@ const FormRenovacionCargo = ({dato, nrocargoG,funcion,materias,idmat}) => {
         fechaB.valido === 'true' && 
         resoA.valido ===  'true' &&
         fechaBN.valido ==='true' &&
-        resoB.valido === 'true'  &&
-        verificarfechas(fechaA.campo, fechaBN.campo)
+        resoB.valido === 'true'
+        
         ) {
           
         grabarNuevoCargo()
@@ -228,26 +186,28 @@ const FormRenovacionCargo = ({dato, nrocargoG,funcion,materias,idmat}) => {
     }
 
   }
-      
-      
 
-  
-   
-    
-    const changeMat = () => {
+  const changeCargo=()=>{
+    setCargo(document.getElementById('cargo').value)
+  }
+      
+      
+  const changeMat = () => {
       let materia = (document.getElementById('materia').value).toString()
       setPlan(materia.substring(0,1))
       setMat(materia.substring(1,4))
       buscarMat(materia)
     }
    
-    
+    const{loading,error,cargospl}=useGetMaterias()
+   if(loading) return <p>Cargando datos .....</p>
+   if(error) return <p>Error de Carga</p>
 
   return (
     <div className='container'>
           <div className='row'>
 
-            <h2> Renovacion de Cargo </h2>
+            <h2> Nuevo Cargo por Extensión </h2>
             
           </div>
 
@@ -354,27 +314,7 @@ const FormRenovacionCargo = ({dato, nrocargoG,funcion,materias,idmat}) => {
 
           <Formulario onSubmit={handleSubmit}>
                 
-                <InputC 
-                    tipo='text'
-                    name='fechaB'
-                    infoplace='aaaa-mm-dd'
-                    estado={fechaB}
-                    cambiarEstado={setFechaB}
-                    label='Fecha Baja '
-                    leyendaErr='la fecha tiene que tener un formato como 2000-08-14'
-                    expreg={expresiones.fechaB}
-                />        
 
-            <InputC 
-                tipo='text'
-                name='resoB'
-                infoplace='Nro Resolucion de Baja'
-                estado={resoB}
-                cambiarEstado={setResoB}
-                label='Nro.Resolición de Baja'
-                leyendaErr='no menor de 4 y no mayor a 60 caracteres'
-                expreg={expresiones.resoB}
-            />
                 
                 <InputC 
                     tipo='text'
@@ -383,7 +323,7 @@ const FormRenovacionCargo = ({dato, nrocargoG,funcion,materias,idmat}) => {
                     estado={fechaA}
                     cambiarEstado={setFechaA}
                     label='Fecha Alta Resolucion'
-                    leyendaErr='la fecha tiene que tener un formato como 2000-08-14'
+                    leyendaErr='la fecha tiene que tener unformato como 2000-08-14'
                     expreg={expresiones.fechaA}
                 />        
                
@@ -406,14 +346,14 @@ const FormRenovacionCargo = ({dato, nrocargoG,funcion,materias,idmat}) => {
                     estado={fechaBN}
                     cambiarEstado={setFechaBN}
                     label='Nueva Fecha Baja '
-                    leyendaErr='la fecha tiene que tener unformato como 2000-08-14'
+                    leyendaErr='la fecha tiene que tener un formato como 2000-08-14'
                     expreg={expresiones.fechaBN}
                 />
 
               <div>
                 <LabelF htmlFor='materia'>Actividad Academica</LabelF>
                 <SelectorV name="materia" id='materia' onChange={changeMat}>
-                  <option>Elegir Actividad</option>
+                  <option value='0'>Elegir Actividad</option>
                   {actividades ?
                     actividades.map((ele, index) => (
                       <option value={ele.id_materia} key={index}>({ele.id_materia}){ele.car}:{ele.materia}</option>
@@ -423,15 +363,24 @@ const FormRenovacionCargo = ({dato, nrocargoG,funcion,materias,idmat}) => {
 
               </div>
 
-              <div className="form-check">
-                <input className="form-check-input" type="checkbox" id="cp" />
-                <label className="form-check-label">
-                  Por Cambio Plan
-                </label>
-              </div>
               <div>
+                <LabelF htmlFor='cargo'>Cargo Extensión</LabelF>
+                <SelectorV name="cargo" id='cargo' onChange={changeCargo}>
+                  <option value='0'>Elegir Cargo</option>
+                  {cargospl ?
+                    cargospl.filter(cargos => cargos.ppal== 37 && cargos.nv > 19).map((ele, index) => (
+                      <option value={ele.nv} key={index}>({ele.ppal}){ele.nv}:{ele.cargo}</option>
+                    ))
+                    : null}
+                </SelectorV>
+
+              </div>
+
+             
+              <div>
+                <br/>
                 <button type='submit' className='btn btn-primary'>
-                  Grabar Renovacion
+                  Grabar Extension
                 </button>
               </div>
 
@@ -441,4 +390,4 @@ const FormRenovacionCargo = ({dato, nrocargoG,funcion,materias,idmat}) => {
   )
 }
 
-export default FormRenovacionCargo
+export default FormAltaExtension

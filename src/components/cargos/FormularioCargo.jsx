@@ -1,17 +1,18 @@
 import React,{useState,useEffect} from 'react'
 import {SelectorV, LabelF, Boton, ContenedorBoton, Formulario, BotonC} from '../../styles-components/formularios/FormAgente'
 import InputC from '../../elementos/InputComponent'
-
+//import { useNavigate } from 'react-router-dom'
 import { useGetMaterias } from '../../hooks/useGetMaterias'
 import { useSelector } from 'react-redux'
 import { getLastNroCargo, grabarCargo } from '../../services/f_axioscargos'
 import Swal from 'sweetalert2'
+//import { traerAgentes } from '../../services/f_axiospersonas'
 
 
 
 const FormularioCargo = () => {
 
-   
+    //const navigate = useNavigate()
     const {legajo}=useSelector(state=>state.agente)    
     
     const expresiones = {
@@ -42,6 +43,8 @@ const FormularioCargo = () => {
     const [actividades, setActividades]=useState(null)
     const [mostrarF, setMostrarF] = useState(false)
     const [carrera, setCarrera]=useState('')
+    const [legajorem, setLegajorem]= useState('0')
+    //const [agentesActivos,setAgentesActivos]=useState(null)
 
     
    
@@ -49,18 +52,35 @@ const FormularioCargo = () => {
 
     useEffect(() => {
         setMostrarF(false)
-       
+               
         
         
       }, [])
 
       useEffect(() => {
+
         const cargardatos=async()=>{
             setNrocargos(await getLastNroCargo(legajo))
             
             }
+
+/*
+        const cargarAgentesAct = async() =>{
+                const resu =await traerAgentes()
+                setAgentesActivos(resu)
+                console.log(resu)
+                
+            }
+             
+            cargarAgentesAct()   
+  */      
+           
             cargardatos()
+
       }, [materias,cargos,legajo])
+
+
+     
 
 
       useEffect(()=>{
@@ -106,8 +126,11 @@ const FormularioCargo = () => {
             let cl = document.getElementById('ppal').value.substring(0,1)
             let pp = document.getElementById('ppal').value.substring(1,3)
             setPpal(pp)
-            setCargos(cargospl.filter(cargo=>cargo.ppal==pp && cargo.es==cl))
-            
+            if(pp==='37'){
+                setCargos(cargospl.filter(cargo=>cargo.ppal==pp && cargo.es==cl && cargo.nv < 20))
+            }else{
+                setCargos(cargospl.filter(cargo=>cargo.ppal==pp && cargo.es==cl))
+            }
             
     }
     //setear nivel
@@ -122,7 +145,17 @@ const FormularioCargo = () => {
         setTitular(document.getElementById('titular').value)
        
     }
-    
+    //comparar fechas
+    const verificarfechas=(falta,fbaja)=>{
+        if(falta >= fbaja){
+          alert('La Fecha de baja no puede ser menor o igual a la fecha de Alta')
+          return false
+        }else{
+          
+          return true
+        }
+    }
+
     //buscar actividades segun propuesta
     const changePropuesta = ()=>{
             let prop= document.getElementById('propuesta').value.substring(0,1)
@@ -151,11 +184,13 @@ const FormularioCargo = () => {
     const changeAdicional =()=>{
         setAdicional(document.getElementById('adicional').value)
     }
-    const changePlanCarrera =()=>{
-        //let planF=document.getElementById('plan').value
+    
+    
+    const changeRemplazo =()=>{
         
-        //setActividades(materias.filter(materia=>materia.pl==planF && materia.car==propuesta))
-        
+        if(tcargo==='3'){
+            setLegajorem(document.getElementById('remplazo').value)
+        }
            
 
     }
@@ -179,10 +214,11 @@ const FormularioCargo = () => {
             fechaB:fechaB.campo,
             ncg:ncargoGen,
             titu:titular,
-            car:carrera
+            car:carrera,
+            rempl:legajorem
  
          }
-        console.log(cargoNew)
+        //console.log(cargoNew)
          Swal
          .fire({
              title: `Agente Legajo:${cargoNew.legajo}`,
@@ -195,7 +231,7 @@ const FormularioCargo = () => {
          .then(resultado => {
              if (resultado.value) {
                  // Hicieron click en "Sí"
-                 console.warn(cargoNew)
+                 //console.warn(cargoNew)
                  grabarCargo(cargoNew)
                  cerrarForm()
                    
@@ -230,6 +266,10 @@ const FormularioCargo = () => {
                 return false
             }
         }
+        if(tcargo==='3' && legajorem==='0'){
+            alert('Si tipo de cargo es Interino Remplazante, debe ingresar a quien remplaza')
+            return false
+        }
         if(nivel===""){
             alert('Sin Nivel Asignado')
             return false
@@ -247,6 +287,7 @@ const FormularioCargo = () => {
             fechaA.valido==='true' && 
             fechaB.valido === 'true' && 
             resoA.valido === 'true' &&
+            verificarfechas(fechaA.campo, fechaB.campo) &&
             datosfor()
             
             )
@@ -269,13 +310,16 @@ const FormularioCargo = () => {
    }
    
    const cerrarForm =()=>{
-    console.log('Hola')
+    
     setMostrarF(false)
+   // navigate('/fichaAgente')
    }
    
-   const{loading,error,materias, cargospl}=useGetMaterias()
+   const{loading,error,materias, cargospl,agentesActivos}=useGetMaterias()
    if(loading) return <p>Cargando datos .....</p>
    if(error) return <p>Error de Carga</p>
+
+   
    
         
   return (
@@ -457,6 +501,20 @@ const FormularioCargo = () => {
                     leyendaErr='la fecha tiene que tener unformato como 2000-08-14'
                     expreg={expresiones.fechaB}
                 />        
+            
+
+            <div>
+                <LabelF htmlFor='remplazo'>Remplaza a</LabelF>
+                <SelectorV name="remplazo" id='remplazo' onChange={changeRemplazo}>
+                <option value='0'>Elegir Agente</option>
+                
+                    {agentesActivos?
+                    agentesActivos.map((ele,index)=>(
+                    <option value={ele.legajo} key={index}>{ele.apellido}</option>
+                    ))
+                    :null}
+            </SelectorV>            
+            </div>
 
             <ContenedorBoton>
                 <Boton type='submit'>Grabar Nuevo Cargo</Boton>

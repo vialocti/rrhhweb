@@ -133,7 +133,7 @@ const grabarDatos=(e)=>{
   values.legajo=agente
   values.motivo= mot
   values.ncargo = 999
-  values.nr=document.getElementById('habersn').value
+  values.nr=document.getElementById('habersn').value==='1'?'CG':'SG'
   values.nrores=document.getElementById('nroresu').value.trim()
   //console.log(values)
   let urlpost=`${uri}cargos/cargarinasistencia`
@@ -185,7 +185,7 @@ const onChangeFf = (fecha)=>{
                 <label className='h5'> Motivo </label>
                 <select id="motivo" className='form-control'>
                   {motivos.map((ele,index)=>(
-                      <option key={index} value={ele.codina}>{ele.Motivo}</option>
+                      <option key={index} value={ele.codina}>{ele.codina} - {ele.Motivo}</option>
                     ))}
             
 

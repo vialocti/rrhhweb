@@ -12,12 +12,13 @@
     border-radius:10px;
     border-shadow: 0 0 10px rgba(167,167,167,0,8);
 }
-.login h1 { color: #00B; letter-spacing:2px; text-align:center; }
-.login button {width:100%;color:#000}
 
+.login h1 { color: #04B; letter-spacing:2px; text-align:center; }
+.login button {width:100%;color:#000;margin-top:20px}
+.login form{margin-top:40px}
 .inputU { 
 	width: 100%; 
-	margin-bottom: 10px; 
+	margin-bottom: 15px; 
 	background: rgba(0,0,0,0.3);
 	border: none;
 	outline: none;

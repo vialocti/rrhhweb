@@ -49,7 +49,9 @@ const LoginPage = () => {
     :
     <div>
       <div className="login">
-	        <h1>Login</h1>
+          
+	        
+          <h1>Login</h1>
           <form onSubmit={onHandleSubmit}>
     	        <input  
               className='inputU' 

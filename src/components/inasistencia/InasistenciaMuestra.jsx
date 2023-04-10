@@ -106,7 +106,7 @@ const InasistenciaMuestra = ({inasistenciasag}) => {
            <td>{ele.fechai}</td>
            <td>{ele.fechaf}</td>
            <td>{ele.nres}</td>
-           {ele.r==='1'?
+           {ele.r==='CG'?
            <td>NO</td>
            :
            <td>SI</td>

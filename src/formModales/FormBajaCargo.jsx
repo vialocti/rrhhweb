@@ -100,7 +100,8 @@ const FormBajaCargo = ({dato,funcion,materias,idmat}) => {
         ncg: dato.ncg,
         titu: dato.titular,
         sit:dato.st,
-        motbj:motivoB
+        motbj:motivoB,
+        rempl:dato.rempla
       }
       grabarCargoHistorico(cargoHis,nroReg,legajo)        
         funcion()

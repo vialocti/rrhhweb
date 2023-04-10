@@ -10,6 +10,7 @@ import FormInasistencia from '../../components/inasistencia/FormInasistencia'
 import BuscarPersona from '../../components/BuscarPersona'
 import { CabTitulo } from '../../styles-components/formularios/FormAgente'
 import { useMotivosInasistencia } from '../../hooks/useMotivosInasistencia'
+import CabeceraFuncion_simple from '../../components/CabeceraFuncion_simple'
 
 const InasistenciaPage = () => {
   //const uri = 'http://localhost:4000/'
@@ -83,7 +84,14 @@ const InasistenciaPage = () => {
       <hr/>
   */}
   <div className='row'>
-  <CabTitulo style={{marginLeft:'20px'}}>Registro de Inasistencia</CabTitulo>
+  {legajo
+   ?<>
+    <CabTitulo style={{marginLeft:'20px'}}>Registro de Inasistencia</CabTitulo>
+    <CabeceraFuncion_simple /> 
+   </>
+    :<CabTitulo style={{marginLeft:'20px'}}>Registro de Inasistencia</CabTitulo>
+   }  
+  
   </div>  
     <div className="inasistencia">
       {legajo &&
