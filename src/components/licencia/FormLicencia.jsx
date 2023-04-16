@@ -7,9 +7,9 @@ import axios from 'axios'
 import ReactDatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css';
 import { CabTitulo } from '../../styles-components/formularios/FormAgente'
-import { useFormik } from 'formik'//import es from 'date-fns/locale/es'
+//import { useFormik } from 'formik'//import es from 'date-fns/locale/es'
 import LicenciaMuestra from './LicenciaMuestra'
-import CabeceraFuncion from '../CabeceraFuncion'
+//import CabeceraFuncion from '../CabeceraFuncion'
 
 
 
@@ -22,7 +22,7 @@ const FormLicencia = ({agente,motivos}) => {
   //const uri = 'http://localhost:4000/'
  
 
-  const [cargos,setCargos]=useState([])
+  //const [cargos,setCargos]=useState([])
 
  const [fechaini,setFechaini]=useState(new Date())
  const [fechafin,setFechafin]=useState(new Date())

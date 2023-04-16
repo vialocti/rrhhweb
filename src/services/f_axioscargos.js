@@ -2,7 +2,7 @@ import axios from 'axios'
 
 
 const uri = 'http://200.12.136.74:4000/cargos/'
-//const uri = 'http://localhost:5000/cargos/'
+//const uril = 'http://localhost:5000/cargos/'
 
 export async function getLastNroCargo(legajo) {
 
@@ -46,10 +46,22 @@ export async function grabarCargoHistorico(cargoHist, nroreg, legajo) {
 
 //darbajacargo
 export async function darBajaCargo(nroreg, legajo) {
-    console.log(nroreg, legajo)
+    //console.log(nroreg, legajo)
 
     try {
         const resu = await axios.put(`${uri}bajacargo/${nroreg}/${legajo}`)
+        console.log(resu)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+//modificar datos cargos
+//
+export async function modiCargo(nroreg, datos) {
+    console.log(nroreg, datos)
+    try {
+        const resu = await axios.put(`${uri}modiCargo/${nroreg}`, datos)
         console.log(resu)
     } catch (error) {
         console.log(error)

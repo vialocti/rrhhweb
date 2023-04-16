@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, {useState,useEffect} from 'react'
-import { faAngleDoubleUp, faDownload, faE, faExpand, faFish, faRegistered} from '@fortawesome/free-solid-svg-icons'
+import { faAngleDoubleUp, faDownload, faE, faExpand, faFish, faM, faRegistered} from '@fortawesome/free-solid-svg-icons'
 import {  CabTituloCargo } from '../../styles-components/formularios/FormAgente'
 
 //import { Container, Row, Table } from 'react-bootstrap'
@@ -15,6 +15,8 @@ import FormRenovacionCargo from '../../formModales/FormRenovacionCargo'
 import FormBajaCargo from '../../formModales/FormBajaCargo'
 import Swal from 'sweetalert2'
 import FormAltaExtension from '../../formModales/FormAltaExtension'
+import FormModificarDatosCargo from '../../formModales/FormModificarDatosCargo'
+import { datosAgente } from '../../services/f_axiospersonas'
 
 
 const CargosConsulta = (props) => {
@@ -100,10 +102,30 @@ const CargosConsulta = (props) => {
         openModal()
       }
    }
+
+   const CargoModificar =(ele)=>{
+    if(ele.legajo > 0){
+        setDato(ele)
+        setIdMat(ele.pl+ele.mat)
+        setTipoOpera('M')
+        openModal()
+      }
+   } 
   
-  const mostrarAgente = (legr)=>{
+  const mostrarAgente = async (legr)=>{
     if(legr !== '0'){
-      alert('buscando agente')
+        
+        const resu = await datosAgente(legr)
+        
+        Swal.fire({
+      
+          text: `Agente: ${resu[0].apellido}`,
+          
+          timer: 2000
+        })
+        
+        
+      
     }
   }
   
@@ -118,6 +140,8 @@ const CargosConsulta = (props) => {
           :tipoOpera==='B'?
           <FormBajaCargo dato={dato} funcion={closeModal} materias={materias} idmat={idMat}/>
           
+          :tipoOpera==='M'?
+          <FormModificarDatosCargo dato={dato} funcion={closeModal} idmat={idMat} materias={materias}/>
           :<FormAltaExtension dato={dato}  nrocargoG={nrocargos} funcion={closeModal} materias={materias} idmat={idMat}/>
         }
       </ModalComponente> 
@@ -138,6 +162,7 @@ const CargosConsulta = (props) => {
             <th>CAR</th>
             <th>PL</th>
             <th>MAT</th>
+            <th>Tt</th>
             <th>FECHA ALTA</th>
             <th>Nro.Res.A</th>
             <th>FECHA BAJA</th>
@@ -160,15 +185,15 @@ const CargosConsulta = (props) => {
               <td>{ele.nv}</td>
               <td>{ele.car}</td>
               <td>{ele.pl}</td>
-              <td onMouseOver={ele.pl?()=>mostrarmat(ele.pl+ele.mat):null}>{ele.mat}</td>
-              
+              <td onMouseDown={ele.pl?()=>mostrarmat(ele.pl+ele.mat):null}>{ele.mat}</td>
+              <td>{ele.es ==='1' ? ele.titular:null}</td>
               <td>{ele.fechaAlta}</td>
               <td>{ele.nresa}</td>
               <td>{ele.fechaBaja}</td>
               <td>{ele.nresb}</td>
               <td>{ele.mb}</td>
               <td>{ele.st}</td>
-              <td onMouseOver={ele.rempla !==0  ? ()=>mostrarAgente(ele.rempla):null}>{ele.rempla !==0?ele.rempla:''}</td>
+              <td onMouseDown ={ele.rempla !==0  ? ()=>mostrarAgente(ele.rempla):null}>{ele.rempla !==0?ele.rempla:''}</td>
               <td>{ele.ncg}</td>
               {tipo===1?<>
 
@@ -176,7 +201,7 @@ const CargosConsulta = (props) => {
                   {ele.ca !=='1'?
                 <button
               onClick={()=>RenovacionCargo(ele)}
-            >
+               >
                <FontAwesomeIcon icon={faRegistered} />
               </button>
                :null }
@@ -200,7 +225,16 @@ const CargosConsulta = (props) => {
               :null
               }
                 </>
-              :null}
+              :tipo===2?
+              <td>
+              <button
+              onClick={()=>CargoModificar(ele)}
+            >
+               <FontAwesomeIcon icon={faM} />
+              </button>
+              </td>
+              :null
+              }
 
               
           </tr>

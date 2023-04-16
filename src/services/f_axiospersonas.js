@@ -10,19 +10,21 @@ export async function datosAgente(legajo) {
 
     let rutaag = `${uri}agente_leg/${legajo}`
 
-    if (legajo.length > 0) {
-        try {
 
-            const response = await axios.get(rutaag)
-            return response.data
+    //if (legajo.length > 0) {
+    try {
+
+        const response = await axios.get(rutaag)
+
+        return response.data
 
 
 
-        } catch (error) {
-            console.log(error)
-        }
-
+    } catch (error) {
+        console.log(error)
     }
+
+    //}
 
 
 }
@@ -76,7 +78,7 @@ export async function grabarPersona(persona) {
         const resu = await axios.post(`${uric}addAgente`, persona)
         return resu
 
-        console.warn(resu)
+
     } catch (error) {
         console.log(error)
     }

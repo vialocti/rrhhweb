@@ -15,19 +15,19 @@ const LincenciaPage = () => {
   const dispatch = useDispatch()  
   const legajo = useSelector((state) => state.agente.legajo)
   
-  const [motivos, setMotivos]= useState([])
+  //const [motivos, setMotivos]= useState([])
 
   
 
   useEffect(()=>{
      //traer motivos de inasistencias
      
-     if(motivosLI){
-       setMotivos(motivosLI)
-     }
+    // if(motivosLI){
+    //   setMotivos(motivosLI)
+    // }
      dispatch(addAgente(null))
     
-   },[dispatch,motivosLI])
+   },[dispatch])
 
    
   const {motivosLI, loading,error} = useMotivosInasistencia()

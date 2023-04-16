@@ -16,7 +16,7 @@ const FormularioCargo = () => {
     const {legajo}=useSelector(state=>state.agente)    
     
     const expresiones = {
-        resoA: /^[a-zA-Z0-9\_\ \-/]{4,20}$/, // Letras, numeros, guion y guion_bajo
+        resoA: /^[a-zA-Z0-9\-/]{4,20}$/, // Letras, numeros, guion y guion_bajo
         // resolucionA: /^[,a-zA-ZÀ-ÿ\s]{1,50}$/, // Letras y espacios, pueden llevar acentos.
         fechaA:/^\d{4}([-/.])(0?[1-9]|1[0-1-2])\1(3[01]|[12][0-9]|0?[1-9])$/,
         fechaB:/^\d{4}([-/.])(0?[1-9]|1[0-1-2])\1(3[01]|[12][0-9]|0?[1-9])$/,

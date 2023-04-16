@@ -13,7 +13,7 @@ const CargosHistoricos = () => {
 
   return (
     <>
-    {cargoshAgente.length > 0?<CargosConsulta  cargos={cargoshAgente} title={'Cargos Historicos'} tipo={2}/>:null
+    {cargoshAgente.length > 0?<CargosConsulta  cargos={cargoshAgente} title={'Cargos Historicos'} tipo={3}/>:null
     }
     </>
     )

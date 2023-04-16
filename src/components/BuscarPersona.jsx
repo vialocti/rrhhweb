@@ -10,13 +10,13 @@ import { Form, FormControl } from 'react-bootstrap'
 
 
 const uri = 'http://200.12.136.74:4000/biometrico/'
-
+/*
 const expresiones = {
-    patronb: /^[a-zA-Z\,\ \-]{1,60}$/, // Letras guion y guion_bajo
+    patronb: /^[a-zA-Z]{1,60}$/, // Letras guion y guion_bajo
     // resolucionA: /^[,a-zA-ZÀ-ÿ\s]{1,50}$/, // Letras y espacios, pueden llevar acentos.
     // fecha:/^\d{4}([-/.])(0?[1-9]|1[0-1-2])\1(3[01]|[12][0-9]|0?[1-9])$/,
 }
-
+*/
 const BuscarPersona = () => {
 
     const dispatch =useDispatch()

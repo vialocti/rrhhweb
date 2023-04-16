@@ -7,7 +7,7 @@ import { CabTitulo } from '../../styles-components/formularios/FormAgente'
 const uri = 'http://200.12.136.74:4000/'
 const CargosInterinos = () => {
 
-    const [ruta, setRuta]= useState(`${uri}cargos/cargosinterinos`)  
+    const ruta = `${uri}cargos/cargosinterinos`  
     const [cargos, setCargos]= useState([])
 
     useEffect(()=>{
