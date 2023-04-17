@@ -78,7 +78,7 @@ const FormAltaExtension = ({dato, nrocargoG,funcion,materias,idmat}) => {
         setResoB({campo:dato.nresa ,valido:'true'})
       }
       if (materias) {
-        setActividades(materias.filter(materia => materia.pl == 4))
+        setActividades(materias.filter(materia => (materia.pl == 4 || materia.pl == 1)))
         if(idmat){
           buscarMat(idmat)
         }else{
