@@ -19,7 +19,7 @@
 .modal-container{
     padding:5px;
     position:relative;
-    background-color:#80d8ff;
+    background-color:#70DDAA;
     min-width:80%;
     max-width:100%;
     min-height:50%;
@@ -32,4 +32,11 @@
     position:absolute;
     top:5px;
     right:5px;
+    border-radius: 40%;
+    background-color: lightgreen;
+    border: solid 2px black;
+    width: 35px;
+    height: 35px;
+      
+    
 }

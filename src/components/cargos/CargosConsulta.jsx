@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, {useState,useEffect} from 'react'
-import { faAngleDoubleUp, faDownload, faE, faExpand, faFish, faM, faRegistered} from '@fortawesome/free-solid-svg-icons'
+import { faAngleDoubleUp, faDownload, faE, faEdit, faExpand, faFish, faM, faRegistered} from '@fortawesome/free-solid-svg-icons'
 import {  CabTituloCargo } from '../../styles-components/formularios/FormAgente'
 
 //import { Container, Row, Table } from 'react-bootstrap'
@@ -8,7 +8,7 @@ import {  CabTituloCargo } from '../../styles-components/formularios/FormAgente'
 import {useModal} from '../../hooks/useModal'
 import { ModalComponente } from '../ModalComponente'
 //import RenovacionCargoForm from '../../formModales/RenovacionCargoForm'
-import { getLastNroCargo } from '../../services/f_axioscargos'
+import { getLastNroCargo, modiCargo } from '../../services/f_axioscargos'
 import { useSelector } from 'react-redux'
 //import BajaCargoForm from '../../formModales/BajaCargoForm'
 import FormRenovacionCargo from '../../formModales/FormRenovacionCargo'
@@ -17,6 +17,7 @@ import Swal from 'sweetalert2'
 import FormAltaExtension from '../../formModales/FormAltaExtension'
 import FormModificarDatosCargo from '../../formModales/FormModificarDatosCargo'
 import { datosAgente } from '../../services/f_axiospersonas'
+import FormModificarDatosCargoH from '../../formModales/FormModificarDatosCargoH'
 
 
 const CargosConsulta = (props) => {
@@ -110,7 +111,16 @@ const CargosConsulta = (props) => {
         setTipoOpera('M')
         openModal()
       }
-   } 
+   }
+   
+   const CargoModificarH =(ele)=>{
+    if(ele.legajo > 0){
+        setDato(ele)
+        setIdMat(ele.pl+ele.mat)
+        setTipoOpera('H')
+        openModal()
+      }
+   }
   
   const mostrarAgente = async (legr)=>{
     if(legr !== '0'){
@@ -142,6 +152,8 @@ const CargosConsulta = (props) => {
           
           :tipoOpera==='M'?
           <FormModificarDatosCargo dato={dato} funcion={closeModal} idmat={idMat} materias={materias}/>
+          :tipoOpera==='H'?
+          <FormModificarDatosCargoH dato={dato} funcion={closeModal} idmat={idMat} materias={materias}/>
           :<FormAltaExtension dato={dato}  nrocargoG={nrocargos} funcion={closeModal} materias={materias} idmat={idMat}/>
         }
       </ModalComponente> 
@@ -230,7 +242,15 @@ const CargosConsulta = (props) => {
               <button
               onClick={()=>CargoModificar(ele)}
             >
-               <FontAwesomeIcon icon={faM} />
+               <FontAwesomeIcon icon={faEdit} />
+              </button>
+              </td>
+              :tipo===3?
+              <td>
+                <button
+              onClick={()=>CargoModificarH(ele)}
+            >
+               <FontAwesomeIcon icon={faEdit} />
               </button>
               </td>
               :null

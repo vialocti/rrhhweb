@@ -10,7 +10,7 @@ import { modiCargo} from '../services/f_axioscargos';
 import { useSelector } from 'react-redux';
 
 
-const FormModificarDatosCargo = ({dato,funcion, idmat, materias}) => {
+const FormModificarDatosCargoH = ({dato,funcion, idmat, materias}) => {
 
     const nombre = useSelector(state=>state.agente.nombre)
     //const navigate = useNavigate()
@@ -155,7 +155,7 @@ const FormModificarDatosCargo = ({dato,funcion, idmat, materias}) => {
         titular:document.getElementById('titular').value
         
       }
-//console.log(datosModi)
+console.log(datosModi)
 
         Swal
         .fire({
@@ -168,7 +168,7 @@ const FormModificarDatosCargo = ({dato,funcion, idmat, materias}) => {
         })
         .then(resultado => {
             if (resultado.value) {
-               modiCargo(nroReg,datosModi,1)
+               modiCargo(nroReg,datosModi,2)
                funcion()
                //navigate('/fichaAgente')
                   
@@ -239,7 +239,7 @@ const FormModificarDatosCargo = ({dato,funcion, idmat, materias}) => {
           
           <div className='row'>
 
-            <h2>Modificacion Datos Cargo </h2>
+            <h2 style={{background:'grey'}}>Modificacion Datos Cargo Historico</h2>
             
           </div>
 
@@ -340,6 +340,9 @@ const FormModificarDatosCargo = ({dato,funcion, idmat, materias}) => {
                   </tr>
                   <tr>
                     <td>Fecha Baja</td> <td>{dato ? dato.fechaBaja : "s/d"}</td>
+                  </tr>
+                  <tr>
+                    <td>Motivo Baja</td> <td>{dato ? dato.mb : "s/d"}</td>
                   </tr>
                 </tbody>
               </table>
@@ -495,4 +498,4 @@ const FormModificarDatosCargo = ({dato,funcion, idmat, materias}) => {
   )
 }
 
-export default FormModificarDatosCargo
+export default FormModificarDatosCargoH
