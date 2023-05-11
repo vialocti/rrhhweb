@@ -24,7 +24,7 @@ export async function grabarCargo(cargoNew) {
     try {
         //console.log(`${uri}addCargo`)
         const resu = await axios.post(`${uri}addCargo`, cargoNew)
-        console.log(resu)
+        return resu
     } catch (error) {
         console.log(error)
     }

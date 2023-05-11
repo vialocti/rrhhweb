@@ -15,6 +15,7 @@ import CargosInterinos from '../components/cargos/CargosInterinos'
 import LincenciaPage from '../pagesComponents/inasistencias/LincenciaPage'
 import FormEdadAgentesPage from '../pagesComponents/reportsv/FormEdadAgentesPage'
 import FormIngresoAgentePage from '../pagesComponents/reportsv/FormIngresoAgentePage'
+import BusquedaCatedra from '../components/cargoscatedra/BusquedaCatedra'
 
 const AppRoutes = () => {
   return (
@@ -37,7 +38,7 @@ const AppRoutes = () => {
             <Route exact path='/edadCumple' element={<FormEdadAgentesPage />} />
             <Route exact path='/LugarIngreso' element={<FormIngresoAgentePage />} />
 
-
+            <Route exact path='/catedraver' element={<BusquedaCatedra/>} />
 
             <Route path='*' element={<NotFoundPage />} />
 

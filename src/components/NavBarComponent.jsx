@@ -168,8 +168,8 @@ const NavBarComponent = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/" className="dropdown-item" >
-                    Consulta Planes 
+                  <Link to="/catedraver" className="dropdown-item" >
+                    Consulta Catedras 
                   </Link>
                 </li>
                 

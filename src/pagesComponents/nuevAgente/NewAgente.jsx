@@ -4,6 +4,7 @@ import { Boton, CabTitulo, ContenedorBoton, Formulario,LabelF,SelectorV} from '.
 import InputC from '../../elementos/InputComponent'
 import axios from 'axios'
 import { grabarPersona } from '../../services/f_axiospersonas'
+import { useNavigate } from 'react-router-dom'
 //import { ModalComponente } from '../../components/ModalComponente'
 //import { useModal } from '../../hooks/useModal'
 //const uric = 'http://200.12.136.74:4000/cargos/'
@@ -35,11 +36,33 @@ const NewAgente = () => {
    const [tipod, setTipod] = useState('1')
    const [claustro, setClaustro] = useState('1') 
    
-   
+   const navigate = useNavigate()
 
   
   
+    const mostrarDatos =async(persona)=>{
+        //console.log(persona)
+        let ok = await grabarPersona(persona)
+        if (ok='200'){
+            Swal.fire({
+                title: 'Alta Agente',
+                text: 'Datos Grabados',
+                icon: 'info',
+                showCancelButton: true,
+                
 
+                
+            }).then(resultado => {
+                if (resultado.value) {
+                    // Hicieron click en "Sí"
+                    navigate('/')
+                      
+                    
+                }});
+        
+            
+        } 
+    }
 
     const existeLegajo =async ()=>{
         if(legajo.campo.length>0){
@@ -70,7 +93,13 @@ const NewAgente = () => {
         setClaustro(document.getElementById('claustro').value)
     }
 
-   const grabarDatos =async ()=>{
+   
+
+
+
+   const grabarDatos =()=>{
+
+
         let persona={
             legajo:legajo.campo,
             tipodoc:tipod,
@@ -96,7 +125,8 @@ const NewAgente = () => {
             if (resultado.value) {
                 // Hicieron click en "Sí"
                 //console.log(persona)
-                grabarPersona(persona)   
+                mostrarDatos(persona)
+                  
                 
             } else {
                 // Dijeron que no
@@ -125,7 +155,7 @@ const NewAgente = () => {
 
         } else{
             Swal.fire({
-                title: 'Informacion Grabar datos',
+                title: 'Informacion Alta Agente',
                 text: 'Datos Basicos Incompletos',
                 icon: 'info',
                 showCancelButton: true,

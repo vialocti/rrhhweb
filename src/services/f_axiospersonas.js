@@ -3,7 +3,7 @@ import axios from 'axios'
 const uri = 'http://200.12.136.74:4000/biometrico/'
 const uric = 'http://200.12.136.74:4000/cargos/'
 //const uri = 'hhtp://localhost:4000/biometrico/'
-//const uric = 'http://localhost:4000/cargos/'
+//const uric = 'http://localhost:5000/cargos/'
 
 //datos primarios persona
 export async function datosAgente(legajo) {
@@ -72,11 +72,12 @@ export async function traerAgentes() {
 
 
 export async function grabarPersona(persona) {
-    // console.log(persona)
+    //console.log(persona)
     try {
 
         const resu = await axios.post(`${uric}addAgente`, persona)
-        return resu
+        //console.log(resu.status)
+        return resu.status
 
 
     } catch (error) {
