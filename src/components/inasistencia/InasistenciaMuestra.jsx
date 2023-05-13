@@ -40,6 +40,7 @@ const InasistenciaMuestra = ({inasistenciasag}) => {
         const newinasistencias =inasistencias.filter(inas=>inas.id_ina !== id)
         
         setInasistencias(newinasistencias)
+        const resuC= await `${uri}cargos`
         console.log('uuuu')
         
         

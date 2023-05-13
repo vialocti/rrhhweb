@@ -59,7 +59,7 @@ export async function darBajaCargo(nroreg, legajo) {
 //modificar datos cargos
 //
 export async function modiCargo(nroreg, datos, archi) {
-    //console.log(nroreg, datos)
+    console.log(nroreg, datos)
     try {
         if (archi === 1) {
             const resu = await axios.put(`${uri}modiCargo/${nroreg}`, datos)

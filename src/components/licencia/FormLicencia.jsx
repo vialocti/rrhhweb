@@ -63,6 +63,8 @@ const FormLicencia = ({agente,motivos}) => {
   fechafin: "",
   nrores: ""
  }
+
+ //const nroregistroC=''
   const {loading,error,cargosAgente} = useAgenteCargos()
  
    if(loading) return <p>Cargando datos .....</p>

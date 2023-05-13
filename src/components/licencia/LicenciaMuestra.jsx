@@ -31,13 +31,13 @@ const LicenciaMuestra = ({licenciasag}) => {
     console.log(inasistencias)
   }*/ 
 
-  const eliminarRegistro=async(id,legajo)=>{
+  const eliminarRegistroLic=async(id,legajo)=>{
     try {
       const strqdel = `${uri}cargos/dellicencia/${id}/${legajo}`
       const resu = await axios.delete(strqdel)
       console.log(resu.statusText)
       if (resu.statusText==='OK'){
-        const newlicencias =licenciasag.filter(inas=>inas.id_ina !== id)
+        const newlicencias =licenciasag.filter(inas=>inas.row_id !== id)
         
         setLicencias(newlicencias)
         console.log('uuuu')
@@ -59,7 +59,7 @@ const LicenciaMuestra = ({licenciasag}) => {
     Swal
     .fire({
         title: `Registro Licencia Agente:${legajo}`,
-        text: `¿Eliminar registro Nro: ${id}?`,
+        text: `¿Eliminar registro Nro: ${id}?, Recuerde modificar Situacion en Cargo`,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: "Sí, eliminar",
@@ -68,7 +68,7 @@ const LicenciaMuestra = ({licenciasag}) => {
     .then(resultado => {
         if (resultado.value) {
             // Hicieron click en "Sí"
-            eliminarRegistro(id,legajo)
+            eliminarRegistroLic(id,legajo)
             
         } else {
             // Dijeron que no
@@ -117,7 +117,7 @@ const LicenciaMuestra = ({licenciasag}) => {
            }
            <td>
             <button
-              //onClick={()=>eliminarLicencia(ele.id_ina, ele.nleg)}
+              onClick={()=>eliminarLicencia(ele.row_id, ele.nleg)}
             >
                <FontAwesomeIcon icon={faTrash} />
               </button>

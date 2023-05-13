@@ -114,12 +114,19 @@ const CargosConsulta = (props) => {
    }
    
    const CargoModificarH =(ele)=>{
-    if(ele.legajo > 0){
+    Swal.fire({
+      text:"No Modificar cargo dado de Baja",
+      icon:'info'
+
+    }
+
+    )
+    /* if(ele.legajo > 0){
         setDato(ele)
         setIdMat(ele.pl+ele.mat)
         setTipoOpera('H')
         openModal()
-      }
+      }*/
    }
   
   const mostrarAgente = async (legr)=>{

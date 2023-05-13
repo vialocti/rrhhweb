@@ -43,6 +43,7 @@ const FormModificarDatosCargo = ({dato,funcion, idmat, materias}) => {
     const [propuesta, setPropuesta]=useState('')
     const [car, setCar]=useState('')
     const [titular, setTitular] = useState('0') 
+    const [situacion, setSituacion]= useState('')
     const [carreraI, setCarrera]=useState({campo:'', valido:null})
 
     
@@ -85,6 +86,7 @@ const FormModificarDatosCargo = ({dato,funcion, idmat, materias}) => {
         setResoA({campo:dato.nresa ,valido:'true'})
         setFechaA({campo:convertirFecha(dato.fechaAlta),valido:'true'})
         setTitular(dato.titular)
+        setSituacion(dato.st)
         document.getElementById('titular').value=dato.titular
       }
       
@@ -139,6 +141,18 @@ const FormModificarDatosCargo = ({dato,funcion, idmat, materias}) => {
       setTitular(document.getElementById('titular').value)
      
   }
+
+  //situacion del cargo
+  const changeSituacion =()=>{
+    Swal.fire({
+      title: 'Cambio Situacion Cargo',
+      text: 'Recuerde No cambiar la Situacion si No a eliminado la licencia o se levanto la misma',
+      icon: 'warning',
+      showCancelButton: true,})
+
+    setSituacion(document.getElementById('situacion').value)
+   
+}
   
     //console.log(materias)
     //grabar cargo renovacion
@@ -152,7 +166,9 @@ const FormModificarDatosCargo = ({dato,funcion, idmat, materias}) => {
         pl:planI.campo,
         car:carreraI.campo,
         mat:matI.campo,
-        titular:document.getElementById('titular').value
+        titular:document.getElementById('titular').value,
+        st:document.getElementById('situacion').value
+        
         
       }
 //console.log(datosModi)
@@ -291,7 +307,9 @@ const FormModificarDatosCargo = ({dato,funcion, idmat, materias}) => {
                   <tr>
                     <td>Nivel</td><td>{dato ? dato.nv : "s/d"}</td>
                   </tr>
-
+                  <tr>
+                    <td>Sit</td><td>{dato ? dato.st : "s/d"}</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -384,8 +402,9 @@ const FormModificarDatosCargo = ({dato,funcion, idmat, materias}) => {
                 />
                 
                
+                <div style={{display:'flex'}}>
                
-               <div>
+               <div style={{width:'120px',marginRight:'5px'}}>
                 <LabelF htmlFor='titular'>Titular</LabelF>
                 <SelectorV name="titular" id='titular' onChange={changeTitular}>
                     <option value="0">NO</option>
@@ -394,7 +413,18 @@ const FormModificarDatosCargo = ({dato,funcion, idmat, materias}) => {
                     
                 </SelectorV>
 
-            </div>
+                </div>
+                <div style={{width:'200px',marginRight:'5px'}}>
+                <LabelF htmlFor='situacion'>Situacion</LabelF>
+                <SelectorV name="situacion" id='situacion' onChange={changeSituacion}>
+                    <option value="">En Funciones</option>
+                    <option value="CG">Licencia Sin Afectación</option>
+                    <option value="SG">Licencia Con Afectación</option>
+                    
+                </SelectorV>
+
+                </div>
+                </div>
            
             
                 
