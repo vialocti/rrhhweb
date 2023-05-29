@@ -1,23 +1,43 @@
 
-import React from 'react'
+import React, { useState } from 'react'
 
 //import { useSelector} from 'react-redux'
 //import { AgenteConsulta } from '../../dominio/store/agente-thunx'
-import { Label } from '../../styles-components/formularios/FormAgente'
+import { CabSubTitulo, Label } from '../../styles-components/formularios/FormAgente'
 import {useAgenteInfo} from '../../hooks/useAgenteInfo'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEdit } from '@fortawesome/free-regular-svg-icons'
+import { useModal } from '../../hooks/useModal'
+import { useSelector } from 'react-redux'
 
 const DatosPersona = () => {
   //const legajo =useSelector(state=>state.agente.legajo)
   //const user =useSelector(state=>state.agente.user)
   //const dispatch = useDispatch()
   const {agente,error,loading} = useAgenteInfo() 
+  const [tipo, setTipo] = useState('')
+  const legajo=useSelector(state=>state.agente.legajo)
+  const [isOpen,openModal,closeModal] = useModal()
 
+  const handleNewDato=()=>{
+    setTipo('A')
+    openModal()
+  }
+
+  const handleModiDatos =()=>{
+    setTipo('U')
+    openModal()
+  }
 
    if(loading) return <p>Cargando datos .....</p>
    if(error) return <p>Error de Carga</p>
 
 return (
     <div className='container'>
+         
+         <div className='row'>
+          <CabSubTitulo>Datos Principales Agente <button onClick={handleModiDatos} style={{'marginLeft':'10px'}}><FontAwesomeIcon icon={faEdit} /></button></CabSubTitulo>
+        </div>
 
         <div className="row">
              
@@ -46,9 +66,7 @@ return (
             <div className='col-md-4'>
               Area Trabajo<Label> {agente.area}</Label>
             </div>
-
-           
-
+            
          </div>
 
 

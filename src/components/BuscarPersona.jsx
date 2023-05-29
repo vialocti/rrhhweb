@@ -54,7 +54,7 @@ const BuscarPersona = () => {
     useEffect(()=>{
         
         setRutap (`${uri}agente_name/${patronb}`)
-       //  console.log(rutap)
+       //console.log(rutap)
         
 
 

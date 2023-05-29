@@ -127,7 +127,7 @@ const FormularioCargo = () => {
             let pp = document.getElementById('ppal').value.substring(1,3)
             setPpal(pp)
             if(pp==='37'){
-                setCargos(cargospl.filter(cargo=>cargo.ppal==pp && cargo.es==cl && cargo.nv < 20))
+                setCargos(cargospl.filter(cargo=>cargo.ppal==pp && cargo.es==cl && cargo.nv < 21))
             }else{
                 setCargos(cargospl.filter(cargo=>cargo.ppal==pp && cargo.es==cl))
             }

@@ -1,9 +1,9 @@
 import axios from 'axios'
 
-const uri = 'http://200.12.136.74:4000/biometrico/'
-const uric = 'http://200.12.136.74:4000/cargos/'
-//const uri = 'hhtp://localhost:4000/biometrico/'
-//const uric = 'http://localhost:5000/cargos/'
+//const uri = 'http://200.12.136.74:4000/biometrico/'
+//const uric = 'http://200.12.136.74:4000/cargos/'
+const uri = 'hhtp://localhost:5000/biometrico/'
+const uric = 'http://localhost:5000/cargos/'
 
 //datos primarios persona
 export async function datosAgente(legajo) {
@@ -68,8 +68,8 @@ export async function traerAgentes() {
 }
 
 
-
-
+//datos persona principal
+//agregar persona
 
 export async function grabarPersona(persona) {
     //console.log(persona)
@@ -85,7 +85,132 @@ export async function grabarPersona(persona) {
     }
 }
 
+//lugar cod
+export async function traerCodLugar() {
+    try {
+        const rows = await axios.get(`${uric}traerLoc`)
+        return rows.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+//modificar datos persona
 
+export async function modificarPersona(legajo, persona) {
+    //console.log(persona)
+    try {
+
+        const resu = await axios.post(`${uric}modiAgente/:${legajo}`, persona)
+        //console.log(resu.status)
+        return resu.status
+
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+
+//datos personales
+//agregar datos personales
+export async function grabarDatosPer(datosper) {
+    try {
+        const resu = await axios.post(`${uric}addADatosPer`, datosper)
+        return resu.status
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+//modificar datos personales
+
+export async function modificarDatosPer(legajo, datosper) {
+    try {
+        const resu = await axios.put(`${uric}modiADatosPer/${legajo}`, datosper)
+        return resu.status
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+
+//datos contactos
+//agregar datos personales domi
+export async function grabarDatosPerDomi(datosperdomi) {
+
+    try {
+        const resu = await axios.post(`${uric}addADatosCont`, datosperdomi)
+
+        return resu.status
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+//modificar datos personales domi
+
+export async function modificarDatosPerDomi(legajo, datosperdomi) {
+    try {
+        const resu = await axios.put(`${uric}modiADatosCont/${legajo}`, datosperdomi)
+        return resu.status
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+//datos antiguedad
+//agregar datos antiguedad
+export async function grabarDatosAntiguedad(datosperant) {
+    try {
+        const resu = await axios.post(`${uric}addADatosAnt`, datosperant)
+        return resu.status
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+//modificar datos personales domi
+
+export async function modificarDatosAntiguedad(legajo, datosperant) {
+    try {
+        const resu = await axios.put(`${uric}modiADatosAnt/${legajo}`, datosperant)
+        return resu.status
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+//datos familiares
+//agregar datos familiares
+export async function grabarDatosFamiliares(datosfam) {
+    try {
+        const resu = await axios.post(`${uric}addADatosFam`, datosfam)
+        return resu.status
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+//modificar datos familiares
+
+export async function modificarDatosFam(id, datosfam) {
+    try {
+        const resu = await axios.put(`${uric}modiADatosFam/${id}`, datosfam)
+        return resu.status
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+///=============================
+
+
+
+//modificar asistencia persona
 export async function asistenciaPersona(claustro, fechaini, fechafin, legajo) {
     var fecfin = ''
     try {
@@ -107,5 +232,8 @@ export async function asistenciaPersona(claustro, fechaini, fechafin, legajo) {
 
     }
 }
+
+
+
 
 

@@ -158,7 +158,7 @@ const NewAgente = () => {
                 title: 'Informacion Alta Agente',
                 text: 'Datos Basicos Incompletos',
                 icon: 'info',
-                showCancelButton: true,
+                
                 
             });
 

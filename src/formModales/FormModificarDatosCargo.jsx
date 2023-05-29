@@ -48,6 +48,7 @@ const FormModificarDatosCargo = ({dato,funcion, idmat, materias}) => {
 
     
     const buscarMat=(idm)=>{
+      
       let [materia] =materias.filter(materia => materia.id_materia == idm)
       setMatname(materia.materia)
       if(materia.car ===2){
@@ -107,7 +108,9 @@ const FormModificarDatosCargo = ({dato,funcion, idmat, materias}) => {
     //anular cargo
 
     const convertirFecha =(fe)=>{
+      if(fe){
       return fe.substring(6,10) + "-" + fe.substring(3,5) + "-" + fe.substring(0,2)
+      }else{return '2000-01-01'}    
     }
 
     const verificarfechas=(falta,fbajan)=>{

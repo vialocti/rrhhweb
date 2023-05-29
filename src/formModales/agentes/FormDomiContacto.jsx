@@ -1,12 +1,15 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import Swal from 'sweetalert2'
-import InputC from '../elementos/InputComponent'
+import InputC from '../../elementos/InputComponent'
 
-import { FormularioD, LabelF, SelectorV } from '../styles-components/formularios/FormAgente'
-import { Boton, CabTitulo, ContenedorBoton } from '../styles-components/formularios/FormAgente'
+import { FormularioD, LabelF, SelectorV } from '../../styles-components/formularios/FormAgente'
+import { Boton, CabTitulo, ContenedorBoton } from '../../styles-components/formularios/FormAgente'
+import { grabarDatosPerDomi, modificarDatosPerDomi, traerCodLugar } from '../../services/f_axiospersonas'
+//import { useNavigate } from 'react-router-dom'
 
-const FormDomiContacto = ({legajo}) => {
-
+const FormDomiContacto = ({legajo,funcion,tipo,datos}) => {
+    
+    //console.log(tipo, datos)
     const expresiones = {
        domicilio: /^[,a-zA-ZA0-9\s]{1,60}$/, // Letras y espacios, pueden llevar acentos.
        emailp: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
@@ -26,18 +29,81 @@ const FormDomiContacto = ({legajo}) => {
     const [telefonocontacto,setTelefonocontacto] = useState({campo:'', valido:null})
     const [emailp,setEmailp] = useState({campo:'', valido:null})
     const [emaili,setEmaili] = useState({campo:'', valido:null})   
-    const grabarDatosContacto =()=>{
-            const NewdatoContacto ={
-                legajo:legajo,
+    const [lugar, setLugar]= useState([])
+    
+    useEffect(() => {
+         if(datos){
+            setDomicilio({campo:datos.domicilio,valido:'true'})
+            setCpostal({campo:datos.cp,valido:'true'})
+            setTelefono({campo:datos.telefonoFijo,valido:'true'})
+            setTelefonocontacto({campo:datos.telefonocontacto,valido:'true'})
+            setTelefonomovil({campo:datos.telefonoCelular,valido:'true'})
+            setEmaili({campo:datos.emailinstitucional,valido:'true'})
+            setEmailp({campo:datos.emailpersonal,valido:'true'})
+        }else{
+            setDomicilio({campo:'',valido:null})
+            setCpostal({campo:'',valido:null})
+            setTelefono({campo:'',valido:null})
+            setTelefonocontacto({campo:'',valido:null})
+            setTelefonomovil({campo:'',valido:null})
+            setEmaili({campo:'',valido:null})
+            setEmailp({campo:'',valido:null})
+            
+        }
+        const getDatosU =async ()=>{
+       
+        setLugar(await traerCodLugar())
+        }
+    getDatosU()
+    }, [datos])
+    
+
+
+    const grabarDatosContacto =async ()=>{
+           
+        const datosperdomi ={
+                
                 domicilio:domicilio.campo,
-                cpostal:cpostal.campo,
-                telefono:telefono.campo,
-                telefonomovil:telefonomovil.campo,
+                cp:cpostal.campo,
+                localidad:localidad,
+                telefonoFijo:telefono.campo,
+                telefonoCelular:telefonomovil.campo,
+                emailinstitucional:emaili.campo,
+                emailpersonal:emailp.campo,
                 telefonocontacto:telefonocontacto.campo,
-                emailp:emailp.campo,
-                emaili:emaili.campo,
-                loc:localidad
             }
+            //console.log(datosperdomi)
+            let resp=null
+            if (tipo==='A'){
+                datosperdomi.legajo=legajo
+                resp = await grabarDatosPerDomi(datosperdomi)
+            }else{
+                //console.log(datosperdomi)
+                resp = await modificarDatosPerDomi(legajo,datosperdomi)
+            }
+
+            
+            
+            
+            //const resp=400
+        //console.log(resp)
+        if (resp===200){
+            Swal.fire({
+                title: 'Alta Datos Domicilio - Contacto',
+                text: 'Datos Grabados',
+                icon: 'info',
+                                
+            }).then(resultado => {
+                if (resultado.value) {
+                    // Hicieron click en "Sí"
+                    funcion()
+                      
+                    
+                }});
+        
+            
+        }
+
     }
 
     
@@ -48,6 +114,7 @@ const FormDomiContacto = ({legajo}) => {
 
     const onHandleSubmit =(e)=>{
         e.preventDefault()
+        
         if(
             domicilio.valido==='true' && 
             cpostal.valido === 'true' && 
@@ -59,8 +126,9 @@ const FormDomiContacto = ({legajo}) => {
             localidad.length > 0 
             
             )
+        
         {
-         
+         //console.log('vamos')
         grabarDatosContacto()
 
         } else{
@@ -68,7 +136,7 @@ const FormDomiContacto = ({legajo}) => {
                 title: 'Informacion Datos Contacto',
                 text: 'Datos Basicos Incompletos',
                 icon: 'info',
-                showCancelButton: true,
+                
                 
             });
 
@@ -81,9 +149,10 @@ const FormDomiContacto = ({legajo}) => {
 
   return (
     <div className='container mt-2'>
-
-            <CabTitulo>Ingreso Datos Principales de Persona</CabTitulo>
-    
+            {tipo==='A'
+             ?<CabTitulo>Ingreso Datos Domicilio y Contacto</CabTitulo>
+             :<CabTitulo>Modificar Datos Domicilio y Contacto</CabTitulo>
+            }
     <main>
         
         <FormularioD onSubmit={onHandleSubmit}>
@@ -102,11 +171,11 @@ const FormDomiContacto = ({legajo}) => {
             />
             </div>
             <div>
-                <LabelF htmlFor='localidad'>Tipo Documento</LabelF>
+                <LabelF htmlFor='localidad'>Localidad</LabelF>
                 <SelectorV name="localidad" id='localidad' onChange={changeLocalidad}>
-                    <option value="1">ggg</option>
-                    <option value="2">LE</option>
-                    <option value="3">LC</option>
+                    {lugar?lugar.map((ele)=>
+                        <option key={ele.cdln} value={ele.lugar}>{ele.lugar}</option>  
+                    ):<option value='0'>Sin Opciones</option>}
                 </SelectorV>
             </div>
             <div>
@@ -201,8 +270,10 @@ const FormDomiContacto = ({legajo}) => {
           
               
              <ContenedorBoton>
-                <Boton type='submit'>Grabar Datos</Boton>
-                
+                {tipo ==='A'
+                ?<Boton type='submit'>Grabar Datos</Boton>
+                :<Boton type='submit'>Modificar Datos</Boton>
+                }
              </ContenedorBoton>
              </div>
              

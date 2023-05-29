@@ -1,13 +1,32 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useAgenteInfoAntiguedad } from '../../hooks/useAgenteInfoAntiguedad'
 
 
 import { CabSubTitulo} from '../../styles-components/formularios/FormAgente'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEdit } from '@fortawesome/free-regular-svg-icons'
+import { useSelector } from 'react-redux'
+import { useModal } from '../../hooks/useModal'
+import { ModalComponente } from '../ModalComponente'
+import FormAgenteAntiguedad from '../../formModales/agentes/FormAgenteAntiguedad'
 
 const DatosAntiguedad = () => {
+  const [tipo, setTipo] = useState('')
+  const legajo=useSelector(state=>state.agente.legajo)
+  const [isOpen,openModal,closeModal] = useModal()
   
   const {datosAntiguedadAgente,loading,error} = useAgenteInfoAntiguedad()
 
+  const handleNewDato=()=>{
+    setTipo('A')
+    openModal()
+  }
+
+  const handleModiDatos =()=>{
+    setTipo('U')
+    openModal()
+  }
+  
   if(loading) return <p>Cargando datos .....</p>
   if(error) return <p>Error de Carga</p>
   
@@ -16,10 +35,13 @@ const DatosAntiguedad = () => {
     return (
     
         <div className='container-fluid'>
+          <ModalComponente isOpen={isOpen} closeModal={closeModal}>
+             <FormAgenteAntiguedad legajo={legajo} funcion={closeModal} tipo={tipo} datos={datosAntiguedadAgente} />
+          </ModalComponente>
         {datosAntiguedadAgente?
         <>
         <div className='row'>
-          <CabSubTitulo>Datos Antiguedad Reconocida</CabSubTitulo>
+          <CabSubTitulo>Datos Antiguedad Reconocida <button onClick={handleModiDatos} style={{'marginLeft':'10px'}}><FontAwesomeIcon icon={faEdit} /></button></CabSubTitulo>
         </div>
         <div className='row' style={{margin:'10px'}}>
         <table className="table" >
@@ -62,7 +84,7 @@ const DatosAntiguedad = () => {
     :
     <div className='row'>
     <label>Sin Datos de Reconocimeinto de Antiguedad</label>
-    <button className='button'>Agregar</button>
+    <button className='button' onClick={handleNewDato}>Agregar</button>
     </div>
     }          
     </div>

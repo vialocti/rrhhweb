@@ -1,20 +1,30 @@
-import React from 'react'
-import FormDomiContacto from '../../formModales/FormDomiContacto'
+import React,{useState} from 'react'
+
 import {useAgenteInfoDomiConta} from '../../hooks/useAgenteInfoDomiConta'
 import { useModal } from '../../hooks/useModal'
 
 import { CabSubTitulo, Label } from '../../styles-components/formularios/FormAgente'
-import { ModalComponente } from '../ModalComponente'
+import { ModalComponente} from '../ModalComponente'
+import FormDomiContacto from '../../formModales/agentes/FormDomiContacto'
+import { useSelector } from 'react-redux'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEdit } from '@fortawesome/free-regular-svg-icons'
 
 const DatosDomiconta = () => {
-
+  
+  const [tipo, setTipo] = useState('')
+  const legajo=useSelector(state=>state.agente.legajo)
   const [isOpen,openModal,closeModal] = useModal()
   
     const handleNewDato=()=>{
+      setTipo('A')
       openModal()
     }
 
-
+    const handleModiDatos =()=>{
+      setTipo('U')
+      openModal()
+    }
     const {loading,error,datosDomiContaAgente} = useAgenteInfoDomiConta()
    
     if(loading) return <p>Cargando datos .....</p>
@@ -27,14 +37,15 @@ const DatosDomiconta = () => {
     <div className='container-fluid'>
     
     <ModalComponente isOpen={isOpen} closeModal={closeModal}>
-        <FormDomiContacto  />
+        <FormDomiContacto legajo={legajo} funcion={closeModal} tipo={tipo} datos={datosDomiContaAgente}/>
     </ModalComponente>
 
 
     {datosDomiContaAgente?
     <>
     <div className='row'>
-          <CabSubTitulo>Datos de Contacto </CabSubTitulo>
+          <CabSubTitulo>Datos de Contacto <button onClick={handleModiDatos} style={{'marginLeft':'10px'}}><FontAwesomeIcon icon={faEdit} /></button> </CabSubTitulo>
+          
     </div>
 
     <div className="row">
@@ -59,21 +70,23 @@ const DatosDomiconta = () => {
      <div className='row'>
      
      <div className='col-md-2'>
-           Tel.Movil<Label>{datosDomiContaAgente.telefonoCelular}</Label>
+           Telef.Movil<Label>{datosDomiContaAgente.telefonoCelular}</Label>
         </div>
        
         <div className='col-md-2'>
-           Tel.Contacto<Label>{datosDomiContaAgente.telefoncontacto}</Label>
+           Telef.Contacto<Label>{datosDomiContaAgente.telefonocontacto}</Label>
         </div>
             
         <div className='col-md-4'>
         Email Personal<Label>{datosDomiContaAgente.emailpersonal}</Label>
         </div>
         <div className='col-md-4'>
-        Email Institu.<Label>{datosDomiContaAgente.emailinstitucional}</Label>
+        Email Institucional<Label>{datosDomiContaAgente.emailinstitucional}</Label>
         </div>
+          
+       <div className="row">
        
-
+       </div>
      </div>
      </>
      :
