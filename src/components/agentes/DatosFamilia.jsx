@@ -8,7 +8,7 @@ import { ModalComponente } from '../ModalComponente'
 import FormDatosFamilia from '../../formModales/agentes/FormDatosFamilia'
 import { useSelector } from 'react-redux'
 import { useModal } from '../../hooks/useModal'
-import { faAdd } from '@fortawesome/free-solid-svg-icons'
+//import { faAdd } from '@fortawesome/free-solid-svg-icons'
 
 const DatosFamilia = () => {
   const legajo=useSelector(state=>state.agente.legajo)
@@ -17,7 +17,7 @@ const DatosFamilia = () => {
   const {datosFamiliaAgente,loading,error} = useAgenteInfoFamilia()
 
   const[tipo, setTipo]= useState('')
-
+  const [datosFamiliar,setDatoFamiliar]=useState([])
 
   if(loading) return <p>Cargando datos .....</p>
   if(error) return <p>Error de Carga</p>
@@ -32,7 +32,8 @@ const DatosFamilia = () => {
     openModal()
   }
 
-  const handleModiDatos =()=>{
+  const handleModiDatos =(index)=>{
+    setDatoFamiliar(datosFamiliaAgente[index])
     setTipo('U')
     openModal()
   }
@@ -41,7 +42,7 @@ const DatosFamilia = () => {
     
         <div className='container-fluid'>
           <ModalComponente isOpen={isOpen} closeModal={closeModal}>
-            <FormDatosFamilia legajo={legajo} funcion={closeModal} tipo={tipo} datos={datosFamiliaAgente} />
+            <FormDatosFamilia legajo={legajo} funcion={closeModal} tipo={tipo} datos={datosFamiliar} />
           </ModalComponente>
         {datosFamiliaAgente.length > 0?
         <>
@@ -71,7 +72,7 @@ const DatosFamilia = () => {
                         <td>{ele.tdoc?ele.tdoc:'Sin dato'}</td>
                         <td>{ele.nrodoc?ele.nrodoc:'Sin dato'}</td>
                         <td>{ele.fechanac?convertir(ele.fechanac):'Sin dato'}</td>
-                       <td><button onClick={handleModiDatos}><FontAwesomeIcon icon={faEdit} /></button></td>
+                       <td><button onClick={()=>{handleModiDatos(index)}}><FontAwesomeIcon icon={faEdit} /></button></td>
                     </tr>
                 )}
             </tbody> 

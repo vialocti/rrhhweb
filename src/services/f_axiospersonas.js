@@ -100,7 +100,7 @@ export async function modificarPersona(legajo, persona) {
     //console.log(persona)
     try {
 
-        const resu = await axios.post(`${uric}modiAgente/:${legajo}`, persona)
+        const resu = await axios.put(`${uric}modiAgente/${legajo}`, persona)
         //console.log(resu.status)
         return resu.status
 
@@ -172,7 +172,7 @@ export async function grabarDatosAntiguedad(datosperant) {
     }
 }
 
-//modificar datos personales domi
+//modificar datos antig
 
 export async function modificarDatosAntiguedad(legajo, datosperant) {
     try {
@@ -186,7 +186,7 @@ export async function modificarDatosAntiguedad(legajo, datosperant) {
 
 //datos familiares
 //agregar datos familiares
-export async function grabarDatosFamiliares(datosfam) {
+export async function grabarDatosFamiliar(datosfam) {
     try {
         const resu = await axios.post(`${uric}addADatosFam`, datosfam)
         return resu.status
@@ -197,7 +197,7 @@ export async function grabarDatosFamiliares(datosfam) {
 
 //modificar datos familiares
 
-export async function modificarDatosFam(id, datosfam) {
+export async function modificarDatosFamiliar(id, datosfam) {
     try {
         const resu = await axios.put(`${uric}modiADatosFam/${id}`, datosfam)
         return resu.status

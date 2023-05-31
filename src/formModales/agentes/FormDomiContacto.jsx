@@ -11,7 +11,8 @@ const FormDomiContacto = ({legajo,funcion,tipo,datos}) => {
     
     //console.log(tipo, datos)
     const expresiones = {
-       domicilio: /^[,a-zA-ZA0-9\s]{1,60}$/, // Letras y espacios, pueden llevar acentos.
+       domicilio: /^[,a-zA-ZA0-9_.:áéíóú-\s]{1,60}$/, // Letras y espacios, pueden llevar acentos.
+       localidad:/^[,a-zA-ZA0-9_.:áéíóú\s-]{1,60}$/,
        emailp: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
        emaili: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
        telefono: /^\d{6,16}$/, // 7 a 16 numeros.
@@ -21,7 +22,7 @@ const FormDomiContacto = ({legajo,funcion,tipo,datos}) => {
        
     }
 
-    const [localidad, setLocalidad]= useState('')
+    const [localidad, setLocalidad]= useState({campo:'', valido:null})
     const [domicilio, setDomicilio] = useState({campo:'', valido:null})
     const [cpostal,setCpostal] = useState({campo:'', valido:null})
     const [telefono,setTelefono] = useState({campo:'', valido:null})
@@ -29,7 +30,7 @@ const FormDomiContacto = ({legajo,funcion,tipo,datos}) => {
     const [telefonocontacto,setTelefonocontacto] = useState({campo:'', valido:null})
     const [emailp,setEmailp] = useState({campo:'', valido:null})
     const [emaili,setEmaili] = useState({campo:'', valido:null})   
-    const [lugar, setLugar]= useState([])
+    
     
     useEffect(() => {
          if(datos){
@@ -40,7 +41,9 @@ const FormDomiContacto = ({legajo,funcion,tipo,datos}) => {
             setTelefonomovil({campo:datos.telefonoCelular,valido:'true'})
             setEmaili({campo:datos.emailinstitucional,valido:'true'})
             setEmailp({campo:datos.emailpersonal,valido:'true'})
-        }else{
+            setLocalidad({campo:datos.localidad,valido:'true'})
+        }
+        if (tipo==='A'){
             setDomicilio({campo:'',valido:null})
             setCpostal({campo:'',valido:null})
             setTelefono({campo:'',valido:null})
@@ -50,12 +53,8 @@ const FormDomiContacto = ({legajo,funcion,tipo,datos}) => {
             setEmailp({campo:'',valido:null})
             
         }
-        const getDatosU =async ()=>{
-       
-        setLugar(await traerCodLugar())
-        }
-    getDatosU()
-    }, [datos])
+        
+    }, [datos,tipo])
     
 
 
@@ -65,7 +64,7 @@ const FormDomiContacto = ({legajo,funcion,tipo,datos}) => {
                 
                 domicilio:domicilio.campo,
                 cp:cpostal.campo,
-                localidad:localidad,
+                localidad:localidad.campo,
                 telefonoFijo:telefono.campo,
                 telefonoCelular:telefonomovil.campo,
                 emailinstitucional:emaili.campo,
@@ -107,9 +106,9 @@ const FormDomiContacto = ({legajo,funcion,tipo,datos}) => {
     }
 
     
-    const changeLocalidad =()=>{
-        setLocalidad(document.getElementById('localidad').value)
-    }
+   // const changeLocalidad =()=>{
+   //     setLocalidad(document.getElementById('localidad').value)
+   // }
 
 
     const onHandleSubmit =(e)=>{
@@ -123,7 +122,7 @@ const FormDomiContacto = ({legajo,funcion,tipo,datos}) => {
             telefono.valido === 'true' &&
             telefonomovil.valido === 'true' &&
             telefonocontacto.valido === 'true' &&
-            localidad.length > 0 
+            localidad.valido ==='true'
             
             )
         
@@ -171,12 +170,18 @@ const FormDomiContacto = ({legajo,funcion,tipo,datos}) => {
             />
             </div>
             <div>
-                <LabelF htmlFor='localidad'>Localidad</LabelF>
-                <SelectorV name="localidad" id='localidad' onChange={changeLocalidad}>
-                    {lugar?lugar.map((ele)=>
-                        <option key={ele.cdln} value={ele.lugar}>{ele.lugar}</option>  
-                    ):<option value='0'>Sin Opciones</option>}
-                </SelectorV>
+            
+            <InputC 
+                tipo='text'
+                name='localidad'
+                infoplace='Ingrese Localidad'
+                estado={localidad}
+                cambiarEstado={setLocalidad}
+                label='Localidad'
+                leyendaErr='solo texto'
+                expreg={expresiones.localidad}
+             
+            />
             </div>
             <div>
             <InputC 

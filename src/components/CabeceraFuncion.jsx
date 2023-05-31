@@ -13,7 +13,7 @@ return (
     <div className='container-fluid'>
        
        <CabTitulo>{titulo}</CabTitulo>
-      <CabTituloAgente>Colaborador:{nombre}, Legajo:{legajo}</CabTituloAgente>
+      <CabTituloAgente>Colaborador:{nombre} - Legajo:{legajo}</CabTituloAgente>
       
 
    </div>

@@ -2,6 +2,7 @@ import React,{useState,useEffect} from 'react'
 import Swal from 'sweetalert2'
 import { Boton, CabTitulo, ContenedorBoton, FormularioD } from '../../styles-components/formularios/FormAgente'
 import InputC from '../../elementos/InputComponent'
+import { grabarDatosAntiguedad, modificarDatosAntiguedad } from '../../services/f_axiospersonas'
 
 const FormAgenteAntiguedad = ({legajo,funcion,tipo,datos}) => {
 
@@ -14,8 +15,8 @@ const FormAgenteAntiguedad = ({legajo,funcion,tipo,datos}) => {
     fecharnd:/^\d{4}([-/.])(0?[1-9]|1[0-1-2])\1(3[01]|[12][0-9]|0?[1-9])$/,
     aniord:/^[1-9]{1,2}$/,
     mesrd:/^[0-9]{1,2}$/,
-    diard:/^[1-9]{1,2}$/,
-    aniornd:/^[1-9]{1,2}$/,
+    diard:/^[0-9]{1,2}$/,
+    aniornd:/^[0-9]{1,2}$/,
     mesrnd:/^[0-9]{1,2}$/,
     diarnd:/^[1-9]{1,2}$/,
  
@@ -23,23 +24,37 @@ const FormAgenteAntiguedad = ({legajo,funcion,tipo,datos}) => {
 
 
 
-  const [fechard, setFechard] = useState({campo:'', valido:null})
-  const [fecharnd, setFecharnd] = useState({campo:'', valido:null})
-  const [nroresord, setNroResord] = useState({campo:'', valido:null})
-  const [nroresornd, setNroResornd] = useState({campo:'', valido:null})
-  const [aniord, setAniord] = useState({campo:'', valido:null})
-  const [aniornd, setAniornd] = useState({campo:'', valido:null})
-  const [mesrd, setMesrd] = useState({campo:'', valido:null})
-  const [mesrnd, setMesrnd] = useState({campo:'', valido:null})
-  const [diard, setDiard] = useState({campo:'', valido:null})
-  const [diarnd, setDiarnd] = useState({campo:'', valido:null})
+  const [fechard, setFechard] = useState({campo:'', valido:'true'})
+  const [fecharnd, setFecharnd] = useState({campo:'', valido:'true'})
+  const [nroresord, setNroResord] = useState({campo:'', valido:'true'})
+  const [nroresornd, setNroResornd] = useState({campo:'', valido:'true'})
+  const [aniord, setAniord] = useState({campo:'', valido:'true'})
+  const [aniornd, setAniornd] = useState({campo:'', valido:'true'})
+  const [mesrd, setMesrd] = useState({campo:'', valido:'true'})
+  const [mesrnd, setMesrnd] = useState({campo:'', valido:'true'})
+  const [diard, setDiard] = useState({campo:'', valido:'true'})
+  const [diarnd, setDiarnd] = useState({campo:'', valido:'true'})
+
 
 
  useEffect(() => {
+    setFechard({campo:'',valido:'true'})
+    setFecharnd({campo:'',valido:'true'})
+    setNroResord({campo:'',valido:'true'})
+    setNroResornd({campo:'',valido:'true'})
+    setAniord({campo:'',valido:'true'})
+    setAniornd({campo:'',valido:'true'})
+    setMesrd({campo:'',valido:'true'})
+    setMesrnd({campo:'',valido:'true'})
+    setDiard({campo:'',valido:'true'})
+    setDiarnd({campo:'',valido:'true'})
+ }, [])
+  
+ useEffect(() => {
  
   if(datos){
-    setFechard({campo:datos.fechardoc,valido:'true'})
-    setFecharnd({campo:datos.fecharndoc,valido:'true'})
+    setFechard({campo:datos.fechardoc?convertirFecha(datos.fechardoc):'',valido:'true'})
+    setFecharnd({campo:datos.fecharndoc?convertirFecha(datos.fecharndoc):'',valido:'true'})
     setNroResord({campo:datos.nresd,valido:'true'})
     setNroResornd({campo:datos.nresnd,valido:'true'})
     setAniord({campo:datos.aad,valido:'true'})
@@ -48,34 +63,86 @@ const FormAgenteAntiguedad = ({legajo,funcion,tipo,datos}) => {
     setMesrnd({campo:datos.mand,valido:'true'})
     setDiard({campo:datos.dad,valido:'true'})
     setDiarnd({campo:datos.dand,valido:'true'})
-  }else{
-    setFechard({campo:'',valido:null})
-    setFecharnd({campo:'',valido:null})
-    setNroResord({campo:'',valido:null})
-    setNroResornd({campo:'',valido:null})
-    setAniord({campo:'',valido:null})
-    setAniornd({campo:'',valido:null})
-    setMesrd({campo:'',valido:null})
-    setMesrnd({campo:'',valido:null})
-    setDiard({campo:'',valido:null})
-    setDiarnd({campo:'',valido:null})
-    
+  }
+
+  if(tipo==='A'){
+   setFechard({campo:'',valido:'true'})
+    setFecharnd({campo:'',valido:'true'})
+    setNroResord({campo:'',valido:'true'})
+    setNroResornd({campo:'',valido:'true'})
+    setAniord({campo:'',valido:'true'})
+    setAniornd({campo:'',valido:'true'})
+    setMesrd({campo:'',valido:'true'})
+    setMesrnd({campo:'',valido:'true'})
+    setDiard({campo:'',valido:'true'})
+    setDiarnd({campo:'',valido:'true'})
   }
    
+  
     
-   
- }, [datos])
+  }, [datos,tipo])
  
+ const convertirFecha =(fe)=>{
+    if(fe){
+    return fe.substring(6,10) + "-" + fe.substring(3,5) + "-" + fe.substring(0,2)
+    }else{return ''}    
+  }
 
+const grabarDatosAntiguedadx =async ()=>{
+ 
+ 
+    const datosperant ={
+        fechrecd:fechard.campo===''?null:fechard.campo,
+        fechrecnd:fecharnd.campo===''?null:fecharnd.campo,
+        nresd:nroresord.campo,
+        nresnd:nroresornd.campo,
+        aad:aniord.campo,
+        aand:aniornd.campo,
+        mad:mesrd.campo,
+        mand:mesrnd.campo,
+        dad:diard.campo,
+        dand:diarnd.campo
+    }
 
-   const grabarDatosAntiguedad =async ()=>{
-    console.log(datos)
-   }
+    let resp=null
+    if (tipo==='A'){
+        datosperant.legajo=legajo
+        resp = await grabarDatosAntiguedad(datosperant)
+    }else{
+        
+        resp = await modificarDatosAntiguedad(legajo,datosperant)
+    }
+   console.log(datosperant)
+    
+    //const resp=400
+//console.log(resp)
+if (resp===200){
+    Swal.fire({
+        title: 'Datos Reconoc. Antiguedad Grabados',
+        text: 'Datos Grabados',
+        icon: 'info',
+                        
+    }).then(resultado => {
+        if (resultado.value) {
+            // Hicieron click en "Sí"
+            funcion()
+              
+            
+        }});
+
+    
+}
+
+}
 
 
   //pulsamos boton agregar o modificar
   const onHandleSubmit =(e)=>{
+    
     e.preventDefault()
+    grabarDatosAntiguedadx()
+    /*
+    
     if(
         fechard.valido==='true' && 
         fecharnd.valido === 'true' &&
@@ -86,12 +153,12 @@ const FormAgenteAntiguedad = ({legajo,funcion,tipo,datos}) => {
         mesrd.valido === 'true' &&
         mesrnd.valido === 'true' &&
         diard.valido === 'true' &&
-        diarnd.length > 0 
+        diarnd.valido === 'true' 
         
         )
     {
      //console.log('vamos')
-    grabarDatosAntiguedad()
+    
 
     } else{
         Swal.fire({
@@ -105,7 +172,7 @@ const FormAgenteAntiguedad = ({legajo,funcion,tipo,datos}) => {
         
         
     }
-   
+   */
 }
 
 
@@ -164,28 +231,28 @@ return (
            
       </div>
     
-    <div style={{width:'250px',marginRight:'5px'}}>
+    <div style={{width:'180px'}}>
     <InputC 
         tipo='text'
         name='fechard'
         infoplace='Ingrese Fecha '
         estado={fechard}
         cambiarEstado={setFechard}
-        label='Doc:Fecha Acreditación.'
-        leyendaErr='El debe ser numerico sin puntos'
+        label='Doc:Fecha Acredit.'
+        leyendaErr='la fecha tiene que tener un formato como 2000-08-26'
         expreg={expresiones.fechard}
      
     />
     </div>
 
-    <div style={{width:'250px',marginRight:'5px'}}>
+    <div style={{width:'180px'}}>
      <InputC 
         tipo='text'
         name='nroresord'
         infoplace='Ingrese Nro Resolución'
         estado={nroresord}
         cambiarEstado={setNroResord}
-        label='Doc:Nro Resolución. '
+        label='Doc:Nro Resolución'
         leyendaErr=''
         expreg={expresiones.nroresord}
      
@@ -207,7 +274,7 @@ return (
                />       
                </div>
     
-               <div style={{width:'170px',marginRight:'5px'}}> 
+               <div style={{width:'170px',marginRight:'10px'}}> 
                <InputC 
                    tipo='text'
                    name='mesrnd'
@@ -220,7 +287,7 @@ return (
                />       
                </div>
     
-               <div style={{width:'170px',marginRight:'5px'}}> 
+               <div style={{width:'170px'}}> 
                <InputC 
                    tipo='text'
                    name='diarnd'
@@ -235,28 +302,28 @@ return (
                
           </div>
         
-        <div style={{width:'250px'}}>
+        <div style={{width:'180px'}}>
         <InputC 
             tipo='text'
             name='fecharnd'
             infoplace='Ingrese Fecha '
             estado={fecharnd}
             cambiarEstado={setFecharnd}
-            label='NDoc:Fecha Acreditacion'
-            leyendaErr='El debe ser numerico sin puntos'
+            label='NDoc:Fecha Acredit.'
+            leyendaErr='la fecha tiene que tener un formato como 2000-08-14'
             expreg={expresiones.fecharnd}
          
         />
         </div>
     
-        <div style={{width:'250px'}}>
+        <div style={{width:'180px'}}>
          <InputC 
             tipo='text'
             name='nroresornd'
             infoplace='Ingrese Nro Resolucion'
             estado={nroresornd}
             cambiarEstado={setNroResornd}
-            label='NDoc:Nro Resolución.'
+            label='NDoc:Nro Resolución'
             leyendaErr='El nro '
             expreg={expresiones.nroresornd}
          

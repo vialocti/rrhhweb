@@ -61,14 +61,18 @@ const DatosPersonales = () => {
                 Grupo y Factor Sanguineo<Label>{datosAgente.gs}{datosAgente.rh}</Label>
               </div>
           </div>
-          <div className="row">  
+          <div className="row">
+
             <div className='col-md-2'>
-              Ingreso FCE.<Label>{datosAgente.fechaIFCE}</Label>
+              Estado Civil<Label>{datosAgente.ecivil}</Label>
+            </div>  
+            <div className='col-md-2'>
+              Ingreso FCE<Label>{datosAgente.fechaIFCE}</Label>
             </div>
           
             
             <div className='col-md-2'>
-            Ingreso Uncu<Label>{datosAgente.fechaIUNC}</Label>
+            Ingreso UNcuyo<Label>{datosAgente.fechaIUNC}</Label>
             </div>
 
                       

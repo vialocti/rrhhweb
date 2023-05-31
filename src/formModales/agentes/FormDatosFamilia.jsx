@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Boton, CabTitulo, ContenedorBoton, FormularioD, LabelF, SelectorV } from '../../styles-components/formularios/FormAgente'
 import InputC from '../../elementos/InputComponent'
+import Swal from 'sweetalert2'
+import {modificarDatosFamiliar, grabarDatosFamiliar } from '../../services/f_axiospersonas'
 
 const FormDatosFamilia = ({legajo,funcion,tipo,datos}) => {
   const expresiones={
@@ -13,25 +15,128 @@ const FormDatosFamilia = ({legajo,funcion,tipo,datos}) => {
   const [nombre, setNombre]=useState({campo:'', valido:null})
   const [fechanac, setFechanac]=useState({campo:'', valido:null})
   const [nrodoc, setNrodoc]=useState({campo:'', valido:null})
-  const [datosFamilia, setDatosFamilia]=useState(null)
+  const [tdoc, setTdoc]=useState('1')
+  const [vinculo,setVinculo]=useState('1')
+  //const [datosFamilia, setDatosFamilia]=useState(null)
+
 
   useEffect(() => {
+    setNombre({campo:'',valido:null})
+    setFechanac({campo:'',valido:null})
+    setNrodoc({campo:'',valido:null})
+    setTdoc(datos.tdoc)
+    setVinculo(datos.vinculo)
+  }, [])
+  
+  //console.log(datos)
+  useEffect(() => {
     if(datos){
+      setNombre({campo:datos.nombre,valido:'true'})
+      setFechanac({campo:datos.fechanac?convertir(datos.fechanac):'2000-01-01',valido:'true'})
+      setNrodoc({campo:datos.nrodoc,valido:'true'})
+      setVinculo(datos.vinculo)
+      setTdoc(datos.tdoc)
+    }else{
       
+      setNombre({campo:'',valido:null})
+      setFechanac({campo:'',valido:null})
+      setNrodoc({campo:'',valido:null})
+      setTdoc(datos.tdoc)
+      setVinculo(datos.vinculo)
     }
   
+    if(tipo==='A'){
+      setNombre({campo:'',valido:null})
+      setFechanac({campo:'',valido:null})
+      setNrodoc({campo:'',valido:null})
+      setTdoc(datos.tdoc)
+      setVinculo(datos.vinculo)}
+
+  }, [datos,tipo])
+
+  const convertir=(fecha)=>{
+    return fecha.substring(0,10)
+  }
+
+  const grabarDatosFamiliarx =async ()=>{
+
+    const datosfamiliar={
+      tdoc:tdoc,
+      vinculo:vinculo,
+      nrodoc:nrodoc.campo,
+      nombre:nombre.campo,
+      fechanac:fechanac.campo
+
+    }
+
+    let resp=null
+    if (tipo==='A'){
+        datosfamiliar.legajo=legajo
+        resp = await grabarDatosFamiliar (datosfamiliar)
+    }else{
+        //console.log(datosperdomi)
+        resp = await modificarDatosFamiliar(datos.id,datosfamiliar)
+    }
+   
     
-  }, [datos])
+    //const resp=400
+//console.log(resp)
+if (resp===200){
+    Swal.fire({
+        title: 'Datos Familiar Grabados',
+        text: 'Datos Grabados',
+        icon: 'info',
+                        
+    }).then(resultado => {
+        if (resultado.value) {
+            // Hicieron click en "Sí"
+            funcion()
+              
+            
+        }});
+
+    
+}
+
+  }
 
   
   const onHandleSubmit =(e)=>{
-    e.preventDefault()
+    
+        e.preventDefault()
+        if(
+            nombre.valido==='true' && 
+            nrodoc.valido === 'true' && 
+            fechanac.valido === 'true'
+                        
+            )
+        
+        {
+         //console.log('vamos')
+        grabarDatosFamiliarx()
+
+        } else{
+            Swal.fire({
+                title: 'Informacion Datos Familiar',
+                text: 'Datos Basicos Incompletos',
+                icon: 'info',
+                
+                
+            });
+
+            
+            
+        }
   }
 
-
-  const onHandleChange =(event)=>{
-
+  const onHandleChangeTD =()=>{
+    setTdoc(document.getElementById('tdoc').value)
   }
+
+  const onHandleChangePR =()=>{
+    setVinculo(document.getElementById('vinculo').value)
+  }
+
 
   return (
     <div className='container mt-2'>
@@ -59,7 +164,7 @@ const FormDatosFamilia = ({legajo,funcion,tipo,datos}) => {
           
           <div>
           <LabelF htmlFor='tipodoc'>Tipo Documento</LabelF>
-                <SelectorV name="tipodoc" id='tipodoc' onChange={onHandleChange}>
+                <SelectorV name="tdoc" id='tdoc' value={tdoc} onChange={onHandleChangeTD}>
                     <option value="1">DNI</option>
                     <option value="2">LE</option>
                     <option value="3">LC</option>
@@ -68,10 +173,11 @@ const FormDatosFamilia = ({legajo,funcion,tipo,datos}) => {
 
           <div>
           <LabelF htmlFor='vinculo'>Parentesco</LabelF>
-                <SelectorV name="vinculo" id='vinculo' onChange={onHandleChange}>
-                    <option value="1">Conyuge</option>
-                    <option value="2">Hijo</option>
-                    <option value="3">Hija</option>
+                <SelectorV name="vinculo" id='vinculo' value={vinculo} onChange={onHandleChangePR}>
+                    <option value="1">Esposo</option>
+                    <option value="2">Esposa</option>
+                    <option value="3">Hijo</option>
+                    <option value="4">Hija</option>
                 </SelectorV>
           </div>
 

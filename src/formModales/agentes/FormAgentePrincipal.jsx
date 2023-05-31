@@ -1,28 +1,24 @@
-import React,{useState} from 'react'
-import { Boton, CabTitulo, ContenedorBoton, Formulario,LabelF,SelectorV} from '../../styles-components/formularios/FormAgente'
-//import '../../css/estilosform.css'
-import InputC from '../../elementos/InputComponent'
-import axios from 'axios'
-import { grabarPersona } from '../../services/f_axiospersonas'
-import { useNavigate } from 'react-router-dom'
-//import { ModalComponente } from '../../components/ModalComponente'
-//import { useModal } from '../../hooks/useModal'
-//const uric = 'http://200.12.136.74:4000/cargos/'
-import Swal from 'sweetalert2'
+import React,{useState,useEffect} from 'react'
 
-const NewAgente = () => {
-    const uri = 'http://200.12.136.74:4000/biometrico/'
+import { Boton, CabTitulo, ContenedorBoton, FormularioD, LabelF, SelectorV } from '../../styles-components/formularios/FormAgente'
+import InputC from '../../elementos/InputComponent'
+import Swal from 'sweetalert2'
+import { modificarPersona } from '../../services/f_axiospersonas'
+
+const FormAgentePrincipal = ({funcion,datos}) => {
+    //legajo,tipodocumento,nrodocumento,apellido,condicion,nrocuil,area,sede
+    console.log(datos)
     const expresiones = {
         //usuario: /^[a-zA-Z0-9\_\-]{4,16}$/, // Letras, numeros, guion y guion_bajo
         nombre: /^[,a-zA-ZÀ-ÿ\s]{1,50}$/, // Letras y espacios, pueden llevar acentos.
-        password: /^.{4,12}$/, // 4 a 12 digitos.
-        correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-        telefono: /^\d{7,14}$/, // 7 a 14 numeros.
+        //password: /^.{4,12}$/, // 4 a 12 digitos.
+        //correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+        //telefono: /^\d{7,14}$/, // 7 a 14 numeros.
         legajo: /^\d{4,8}$/,
         nrodoc: /^\d{7,9}$/,
         nrocuil: /^\d{10,11}$/,
 
-        fecha:/^\d{4}([-/.])(0?[1-9]|1[0-1-2])\1(3[01]|[12][0-9]|0?[1-9])$/,
+        //fecha:/^\d{4}([-/.])(0?[1-9]|1[0-1-2])\1(3[01]|[12][0-9]|0?[1-9])$/,
     }
     
 
@@ -31,152 +27,127 @@ const NewAgente = () => {
    const [nrodoc, setNrodoc] = useState({campo:'', valido:null})
    const [nrocuil, setNrocuil] = useState({campo:'', valido:null})
    const [nombre, setNombre] = useState({campo:'', valido:null})
-   const [area, setArea] = useState('Docente')
+   const [area, setArea] = useState('Docentes')
    const [sede, setSede] = useState('1')
    const [tipod, setTipod] = useState('1')
-   const [claustro, setClaustro] = useState('1') 
-   
-   const navigate = useNavigate()
+   const [claustro, setClaustro] = useState('1')
 
-  
-  
-    const mostrarDatos =async(persona)=>{
-        //console.log(persona)
-        let ok = await grabarPersona(persona)
-        if (ok='200'){
-            Swal.fire({
-                title: 'Alta Agente',
-                text: 'Datos Grabados',
-                icon: 'info',
-                
-                
 
-                
-            }).then(resultado => {
-                if (resultado.value) {
-                    // Hicieron click en "Sí"
-                    navigate('/')
-                      
-                    
-                }});
-        
-            
-        } 
-    }
-
-    const existeLegajo =async ()=>{
-        if(legajo.campo.length>0){
-            const res = await axios.get(`${uri}agente_leg/${legajo.campo}`)
-            if (res.data.length !== 0 ){
-                    setLegajo((prevState)=>{
-                    return {...prevState, valido:'false'}
-                })
-           
-            }
-        }
-    }
-  
-
-    const changeTD=()=>{
-        setTipod(document.getElementById('tipodoc').value)
-    }
-
-    const changeSede =()=>{
-        setSede(document.getElementById('sede').value)
-    }
-
-    const changeArea =()=>{
-        setArea(document.getElementById('area').value)
-    }
-  
-    const changeClaustro =()=>{
-        setClaustro(document.getElementById('claustro').value)
-    }
 
    
 
 
+   useEffect(() => {
+     
+    if(datos){
+        setLegajo({campo:datos.legajo, valido:'true'})
+        setNombre({campo:datos.apellido, valido:'true'})
+        setNrocuil({campo:datos.nrocuil, valido:'true'})
+        setNrodoc({campo:datos.nrodocumento, valido:'true'})
+        setArea(datos.area)
+        setClaustro(datos.condicion)
+        setSede(datos.sede)
+        setTipod(datos.tipodocumento)
+    }
+   
+     
+   }, [datos])
+   
 
-   const grabarDatos =()=>{
 
+   const grabarDatosAgentePrincipal = async ()=>{
 
-        let persona={
-            legajo:legajo.campo,
-            tipodoc:tipod,
-            nrodoc:nrodoc.campo,
-            nombre:nombre.campo,
-            sede:sede,
-            claustro:claustro,
-            nrocuil:nrocuil.campo,
-            area:area
-            
-        }
-       
-        Swal
-        .fire({
-            title: `Nuevo Agente:${persona.legajo}`,
-            text: `¿Grabar a ${persona.nombre}?`,
-            icon: 'info',
-            showCancelButton: true,
-            confirmButtonText: "Sí, Grabar",
-            cancelButtonText: "Cancelar",
-        })
-        .then(resultado => {
-            if (resultado.value) {
-                // Hicieron click en "Sí"
-                //console.log(persona)
-                mostrarDatos(persona)
-                  
+    const persona ={
                 
-            } else {
-                // Dijeron que no
-                
-                
-            }
-        });
-         
+        nrodocumento:nrodoc.campo,
+        tipodocumento:tipod,
+        nrocuil:nrocuil.campo,
+        apellido:nombre.campo,
+        condicion:claustro,
+        sede:sede,
+        area:area,
         
-         
     }
     
+    let resp = await modificarPersona(legajo.campo,persona)
+    
+ 
+    //const resp=400
+//console.log(resp)
+if (resp===200){
+    Swal.fire({
+        title: 'Datos Principales Grabados',
+        text: 'Datos Grabados',
+        icon: 'info',
+                        
+    }).then(resultado => {
+        if (resultado.value) {
+            // Hicieron click en "Sí"
+            funcion()
+                        
+        }});
+  
+}
+
+
+   }
+
+   const onHandleChangeTD =()=>{
+        setTipod(document.getElementById('tipod').value)
+   }
+
+   const onHandleChangeSE =()=>{
+        setSede(document.getElementById('sede').value)
+   }
+
+   const onHandleChangeAR =()=>{
+    setArea(document.getElementById('area').value)
+   }
+
+   const onHandleChangeCL =()=>{
+    setClaustro(document.getElementById('claustro').value)
+   }
+
 
 
    const onHandleSubmit =(e)=>{
-        e.preventDefault()
-        if(
-            legajo.valido==='true' && 
-            nombre.valido === 'true' && 
-            nrodoc.valido === 'true' 
-            
-            )
-        {
-         
-        grabarDatos()
-
-        } else{
-            Swal.fire({
-                title: 'Informacion Alta Agente',
-                text: 'Datos Basicos Incompletos',
-                icon: 'info',
-                
-                
-            });
-
-            
-            
-        }
+           e.preventDefault()
        
+    if(
+        nrocuil.valido==='true' && 
+        nrodoc.valido === 'true' && 
+        nombre.valido === 'true' 
+        
+        )
+     {
+     
+   grabarDatosAgentePrincipal()
+
+    } else{
+        Swal.fire({
+            title: 'Informacion Datos Principales',
+            text: 'Datos Basicos Incompletos',
+            icon: 'info'
+            
+            
+        });
+
+            
+    }
+
+
    }
 
    return (
-    <div className='container mt-2'>
-
-            <CabTitulo>Ingreso Datos Principales de Persona</CabTitulo>
-    
-    <main>
+    <div className="container mt-2">
         
-        <Formulario onSubmit={onHandleSubmit}>
-           <div>
+            <CabTitulo>Modificar Datos Principales </CabTitulo>
+          
+
+
+        <div className="main">
+            <FormularioD onSubmit={onHandleSubmit}>
+            <div>
             <InputC 
                 tipo='text'
                 name='legajo'
@@ -186,13 +157,13 @@ const NewAgente = () => {
                 label='Legajo'
                 leyendaErr='Existe Legajo Ó El legajo debe ser numerico'
                 expreg={expresiones.legajo}
-                funcion={existeLegajo}
+                
                
             />
             </div>
             <div>
-                <LabelF htmlFor='tipodoc'>Tipo Documento</LabelF>
-                <SelectorV name="tipodoc" id='tipodoc' onChange={changeTD}>
+                <LabelF htmlFor='tipod'>Tipo Documento</LabelF>
+                <SelectorV name="tipod" id='tipod' value={tipod} onChange={onHandleChangeTD}>
                     <option value="1">DNI</option>
                     <option value="2">LE</option>
                     <option value="3">LC</option>
@@ -240,7 +211,7 @@ const NewAgente = () => {
 
                 <div>
                 <LabelF htmlFor='claustro'>Claustro</LabelF>
-                    <SelectorV name="claustro" id='claustro' onChange={changeClaustro}>
+                    <SelectorV name="claustro" id='claustro' value={claustro} onChange={onHandleChangeCL}>
                         <option value="1">Docente</option>
                         <option value="2">No Docente</option>
                         <option value="3">Ambos</option>
@@ -249,7 +220,7 @@ const NewAgente = () => {
                
                 <div>
                 <LabelF htmlFor='sede'>Sede Ingreso</LabelF>
-                <SelectorV name="sede" id='sede' onChange={changeSede}>
+                <SelectorV name="sede" id='sede' value={sede} onChange={onHandleChangeSE}>
                         <option value="1">Sede Mendoza</option>
                         <option value="2">Sede San Rafael</option>
                         <option value="3">Sede Gral.Alvear</option>
@@ -259,7 +230,7 @@ const NewAgente = () => {
               
                 <div>
                 <LabelF htmlFor='area'>Area Trabajo</LabelF>
-                    <SelectorV name="area" id='area' onChange={changeArea}>
+                    <SelectorV name="area" id='area' value={area} onChange={onHandleChangeAR}>
                          <option value="">AREA TRABAJO</option>
                         <option value="Docentes">Docentes</option>
                         <option value="Carrera_Licenciatura_en_Administracion">Carrera Licenciatura en  Administracion</option>
@@ -292,20 +263,19 @@ const NewAgente = () => {
 
             
                 <div>
-                            
-          
-              
-             <ContenedorBoton>
-                <Boton type='submit'>Enviar</Boton>
-                
-             </ContenedorBoton>
-             </div>
-             
-        </Formulario>
-    </main>
+                    
   
-  </div>
-  )
+                    <ContenedorBoton>
+                       
+                       
+                       <Boton type='submit'>Modificar Datos</Boton>
+                       
+                    </ContenedorBoton>
+                    </div>
+            </FormularioD>
+        </div>
+    </div>  
+    )
 }
 
-export default NewAgente
+export default FormAgentePrincipal

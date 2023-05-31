@@ -9,6 +9,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit } from '@fortawesome/free-regular-svg-icons'
 import { useModal } from '../../hooks/useModal'
 import { useSelector } from 'react-redux'
+import FormAgentePrincipal from '../../formModales/agentes/FormAgentePrincipal'
+import { ModalComponente } from '../ModalComponente'
 
 const DatosPersona = () => {
   //const legajo =useSelector(state=>state.agente.legajo)
@@ -19,13 +21,14 @@ const DatosPersona = () => {
   const legajo=useSelector(state=>state.agente.legajo)
   const [isOpen,openModal,closeModal] = useModal()
 
+  /*
   const handleNewDato=()=>{
     setTipo('A')
     openModal()
   }
-
+*/
   const handleModiDatos =()=>{
-    setTipo('U')
+    
     openModal()
   }
 
@@ -33,7 +36,11 @@ const DatosPersona = () => {
    if(error) return <p>Error de Carga</p>
 
 return (
-    <div className='container'>
+    <div className='container-fluid'>
+       
+       <ModalComponente isOpen={isOpen} closeModal={closeModal}>
+             <FormAgentePrincipal funcion={closeModal} datos={agente} />
+        </ModalComponente>
          
          <div className='row'>
           <CabSubTitulo>Datos Principales Agente <button onClick={handleModiDatos} style={{'marginLeft':'10px'}}><FontAwesomeIcon icon={faEdit} /></button></CabSubTitulo>
