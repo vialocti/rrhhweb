@@ -1,9 +1,9 @@
 import axios from 'axios'
 
-//const uri = 'http://200.12.136.74:4000/biometrico/'
-//const uric = 'http://200.12.136.74:4000/cargos/'
-const uri = 'hhtp://localhost:5000/biometrico/'
-const uric = 'http://localhost:5000/cargos/'
+const uri = 'http://200.12.136.74:4000/biometrico/'
+const uric = 'http://200.12.136.74:4000/cargos/'
+//const uri = 'hhtp://localhost:5000/biometrico/'
+//const uric = 'http://localhost:5000/cargos/'
 
 //datos primarios persona
 export async function datosAgente(legajo) {

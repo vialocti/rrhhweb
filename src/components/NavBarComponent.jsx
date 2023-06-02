@@ -75,6 +75,14 @@ const NavBarComponent = () => {
                   </Link>
                  
                 </li>
+
+                <li>
+                <Link to="/registraradic" className="dropdown-item" >
+                    Registrar Adicional
+                  </Link>
+                 
+                </li>
+
                
                 
               </ul>
@@ -101,12 +109,12 @@ const NavBarComponent = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/consuInasistencia" className="dropdown-item" >
+                  <Link to="/consultaInas" className="dropdown-item" >
                     Consulta Inasistencia
                   </Link>
                 </li>
                 <li>
-                  <Link to="/consuLicencia" className="dropdown-item" >
+                  <Link to="/consultaLicencia" className="dropdown-item" >
                     Consulta Licencia
                   </Link>
                 </li>

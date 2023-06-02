@@ -16,6 +16,7 @@ import LincenciaPage from '../pagesComponents/inasistencias/LincenciaPage'
 import FormEdadAgentesPage from '../pagesComponents/reportsv/FormEdadAgentesPage'
 import FormIngresoAgentePage from '../pagesComponents/reportsv/FormIngresoAgentePage'
 import BusquedaCatedra from '../components/cargoscatedra/BusquedaCatedra'
+import FindInasLicComponent from '../pagesComponents/inasistencias/FindInasLicComponent'
 
 const AppRoutes = () => {
   return (
@@ -34,6 +35,8 @@ const AppRoutes = () => {
 
             <Route exact path='/inasistencia' element={<InasistenciaPage/>} />
             <Route exact path='/licencia' element={<LincenciaPage />} />
+            <Route exact path='/consultaInas' element={<FindInasLicComponent opera={'I'} />} />
+            <Route exact path='/consultaLicencia' element={<FindInasLicComponent opera={'L'} />} />
 
             <Route exact path='/edadCumple' element={<FormEdadAgentesPage />} />
             <Route exact path='/LugarIngreso' element={<FormIngresoAgentePage />} />
