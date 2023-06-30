@@ -3,7 +3,7 @@ import axios from 'axios'
 
 const uri = 'http://200.12.136.74:4000/cargos/'
 const urib = 'http://200.12.136.74:4000/biometrico/'
-//const uril = 'http://localhost:5000/cargos/'
+//const uri = 'http://localhost:5000/cargos/'
 
 export async function getLastNroCargo(legajo) {
 
@@ -51,7 +51,7 @@ export async function darBajaCargo(nroreg, legajo) {
 
     try {
         const resu = await axios.put(`${uri}bajacargo/${nroreg}/${legajo}`)
-        console.log(resu)
+        //console.log(resu)
     } catch (error) {
         console.log(error)
     }
@@ -60,21 +60,32 @@ export async function darBajaCargo(nroreg, legajo) {
 //modificar datos cargos
 //
 export async function modiCargo(nroreg, datos, archi) {
-    console.log(nroreg, datos)
+    //console.log(nroreg, datos,archi)
     try {
         if (archi === 1) {
             const resu = await axios.put(`${uri}modiCargo/${nroreg}`, datos)
-            console.log(resu)
+            return resu
         } else {
             const resu = await axios.put(`${uri}modiCargoH/${nroreg}`, datos)
-            console.log(resu)
+            return resu
         }
     } catch (error) {
         console.log(error)
     }
 }
 
+//eleminar Cargo historico
+export async function EliminarCargoH(legajo, nroreg) {
+    //console.log(nroreg, datos,archi)
+    try {
 
+        const resu = await axios.get(`${uri}/bajacargohistorico/${legajo}/${nroreg}`)
+
+    } catch (error) {
+        console.log(error)
+
+    }
+}
 //varios consulta
 export async function getEdadAnio(edad) {
 
@@ -123,6 +134,43 @@ export async function getInasistenciasReporte(fecha_i, fecha_f) {
         const data = await axios.get(`${urib}inasistencias/${fecha_i}/${fecha_f}`)
 
         return data.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+export async function grabarAdicionalFC(values) {
+
+    console.log(values)
+    try {
+        //console.log(`${uri}addCargo`)
+        const resu = await axios.post(`${uri}addAdicionalFC`, values)
+        return resu
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+//traer datos adicional agente
+export async function getAdicionalAgente(legajo) {
+
+
+    try {
+        //console.log(`${uri}${legajo}`)
+        const data = await axios.get(`${uri}adicionalagente/${legajo}`)
+
+        return data.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+//borrar un dato de adicional /deladicional/:id/:legajo
+export async function deleteAdicionalAgente(id, legajo) {
+    try {
+        const resu = await axios.delete(`${uri}deladicional/${id}/${legajo}`)
+        return resu
     } catch (error) {
         console.log(error)
     }

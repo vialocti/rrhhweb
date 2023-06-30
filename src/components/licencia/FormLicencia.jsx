@@ -27,6 +27,7 @@ const FormLicencia = ({agente,motivos}) => {
  const [fechaini,setFechaini]=useState(new Date())
  const [fechafin,setFechafin]=useState(new Date())
  const [licencias, setLicencias] = useState([])
+ const [historicos, setHistoricos] = useState(false)
 
  
 
@@ -49,7 +50,7 @@ const FormLicencia = ({agente,motivos}) => {
      //document.getElementById('nroresu').value=''
      
      
- }, [agente]) 
+ }, [agente,historicos]) 
 
 
  const values = {
@@ -65,7 +66,7 @@ const FormLicencia = ({agente,motivos}) => {
  }
 
  //const nroregistroC=''
-  const {loading,error,cargosAgente} = useAgenteCargos()
+  const {loading,error,cargosAgente,cargoshAgente} = useAgenteCargos()
  
    if(loading) return <p>Cargando datos .....</p>
      if(error) return <p>Error de Carga</p>  
@@ -167,6 +168,12 @@ const onChangeFf = (fecha)=>{
  
 }
 
+const onHandleChangeHis =()=>{
+  let valueH=document.getElementById('cargosh').value==='2'?true:false
+  
+  setHistoricos(valueH) 
+}
+
   return (
     <>
     
@@ -178,14 +185,26 @@ const onChangeFf = (fecha)=>{
             <div className="row"> 
 
                 <div className='col-md-4'>
-                  <label className='h5'> Cargo </label>
+                  {!historicos
+                   ?<> 
+                  <label className='h5'> Cargos Vigentes </label>
                   <select id="cargo" className='form-control'>
                     {cargosAgente.map((ele,index)=>(
                   <option key={index} value={ele.nc + '/' + ele.ncg}>NC:{ele.nc} - CA:{ele.ca} - PPAL:{ele.ppal} - NV:{ele.nv} - IdMAT:{ele.pl}{ele.mat}</option>
                     ))}
       
+                  </select>
+                  </>  
+                  :<>
+                  <label className='h5'style={{'color':'red'}}> Cargos Historicos </label>
+                  <select id="cargo" className='form-control'>
+                    {cargoshAgente.map((ele,index)=>(
+                  <option key={index} value={ele.nc + '/' + ele.ncg}>NC:{ele.nc} - CA:{ele.ca} - PPAL:{ele.ppal} - NV:{ele.nv} - IdMAT:{ele.pl}{ele.mat}</option>
+                    ))}
+      
                   </select>  
-                
+                  </>
+                  }
                   <br/>
                     <label className='h5'> Motivo </label>
                     <select id="motivo" className='form-control'>
@@ -205,7 +224,7 @@ const onChangeFf = (fecha)=>{
 
                      
 
-                <div className='col-md-2'></div>
+                <div className='col-md-1'></div>
            
             
 
@@ -246,11 +265,18 @@ const onChangeFf = (fecha)=>{
               
               </div>
               
-              <div className='col-md-2'>
+              <div className='col-md-3'>
+               
+                <label className='h5'> Cargos Historicos ? </label>
+                    <select id="cargosh" className='form-control' onChange={onHandleChangeHis}>
+                    <option value='1'>NO</option>
+                    <option value='2'>SI</option>
+                </select> 
                 <div style={{marginTop:'15px',marginLeft:'15px'}}>
                 <button  type='buttom'  className='btn btn-primary' style={{marginTop:20}} onClick={grabarDatos}>
                     Grabar Licencia
                 </button>    
+                
                 </div>
               </div>       
           </div>    

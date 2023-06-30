@@ -6,11 +6,15 @@ import axios from 'axios'
 
 
 
-const InasistenciaMuestra = ({inasistenciasag}) => {
+const InasistenciaMuestra = ({inasistenciasag, agente}) => {
 
   const [inasistencias, setInasistencias]=useState([])
   
+  
+  
+  
   const uri ='http://200.12.136.74:4000/'
+  //const uri ='http://localhost:5000/'
   useEffect(()=>{
     
     setInasistencias(inasistenciasag)
@@ -30,6 +34,20 @@ const InasistenciaMuestra = ({inasistenciasag}) => {
     }
     console.log(inasistencias)
   }*/ 
+  
+  const VerInasistenciaRZ = async (tipo,motivo)=>{
+
+    let strqry = `${uri}cargos/inasistenciasagente/${agente}/${tipo}/'${motivo}'`
+  try {
+      const res = await axios.get(strqry)
+      setInasistencias(res.data)         
+  } catch (error) {
+    console.log(error)
+  }
+    
+    
+    
+  }
 
   const eliminarRegistro=async(id,legajo)=>{
     try {
@@ -40,7 +58,7 @@ const InasistenciaMuestra = ({inasistenciasag}) => {
         const newinasistencias =inasistencias.filter(inas=>inas.id_ina !== id)
         
         setInasistencias(newinasistencias)
-        const resuC= await `${uri}cargos`
+        //const resuC= await `${uri}cargos`
         console.log('uuuu')
         
         
@@ -93,7 +111,28 @@ const InasistenciaMuestra = ({inasistenciasag}) => {
            <th>Fecha Fin</th>
            <th>Nro Res.</th>
            <th>Afecta Haberes</th>
-           <th></th>
+           <th>
+            <button
+              onClick={()=>VerInasistenciaRZ(2,'02')}
+            >
+               02
+              </button>
+              <button
+              onClick={()=>VerInasistenciaRZ(2,'04')}
+            >
+               04
+              </button>
+              <button
+              onClick={()=>VerInasistenciaRZ(2,'32')}
+            >
+               32
+              </button>
+              <button
+              onClick={()=>VerInasistenciaRZ(1,'00')}
+            >
+               T
+              </button>
+            </th>
          
          </tr>
        </thead>
@@ -127,6 +166,7 @@ const InasistenciaMuestra = ({inasistenciasag}) => {
        </table>
        
       </div>  
+      
   )
 }
 

@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, {useState,useEffect} from 'react'
-import { faAngleDoubleUp, faDownload, faE, faEdit, faExpand, faFish, faM, faRegistered} from '@fortawesome/free-solid-svg-icons'
+import { faAngleDoubleUp, faDownload, faE, faEdit, faExpand, faFish, faM, faRegistered, faTurnUp} from '@fortawesome/free-solid-svg-icons'
 import {  CabTituloCargo } from '../../styles-components/formularios/FormAgente'
 
 //import { Container, Row, Table } from 'react-bootstrap'
@@ -18,7 +18,8 @@ import FormAltaExtension from '../../formModales/FormAltaExtension'
 import FormModificarDatosCargo from '../../formModales/FormModificarDatosCargo'
 import { datosAgente } from '../../services/f_axiospersonas'
 import FormModificarDatosCargoH from '../../formModales/FormModificarDatosCargoH'
-
+import FormCargoMayorResponzabilidad from '../../formModales/FormCargoMayorResponzabilidad'
+import { useGetMaterias } from '../../hooks/useGetMaterias'
 
 const CargosConsulta = (props) => {
   
@@ -104,6 +105,14 @@ const CargosConsulta = (props) => {
       }
    }
 
+   const CargoMayorResponzabilidad =(ele)=>{
+    if(ele.legajo > 0){
+        setDato(ele)
+        setTipoOpera('U')
+        openModal()
+      }
+   }
+
    const CargoModificar =(ele)=>{
     if(ele.legajo > 0){
         setDato(ele)
@@ -114,19 +123,20 @@ const CargosConsulta = (props) => {
    }
    
    const CargoModificarH =(ele)=>{
-    Swal.fire({
+    /*Swal.fire({
       text:"No Modificar cargo dado de Baja",
       icon:'info'
 
     }
 
     )
-    /* if(ele.legajo > 0){
+    */
+     if(ele.legajo > 0){
         setDato(ele)
         setIdMat(ele.pl+ele.mat)
         setTipoOpera('H')
         openModal()
-      }*/
+      }
    }
   
   const mostrarAgente = async (legr)=>{
@@ -146,6 +156,11 @@ const CargosConsulta = (props) => {
     }
   }
   
+
+  const{loading,error, cargospl}=useGetMaterias()
+    if(loading) return <p>Cargando datos .....</p>
+    if(error) return <p>Error de Carga</p>
+
    return (
     <div className='container-fluid'>
 
@@ -156,9 +171,12 @@ const CargosConsulta = (props) => {
         
           :tipoOpera==='B'?
           <FormBajaCargo dato={dato} funcion={closeModal} materias={materias} idmat={idMat}/>
+          :tipoOpera==='U'?
+            <FormCargoMayorResponzabilidad dato={dato} nrocargoG={nrocargos} funcion={closeModal}/>
           
-          :tipoOpera==='M'?
-          <FormModificarDatosCargo dato={dato} funcion={closeModal} idmat={idMat} materias={materias}/>
+            :tipoOpera==='M'?
+
+          <FormModificarDatosCargo dato={dato} funcion={closeModal} idmat={idMat} materias={materias} cargospl={cargospl}/>
           :tipoOpera==='H'?
           <FormModificarDatosCargoH dato={dato} funcion={closeModal} idmat={idMat} materias={materias}/>
           :<FormAltaExtension dato={dato}  nrocargoG={nrocargos} funcion={closeModal} materias={materias} idmat={idMat}/>
@@ -188,8 +206,8 @@ const CargosConsulta = (props) => {
             <th>Nro.Res.B</th>
             <th>M.Baja</th>
             <th>Sit.</th>
+            <th>Adic.</th>
             <th>LegR</th>
-            <th>NCG</th>
           </tr>
         </thead>
         <tbody>
@@ -212,8 +230,9 @@ const CargosConsulta = (props) => {
               <td>{ele.nresb}</td>
               <td>{ele.mb}</td>
               <td>{ele.st}</td>
+              <td>{ele.adic}</td>
               <td onMouseDown ={ele.rempla !==0  ? ()=>mostrarAgente(ele.rempla):null}>{ele.rempla !==0?ele.rempla:''}</td>
-              <td>{ele.ncg}</td>
+              
               {tipo===1?<>
 
                 <td>
@@ -243,6 +262,17 @@ const CargosConsulta = (props) => {
               </td>
               :null
               }
+              {ele.es==='2' && ele.ca==='1' && ele.st===''
+              ?<td>
+                  <button
+                    onClick={()=>CargoMayorResponzabilidad(ele)}
+                  >
+                  <FontAwesomeIcon icon={faTurnUp} />
+                </button>
+            </td>
+              :null
+              }
+
                 </>
               :tipo===2?
               <td>

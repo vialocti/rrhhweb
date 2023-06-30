@@ -31,6 +31,7 @@ const FormAgentePrincipal = ({funcion,datos}) => {
    const [sede, setSede] = useState('1')
    const [tipod, setTipod] = useState('1')
    const [claustro, setClaustro] = useState('1')
+   const [asistencia, setAsistencia]=useState('A')
 
 
 
@@ -48,6 +49,7 @@ const FormAgentePrincipal = ({funcion,datos}) => {
         setClaustro(datos.condicion)
         setSede(datos.sede)
         setTipod(datos.tipodocumento)
+        setAsistencia(datos.asistencia==='P'?'A':datos.asistencia)
     }
    
      
@@ -66,6 +68,7 @@ const FormAgentePrincipal = ({funcion,datos}) => {
         condicion:claustro,
         sede:sede,
         area:area,
+        asistencia:asistencia,
         
     }
     
@@ -106,6 +109,10 @@ if (resp===200){
 
    const onHandleChangeCL =()=>{
     setClaustro(document.getElementById('claustro').value)
+   }
+
+   const onHandleChangeAs =()=>{
+    setAsistencia(document.getElementById('asistencia').value)
    }
 
 
@@ -214,7 +221,7 @@ if (resp===200){
                     <SelectorV name="claustro" id='claustro' value={claustro} onChange={onHandleChangeCL}>
                         <option value="1">Docente</option>
                         <option value="2">No Docente</option>
-                        <option value="3">Ambos</option>
+                        
                     </SelectorV>
                 </div>
                
@@ -261,7 +268,16 @@ if (resp===200){
                     </SelectorV>
                 </div>
 
-            
+                <div>
+                <LabelF htmlFor='licencia'>Licencia</LabelF>
+                    <SelectorV name="asistencia" id='asistencia' value={asistencia} onChange={onHandleChangeAs}>
+                        <option value="L">SI</option>
+                        <option value="A">NO</option>
+                        
+                    </SelectorV>
+                </div>          
+  
+  
                 <div>
                     
   

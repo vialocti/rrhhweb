@@ -138,6 +138,7 @@ const FormAltaExtension = ({dato, nrocargoG,funcion,materias,idmat}) => {
         fechaA: fechaA.campo,
         nroresA: resoA.campo,
         fechaB: fechaBN.campo,
+        st:'',
         ncg: nrocg + 1,
         titu: dato.titular,
         rempl:dato.rempla

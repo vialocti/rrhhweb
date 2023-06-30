@@ -17,6 +17,9 @@ import FormEdadAgentesPage from '../pagesComponents/reportsv/FormEdadAgentesPage
 import FormIngresoAgentePage from '../pagesComponents/reportsv/FormIngresoAgentePage'
 import BusquedaCatedra from '../components/cargoscatedra/BusquedaCatedra'
 import FindInasLicComponent from '../pagesComponents/inasistencias/FindInasLicComponent'
+import AdicionalesPage from '../pagesComponents/adicionales/AdicionalesPage'
+import FindAusentesNDComponent from '../pagesComponents/ausentes/FindAusentesNDComponent'
+
 
 const AppRoutes = () => {
   return (
@@ -28,7 +31,7 @@ const AppRoutes = () => {
             <Route exact path='/nuevoAgente' element={<NewAgente/>} />
             <Route exact path='/nuevoCargo' element={<NewCargo/>} />
             <Route exact path='/interinosCargos' element={<CargosInterinos />} />
-
+            <Route exact path='/adicionales' element={<AdicionalesPage/>}/>
             <Route exact path='/horarioPersona' element={<FindPersonaComponent />} />
             <Route exact path='/horarioClaustro' element={<FindClaustroComponent />} />
             <Route exact path='/horarioArea' element={<FindAreaComponent />} />
@@ -37,11 +40,12 @@ const AppRoutes = () => {
             <Route exact path='/licencia' element={<LincenciaPage />} />
             <Route exact path='/consultaInas' element={<FindInasLicComponent opera={'I'} />} />
             <Route exact path='/consultaLicencia' element={<FindInasLicComponent opera={'L'} />} />
-
+            <Route exact path='/reporteausentes' element={<FindAusentesNDComponent />}/>
             <Route exact path='/edadCumple' element={<FormEdadAgentesPage />} />
             <Route exact path='/LugarIngreso' element={<FormIngresoAgentePage />} />
 
             <Route exact path='/catedraver' element={<BusquedaCatedra/>} />
+
 
             <Route path='*' element={<NotFoundPage />} />
 

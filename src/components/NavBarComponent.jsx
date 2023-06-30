@@ -77,7 +77,7 @@ const NavBarComponent = () => {
                 </li>
 
                 <li>
-                <Link to="/registraradic" className="dropdown-item" >
+                <Link to="/adicionales" className="dropdown-item" >
                     Registrar Adicional
                   </Link>
                  
@@ -110,12 +110,17 @@ const NavBarComponent = () => {
                 </li>
                 <li>
                   <Link to="/consultaInas" className="dropdown-item" >
-                    Consulta Inasistencia
+                    Reporte Inasistencias
                   </Link>
                 </li>
                 <li>
                   <Link to="/consultaLicencia" className="dropdown-item" >
-                    Consulta Licencia
+                    Reporte Licencias
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/reporteausentes" className="dropdown-item" >
+                    Reporte Ausentes Día
                   </Link>
                 </li>
                         
@@ -191,6 +196,10 @@ const NavBarComponent = () => {
             </li>
 
           </ul>
+          <div className="d-flex" role="search">
+      
+            <h6 style={{color:'blue'}}>Buscar</h6>
+        </div>
         </div>
       </div>
     </nav>

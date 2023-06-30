@@ -50,7 +50,7 @@ const FormInasistencia = ({agente, motivos}) => {
  useEffect(() => {
 
   const getInasistencias = async ()=>{
-    let strqry = `${uri}cargos/inasistenciasagente/${agente}`
+    let strqry = `${uri}cargos/inasistenciasagente/${agente}/1/'00`
     try {
         const res = await axios.get(strqry)
         setInasistencias(res.data)         
@@ -88,7 +88,7 @@ const FormInasistencia = ({agente, motivos}) => {
 
  
  const getInasistencias = async ()=>{
-  let strqry = `${uri}cargos/inasistenciasagente/${agente}`
+  let strqry = `${uri}cargos/inasistenciasagente/${agente}/1/'00'`
   try {
       const res = await axios.get(strqry)
       setInasistencias(res.data)         
@@ -255,7 +255,7 @@ const onChangeFf = (fecha)=>{
           
           
           
-            {inasistencias.length > 0  ? <InasistenciaMuestra inasistenciasag={inasistencias}/>: null} 
+            {inasistencias.length > 0  ? <InasistenciaMuestra inasistenciasag={inasistencias} agente={agente}/>: null} 
         </div>
     </>
   )

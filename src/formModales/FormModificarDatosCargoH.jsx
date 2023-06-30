@@ -6,12 +6,12 @@ import InputC from '../elementos/InputComponent'
 import { Formulario, LabelF, SelectorV } from '../styles-components/formularios/FormAgente'
 //import { useGetMaterias } from '../hooks/useGetMaterias';
 import Swal from 'sweetalert2';
-import { modiCargo} from '../services/f_axioscargos';
+import { EliminarCargoH, modiCargo} from '../services/f_axioscargos';
 import { useSelector } from 'react-redux';
 
 
 const FormModificarDatosCargoH = ({dato,funcion, idmat, materias}) => {
-
+  console.log(dato)
     const nombre = useSelector(state=>state.agente.nombre)
     //const navigate = useNavigate()
     const expresiones = {
@@ -41,6 +41,8 @@ const FormModificarDatosCargoH = ({dato,funcion, idmat, materias}) => {
     const [actividades, setActividades] = useState([])
     const [matname, setMatname] = useState('')
     const [propuesta, setPropuesta]=useState('')
+    const [situacion, setSituacion]= useState('')
+    const [adicional, setAdicional]= useState('0')
     const [car, setCar]=useState('')
     const [titular, setTitular] = useState('0') 
     const [carreraI, setCarrera]=useState({campo:'', valido:null})
@@ -48,6 +50,7 @@ const FormModificarDatosCargoH = ({dato,funcion, idmat, materias}) => {
     
     const buscarMat=(idm)=>{
       let [materia] =materias.filter(materia => materia.id_materia == idm)
+      if(materia){
       setMatname(materia.materia)
       if(materia.car ===2){
         setPropuesta('CONTADOR PUBLICO NACIONAL')
@@ -66,6 +69,7 @@ const FormModificarDatosCargoH = ({dato,funcion, idmat, materias}) => {
         setPropuesta('CONTADOR PUBLICO')
         setCar('8')
       }
+    }
       // console.log(matname)
       //console.log(propuesta)
     }
@@ -86,6 +90,8 @@ const FormModificarDatosCargoH = ({dato,funcion, idmat, materias}) => {
         setFechaA({campo:convertirFecha(dato.fechaAlta),valido:'true'})
         setTitular(dato.titular)
         document.getElementById('titular').value=dato.titular
+        document.getElementById('adicional').value=dato.adic
+        setSituacion(dato.adic)
       }
       
       if (materias) {
@@ -139,6 +145,18 @@ const FormModificarDatosCargoH = ({dato,funcion, idmat, materias}) => {
       setTitular(document.getElementById('titular').value)
      
   }
+   //cambiar adicional
+  const changeAdicional=()=>{
+    Swal.fire({
+      title: 'Cambio Adicional Cargo',
+      text: 'Recuerde No cambiar la Adicional, si No ha eliminado el Adicional o se termino el mismo',
+      icon: 'warning',
+      showCancelButton: true,})
+  
+    setAdicional(document.getElementById('adicional').value)
+   
+  }
+  
   
     //console.log(materias)
     //grabar cargo renovacion
@@ -152,7 +170,9 @@ const FormModificarDatosCargoH = ({dato,funcion, idmat, materias}) => {
         pl:planI.campo,
         car:carreraI.campo,
         mat:matI.campo,
-        titular:document.getElementById('titular').value
+        titular:document.getElementById('titular').value,
+        adic:adicional,
+        st:dato.st!=='MR'?document.getElementById('situacion').value:'MR'
         
       }
 console.log(datosModi)
@@ -160,7 +180,7 @@ console.log(datosModi)
         Swal
         .fire({
             title: `Agente Legajo:${legajo}`,
-            text: `Grabar Modificación de Cargo`,
+            text: `Grabar Modificación de Cargo Historico`,
             icon: 'info',
             showCancelButton: true,
             confirmButtonText: "Sí, Grabar",
@@ -217,7 +237,46 @@ console.log(datosModi)
     
 } 
 
-  
+
+
+//situacion del cargo
+const changeSituacion =()=>{
+  Swal.fire({
+    title: 'Cambio Situacion Cargo',
+    text: 'Recuerde No cambiar la Situacion si No a eliminado la licencia o se levanto la misma',
+    icon: 'warning',
+    showCancelButton: true,})
+
+  setSituacion(document.getElementById('situacion').value)
+ 
+}
+
+const onHandleEliminar=async ()=>{
+
+  Swal
+        .fire({
+            title: `Agente Legajo:${legajo}`,
+            text: `Eliminar Cargo Historico`,
+            icon: 'info',
+            showCancelButton: true,
+            confirmButtonText: "Sí, Eliminar",
+            cancelButtonText: "Cancelar",
+        })
+        .then(async resultado => {
+            if (resultado.value) {
+               const resu = await EliminarCargoH(legajo,nroReg)
+
+               funcion()
+               //navigate('/fichaAgente')
+                  
+                
+            } else {
+                // Dijeron que no
+                
+                
+            }
+        });
+}
    
     /*
     const changeMat = () => {
@@ -240,17 +299,33 @@ console.log(datosModi)
           <div className='row'>
 
             <h2 style={{background:'grey'}}>Modificacion Datos Cargo Historico</h2>
-            
-          </div>
-
-          <div>
-            <h5>Colaborador: {nombre}</h5>
+              <div className="col-md-7">
+                <div>
+                  <h5>Colaborador: {nombre}</h5>
+                </div>
+              </div>
+              <div className="col-md-2"></div>
+              <div className="col-md-3">
+                <div style={{width:'200px',marginRight:'5px'}}>
+              
+                    <button className='btn btn-danger' onClick={onHandleEliminar}>
+                      Eliminar Cargo
+                    </button>
+                </div>   
+                </div>
+            </div>
+          
+          <div className="row">  
+          
+             <div className="col-md-12">
+                <div style={{display:'flex'}}>
+                    {propuesta.length > 5?<h6>Carrera: {propuesta}</h6>:null} - {matname.length > 5?<h6>Actividad: {matname} </h6>:null
+                }
+                </div>
+                </div>
+                  
           </div>
           
-          <div style={{display:'flex'}}>
-            {propuesta.length > 5?<h6>Carrera: {propuesta}</h6>:null} - {matname.length > 5?<h6>Actividad: {matname} </h6>:null
-            }
-          </div>
           <br/>
           <div className='row'>
 
@@ -363,19 +438,19 @@ console.log(datosModi)
                     expreg={expresiones.fechaA}
                 />        
 
-            <InputC 
-                tipo='text'
-                name='resoA'
-                infoplace='Nro Resolucion de Alta'
-                estado={resoA}
-                cambiarEstado={setResoA}
-                label='Nro.Resolición de Alta'
-                leyendaErr='no menor de 4 y no mayor a 60 caracteres'
-                expreg={expresiones.resoA}
-            />
+                <InputC 
+                    tipo='text'
+                      name='resoA'
+                      infoplace='Nro Resolucion de Alta'
+                      estado={resoA}
+                      cambiarEstado={setResoA}
+                      label='Nro.Resolición de Alta'
+                      leyendaErr='no menor de 4 y no mayor a 60 caracteres'
+                      expreg={expresiones.resoA}
+                />
                 
                
-               <InputC 
+                <InputC 
                     tipo='text'
                     name='fechaB'
                     infoplace='aaaa-mm-dd'
@@ -387,75 +462,100 @@ console.log(datosModi)
                 />
                 
                
+                <div style={{display:'flex'}}>
                
-               <div>
-                <LabelF htmlFor='titular'>Titular</LabelF>
-                <SelectorV name="titular" id='titular' onChange={changeTitular}>
-                    <option value="0">NO</option>
-                    <option value="1">SI</option>
-                    <option value="2">A Cargo</option>
-                    
-                </SelectorV>
+                    <div style={{width:'120px',marginRight:'5px'}}>
+                        <LabelF htmlFor='titular'>Titular</LabelF>
+                        <SelectorV name="titular" id='titular' onChange={changeTitular}>
+                            <option value="0">NO</option>
+                            <option value="1">SI</option>
+                            <option value="2">A Cargo</option>
+                            
+                        </SelectorV>
 
-            </div>
+                    </div>
+                    
+                    <div style={{width:'150px',marginRight:'5px'}}>
+                          <LabelF htmlFor='situacion'>Situacion</LabelF>
+                          <SelectorV name="situacion" id='situacion' onChange={changeSituacion}>
+                            <option value="">En Funciones</option>
+                            <option value="CG">Lic.C.Goce Haber</option>
+                            <option value="SG">Lic.S.Goce Haber</option>
+
+                          </SelectorV>
+
+                    </div>
+
+                    <div style={{width:'150px',marginRight:'5px'}}>
+                        <LabelF htmlFor='adicional'>Adicional</LabelF>
+                        <SelectorV name="adicional" id='adicional' onChange={changeAdicional}>
+                          <option value="0">Sin Adicional</option>
+                          <option value="1">F.C.Docentes</option>
+                          <option value="2">F.C.NoDoc.</option>
+                          <option value="3">F.C.Gestión</option>
+                    
+                        </SelectorV>
+
+                    </div>
+                  </div>
            
-            
-                
+                    
 
 
             <div style={{display:'flex'}}>
             
-             <div style={{width:'100px',marginRight:'5px'}}> 
-            <InputC 
-                tipo='text'
-                name='planI'
-                infoplace='Plan'
-                estado={planI}
-                cambiarEstado={setPlan}
-                label='Plan'
-                leyendaErr='1 caracter'
-                expreg={expresiones.planI}
-            />       
-            </div>
+                <div style={{width:'100px',marginRight:'5px'}}> 
+                  <InputC 
+                      tipo='text'
+                      name='planI'
+                      infoplace='Plan'
+                      estado={planI}
+                      cambiarEstado={setPlan}
+                      label='Plan'
+                      leyendaErr='1 caracter'
+                      expreg={expresiones.planI}
+                  />       
+                </div>
+
+              <div style={{width:'100px',marginRight:'5px'}}> 
+                <InputC 
+                  tipo='text'
+                  name='carreraI'
+                  infoplace=''
+                  estado={carreraI}
+                  cambiarEstado={setCarrera}
+                  label='Carr'
+                  leyendaErr='1 caracter'
+                  expreg={expresiones.carreraI}
+                />       
+              </div>
 
             <div style={{width:'100px',marginRight:'5px'}}> 
-            <InputC 
-                tipo='text'
-                name='carreraI'
-                infoplace=''
-                estado={carreraI}
-                cambiarEstado={setCarrera}
-                label='Carr'
-                leyendaErr='1 caracter'
-                expreg={expresiones.carreraI}
-            />       
-            </div>
-
-            <div style={{width:'100px',marginRight:'5px'}}> 
-            <InputC 
-                tipo='text'
-                name='matI'
-                infoplace='materia'
-                estado={matI}
-                cambiarEstado={setMat}
-                label='Mat'
-                leyendaErr='3 caracteres'
-                expreg={expresiones.matI}
-            />       
+                <InputC 
+                    tipo='text'
+                    name='matI'
+                    infoplace='materia'
+                    estado={matI}
+                    cambiarEstado={setMat}
+                    label='Mat'
+                    leyendaErr='3 caracteres'
+                    expreg={expresiones.matI}
+                />       
             </div>
             
-              
+                         
+          </div>
+            
+            
+            
+          <div style={{width:'200px',marginRight:'5px'}}>
+              <br />
+              <button type='submit' className='btn btn-primary'>
+                    Grabar Modificacion
+                  </button>
+          </div>
 
-
-              
-            </div>
-              
-              <div>
-                <br/>
-                <button type='submit' className='btn btn-primary'>
-                  Grabar Modificacion
-                </button>
-              </div>
+                       
               
               
           </Formulario>

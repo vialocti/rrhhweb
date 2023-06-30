@@ -215,6 +215,7 @@ const FormularioCargo = () => {
             ncg:ncargoGen,
             titu:titular,
             car:carrera,
+            st:'',
             rempl:legajorem
  
          }
@@ -296,8 +297,8 @@ const FormularioCargo = () => {
         grabarNuevoCargo()
         }else{
             Swal.fire({
-                title: 'Informacion datos Cargo',
-                text: 'Datos Incompletos o erroneos',
+                title: 'Informacion Datos Cargo',
+                text: 'Datos Incompletos o Erroneos',
                 icon: 'info',
                 showCancelButton: true,})
 
@@ -404,9 +405,9 @@ const FormularioCargo = () => {
                 <LabelF htmlFor='adicional'>Adicional</LabelF>
                 <SelectorV name="adicional" id='adicional' onChange={changeAdicional}>
                     <option value="0">Sin Adicional</option>
-                    <option value="1">Funcion Critica Doc</option>
-                    <option value="2">Mayor Responzabilidad</option>
-                    <option value="3">Mayor Dedicacion</option>
+                    <option value="1">Función Crítica Docente</option>
+                    <option value="2">Función Crítica No Docente</option>
+                    <option value="3">Función Crítica Gestión</option>
                 </SelectorV>
 
             </div>

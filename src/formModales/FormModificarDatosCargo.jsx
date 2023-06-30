@@ -8,9 +8,10 @@ import { Formulario, LabelF, SelectorV } from '../styles-components/formularios/
 import Swal from 'sweetalert2';
 import { modiCargo} from '../services/f_axioscargos';
 import { useSelector } from 'react-redux';
+import { useGetMaterias } from '../hooks/useGetMaterias';
 
 
-const FormModificarDatosCargo = ({dato,funcion, idmat, materias}) => {
+const FormModificarDatosCargo = ({dato,funcion, idmat, materias, cargospl}) => {
 
     const nombre = useSelector(state=>state.agente.nombre)
     //const navigate = useNavigate()
@@ -44,12 +45,17 @@ const FormModificarDatosCargo = ({dato,funcion, idmat, materias}) => {
     const [car, setCar]=useState('')
     const [titular, setTitular] = useState('0') 
     const [situacion, setSituacion]= useState('')
+    const [adicional, setAdicional]= useState('0')
     const [carreraI, setCarrera]=useState({campo:'', valido:null})
+    const [nivel, setNivel] = useState('0')
+    const [cargos, setCargos]=useState([])
+    const [ppal,setPpal]=useState('0')
 
     
     const buscarMat=(idm)=>{
       
       let [materia] =materias.filter(materia => materia.id_materia == idm)
+      if (materia){
       setMatname(materia.materia)
       if(materia.car ===2){
         setPropuesta('CONTADOR PUBLICO NACIONAL')
@@ -68,13 +74,14 @@ const FormModificarDatosCargo = ({dato,funcion, idmat, materias}) => {
         setPropuesta('CONTADOR PUBLICO')
         setCar('8')
       }
+    }
       // console.log(matname)
       //console.log(propuesta)
     }
 
 
     useEffect(() => {
-
+      console.log(dato)
       if (dato) {
         setnroReg(dato.row_id)
         setlegajo(dato.legajo)
@@ -82,15 +89,24 @@ const FormModificarDatosCargo = ({dato,funcion, idmat, materias}) => {
         setCarrera({campo:dato.car,valido:'true'})
         setMat({campo:dato.mat,valido:'true'})
         setPlan({campo:dato.pl,valido:'true'})
-
+        
         setFechaB({campo:convertirFecha(dato.fechaBaja),valido:'true'})
         setResoA({campo:dato.nresa ,valido:'true'})
         setFechaA({campo:convertirFecha(dato.fechaAlta),valido:'true'})
         setTitular(dato.titular)
-        setSituacion(dato.st)
         document.getElementById('titular').value=dato.titular
+        setSituacion(dato.st)
+        document.getElementById('adicional').value=dato.adic
+        setSituacion(dato.adic)
+        if(dato.ppal === '37'){
+          document.getElementById('ppal').value='137'
+          changePpal()
+        }else if (dato.ppal==='21'){
+          document.getElementById('ppal').value='221'  
+          changePpal()
+        }
+        document.getElementById('nivel').value=dato.nv
       }
-      
       if (materias) {
         setActividades(materias.filter(materia => materia.pl == 4))
         if(idmat){
@@ -103,6 +119,8 @@ const FormModificarDatosCargo = ({dato,funcion, idmat, materias}) => {
      
       
     }, [dato])
+
+    
     
 
     //anular cargo
@@ -138,6 +156,25 @@ const FormModificarDatosCargo = ({dato,funcion, idmat, materias}) => {
    }
 
 
+  //set partida presu
+  const changePpal =()=>{
+    let cl = document.getElementById('ppal').value.substring(0,1)
+    let pp = document.getElementById('ppal').value.substring(1,3)
+    setPpal(pp)
+    if(pp==='37'){
+        setCargos(cargospl.filter(cargo=>cargo.ppal==pp && cargo.es==cl && cargo.nv < 21))
+    }else{
+        setCargos(cargospl.filter(cargo=>cargo.ppal==pp && cargo.es==cl))
+    }
+    
+}
+//setear nivel
+const changeNivel =()=>{
+
+setNivel(document.getElementById('nivel').value)
+}
+
+
     //titularidad de catedra
     const changeTitular =()=>{
        
@@ -156,6 +193,18 @@ const FormModificarDatosCargo = ({dato,funcion, idmat, materias}) => {
     setSituacion(document.getElementById('situacion').value)
    
 }
+
+const changeAdicional=()=>{
+  Swal.fire({
+    title: 'Cambio Adicional Cargo',
+    text: 'Recuerde No cambiar la Adicional, si No ha eliminado el Adicional o se termino el mismo',
+    icon: 'warning',
+    showCancelButton: true,})
+
+  setAdicional(document.getElementById('adicional').value)
+ 
+}
+
   
     //console.log(materias)
     //grabar cargo renovacion
@@ -170,10 +219,12 @@ const FormModificarDatosCargo = ({dato,funcion, idmat, materias}) => {
         car:carreraI.campo,
         mat:matI.campo,
         titular:document.getElementById('titular').value,
-        st:document.getElementById('situacion').value
-        
-        
+        st:dato.st!=='MR'?document.getElementById('situacion').value:'MR',
+        adic:adicional,
+        ppal:ppal==='0'?dato.ppal:ppal,
+        nv:nivel==='0'?dato.nv:nivel.length===1?'0'+nivel:nivel,  
       }
+        
 //console.log(datosModi)
 
         Swal
@@ -252,7 +303,7 @@ const FormModificarDatosCargo = ({dato,funcion, idmat, materias}) => {
     */
    
     
-
+        
   return (
     <div className='container'>
           
@@ -370,6 +421,7 @@ const FormModificarDatosCargo = ({dato,funcion, idmat, materias}) => {
 
           <Formulario onSubmit={handleSubmit}>
                 
+          <div style={{display:'flex'}}>
                 <InputC 
                     tipo='text'
                     name='fechaA'
@@ -381,6 +433,17 @@ const FormModificarDatosCargo = ({dato,funcion, idmat, materias}) => {
                     expreg={expresiones.fechaA}
                 />        
 
+              <InputC 
+                    tipo='text'
+                    name='fechaB'
+                    infoplace='aaaa-mm-dd'
+                    estado={fechaB}
+                    cambiarEstado={setFechaB}
+                    label='Fecha Baja '
+                    leyendaErr='la fecha tiene que tener un formato como 2000-08-14'
+                    expreg={expresiones.fechaB}
+                />
+            </div>
             <InputC 
                 tipo='text'
                 name='resoA'
@@ -391,21 +454,43 @@ const FormModificarDatosCargo = ({dato,funcion, idmat, materias}) => {
                 leyendaErr='no menor de 4 y no mayor a 60 caracteres'
                 expreg={expresiones.resoA}
             />
+            <div style={{display:'flex'}}>
+            <div>
+                <LabelF htmlFor='ppal'>PPAL</LabelF>
+                <SelectorV name="ppal" id='ppal' onChange={changePpal}>
+                    <option value='0'>PPAL</option>
+                    <option value="110">10-Superior</option>
+                    <option value="137">37-Docentes</option>
+                    <option value="138">38-Cargos Gestión</option>
+                    <option value="148">48-Docentes Sec</option>
+                    <option value="221">21-Administrativos</option>
+                    <option value="222">22-Tecnico</option>
+                    <option value="223">23-Profesional</option>
+                    <option value="225">25-Mantenimiento</option>
+                    <option value="226">26-Servicios Generales</option>
+                    
+                </SelectorV>
+
+            </div>
+            
+            <div>
+            <LabelF htmlFor='nivel'>Nivel</LabelF>
+            <SelectorV name="nivel" id='nivel' onChange={changeNivel}>
+                    <option value='0'>Elegir Nivel</option>
+                    {cargos.map((nv,index)=>(
+                    <option value={nv.nv} key={index}>{nv.cargo} - {nv.nv} </option>
+                    ))}
+                </SelectorV>
+
+            </div>
+
+              
+            </div>    
+               
+             
                 
                
-               <InputC 
-                    tipo='text'
-                    name='fechaB'
-                    infoplace='aaaa-mm-dd'
-                    estado={fechaB}
-                    cambiarEstado={setFechaB}
-                    label='Fecha Baja '
-                    leyendaErr='la fecha tiene que tener un formato como 2000-08-14'
-                    expreg={expresiones.fechaB}
-                />
-                
-               
-                <div style={{display:'flex'}}>
+            <div style={{display:'flex'}}>
                
                <div style={{width:'120px',marginRight:'5px'}}>
                 <LabelF htmlFor='titular'>Titular</LabelF>
@@ -417,12 +502,24 @@ const FormModificarDatosCargo = ({dato,funcion, idmat, materias}) => {
                 </SelectorV>
 
                 </div>
-                <div style={{width:'200px',marginRight:'5px'}}>
+                <div style={{width:'150px',marginRight:'5px'}}>
                 <LabelF htmlFor='situacion'>Situacion</LabelF>
                 <SelectorV name="situacion" id='situacion' onChange={changeSituacion}>
                     <option value="">En Funciones</option>
-                    <option value="CG">Licencia Sin Afectación</option>
-                    <option value="SG">Licencia Con Afectación</option>
+                    <option value="CG">Lic.C.Goce Haber</option>
+                    <option value="SG">Lic.S.Goce Haber</option>
+                    
+                </SelectorV>
+
+                </div>
+
+                <div style={{width:'150px',marginRight:'5px'}}>
+                <LabelF htmlFor='adicional'>Adicional</LabelF>
+                <SelectorV name="adicional" id='adicional' onChange={changeAdicional}>
+                    <option value="0">Sin Adicional</option>
+                    <option value="1">F.C.Docentes</option>
+                    <option value="2">F.C.NoDoc.</option>
+                    <option value="3">F.C.Gestión</option>
                     
                 </SelectorV>
 
