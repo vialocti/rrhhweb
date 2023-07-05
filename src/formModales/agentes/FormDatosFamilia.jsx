@@ -136,14 +136,28 @@ if (resp===200){
   const onHandleChangePR =()=>{
     setVinculo(document.getElementById('vinculo').value)
   }
+  const cerrar=()=>{
+    funcion()
+   }
 
 
   return (
     <div className='container mt-2'>
-       {tipo==='A'
-     ?<CabTitulo>Ingreso Datos Familiar</CabTitulo>
-     :<CabTitulo>Modificar Datos Familiar</CabTitulo>
-    }
+      <div className="row">
+                <div className="col-md-10">
+                  {tipo==='A'
+                    ?<CabTitulo>Ingreso Datos Familiar</CabTitulo>
+                    :<CabTitulo>Modificar Datos Familiar</CabTitulo>
+                    }
+                </div>    
+                    <div className="col-md-1"></div>
+                <div className="col-md-1">
+                    <button  onClick={cerrar} className='btn btn-info'>
+                        X
+                    </button>
+                </div>    
+            </div>
+       
       <div className="main">
         <FormularioD onSubmit={onHandleSubmit}>
           

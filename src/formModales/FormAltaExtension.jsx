@@ -198,6 +198,12 @@ const FormAltaExtension = ({dato, nrocargoG,funcion,materias,idmat}) => {
 
   }
 
+  const cerrar =()=>{
+    
+    //setValores()
+    funcion()
+  }
+
   const changeCargo=()=>{
     setCargo(document.getElementById('cargo').value)
   }
@@ -217,23 +223,35 @@ const FormAltaExtension = ({dato, nrocargoG,funcion,materias,idmat}) => {
   return (
     <div className='container'>
           <div className='row'>
-
-            <h2> Nuevo Cargo por Extensión </h2>
+             <div className="col-md-6">
+             <h2> Nuevo Cargo por Extensión </h2>
+             </div>
+            <div className="col-md-4"></div>
+            <div className="col-md-2">
+                <button  onClick={cerrar} className='btn btn-info'>
+                  Cerrar
+                </button>
+            </div>
             
           </div>
+         
+         <div className='row'>
+              <div>
+                <h6>Colaborador: {nombre}</h6>
+              </div>
+              
+          </div>
+          <div className="row">
 
           <div>
-            <h5>Colaborador: {nombre}</h5>
-          </div>
-          
-          <div>
-            {propuesta.length > 5?<h5>Carrera: {propuesta}</h5>:null}
+            {propuesta.length > 5?<h6>Carrera: {propuesta}</h6>:null}
           </div>
           <div>
-            {matname.length > 5?<h5>Actividad: {matname} </h5>:null
+            {matname.length > 5?<h6>Actividad: {matname} </h6>:null
             }
           </div>
           <br/>
+          
           <div className='row'>
 
             <div className='col-md-3'>
@@ -406,6 +424,7 @@ const FormAltaExtension = ({dato, nrocargoG,funcion,materias,idmat}) => {
 
           </Formulario>
 
+</div>
 </div>
   )
 }

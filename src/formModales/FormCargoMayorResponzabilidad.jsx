@@ -183,21 +183,33 @@ const FormCargoMayorResponzabilidad = ({dato, nrocargoG,funcion}) => {
       setNivel(nv)
           }
    
+          const cerrar =()=>{
     
+            //setValores()
+            funcion()
+          }
 
   return (
     <div className='container'>
           <div className='row'>
-
-            <h2> Alta Cargo Por Mayor Responzabilidad </h2>
+             <div className="col-md-6">
+             <h2> Alta Cargo Por Mayor Responzabilidad </h2>
+             </div>
+             <div className="col-md-4"></div>
+             <div className="col-md-1">
+             <button  onClick={cerrar} className='btn btn-info'>
+                  Cerrar
+              </button>
+             </div>
+            
             
           </div>
-
+        <div className="row">
           <div>
-            <h5>Colaborador: {nombre}, legajo: {legajo}</h5>
+            <h6>Colaborador: {nombre}, legajo: {legajo}</h6>
           </div>
           
-          
+          </div>  
           <br/>
           <div className='row'>
 

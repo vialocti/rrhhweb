@@ -95,6 +95,10 @@ if (resp===200){
 
    }
 
+
+   const cerrar =()=>{
+    funcion()
+   }
    const onHandleChangeTD =()=>{
         setTipod(document.getElementById('tipod').value)
    }
@@ -147,10 +151,17 @@ if (resp===200){
 
    return (
     <div className="container mt-2">
-        
-            <CabTitulo>Modificar Datos Principales </CabTitulo>
-          
-
+            <div className="row">
+                <div className="col-md-10">
+                    <CabTitulo>Modificar Datos Principales </CabTitulo>
+                </div>    
+                    <div className="col-md-1"></div>
+                <div className="col-md-1">
+                    <button  onClick={cerrar} className='btn btn-info'>
+                        X
+                    </button>
+                </div>    
+            </div>
 
         <div className="main">
             <FormularioD onSubmit={onHandleSubmit}>

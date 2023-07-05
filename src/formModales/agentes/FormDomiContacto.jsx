@@ -145,13 +145,26 @@ const FormDomiContacto = ({legajo,funcion,tipo,datos}) => {
        
    }
 
-
+   const cerrar=()=>{
+    funcion()
+   }
   return (
     <div className='container mt-2'>
-            {tipo==='A'
-             ?<CabTitulo>Ingreso Datos Domicilio y Contacto</CabTitulo>
-             :<CabTitulo>Modificar Datos Domicilio y Contacto</CabTitulo>
-            }
+        <div className="row">
+                <div className="col-md-10">
+                {tipo==='A'
+                    ?<CabTitulo>Ingreso Datos Domicilio y Contacto</CabTitulo>
+                    :<CabTitulo>Modificar Datos Domicilio y Contacto</CabTitulo>
+                }
+                </div>    
+                    <div className="col-md-1"></div>
+                <div className="col-md-1">
+                    <button  onClick={cerrar} className='btn btn-info'>
+                        X
+                    </button>
+                </div>    
+            </div>
+            
     <main>
         
         <FormularioD onSubmit={onHandleSubmit}>

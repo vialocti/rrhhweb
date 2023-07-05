@@ -178,7 +178,7 @@ const CargosConsulta = (props) => {
 
           <FormModificarDatosCargo dato={dato} funcion={closeModal} idmat={idMat} materias={materias} cargospl={cargospl}/>
           :tipoOpera==='H'?
-          <FormModificarDatosCargoH dato={dato} funcion={closeModal} idmat={idMat} materias={materias}/>
+          <FormModificarDatosCargoH dato={dato} funcion={closeModal} idmat={idMat} materias={materias} cargospl={cargospl}/>
           :<FormAltaExtension dato={dato}  nrocargoG={nrocargos} funcion={closeModal} materias={materias} idmat={idMat}/>
         }
       </ModalComponente> 

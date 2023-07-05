@@ -19,6 +19,7 @@ import BusquedaCatedra from '../components/cargoscatedra/BusquedaCatedra'
 import FindInasLicComponent from '../pagesComponents/inasistencias/FindInasLicComponent'
 import AdicionalesPage from '../pagesComponents/adicionales/AdicionalesPage'
 import FindAusentesNDComponent from '../pagesComponents/ausentes/FindAusentesNDComponent'
+import ModiDedicacionPage from '../pagesComponents/modidedicacion/ModiDedicacionPage'
 
 
 const AppRoutes = () => {
@@ -45,7 +46,7 @@ const AppRoutes = () => {
             <Route exact path='/LugarIngreso' element={<FormIngresoAgentePage />} />
 
             <Route exact path='/catedraver' element={<BusquedaCatedra/>} />
-
+            <Route exact path ='/modidedicacion' element={<ModiDedicacionPage/>}/>
 
             <Route path='*' element={<NotFoundPage />} />
 

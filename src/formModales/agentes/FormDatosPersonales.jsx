@@ -167,7 +167,9 @@ const FormDatosPersonales = ({legajo,funcion,tipo,datos}) => {
 
   }
 
-  
+  const cerrar=()=>{
+    funcion()
+   }
   
   const onHandleChangeSX =()=>{
     
@@ -200,11 +202,21 @@ const FormDatosPersonales = ({legajo,funcion,tipo,datos}) => {
   
   return (
     <div className="container mt-2">
-
-            {tipo==='A'
-             ?<CabTitulo>Ingreso Datos Personales</CabTitulo>
-             :<CabTitulo>Modificar Datos Personales</CabTitulo>
-            }
+            <div className="row">
+                <div className="col-md-10">
+                {tipo==='A'
+                    ?<CabTitulo>Ingreso Datos Personales</CabTitulo>
+                    :<CabTitulo>Modificar Datos Personales</CabTitulo>
+                  }
+                </div>    
+                    <div className="col-md-1"></div>
+                <div className="col-md-1">
+                    <button  onClick={cerrar} className='btn btn-info'>
+                        X
+                    </button>
+                </div>    
+            </div>
+            
       <main>
         <FormularioD onSubmit={onHandleSubmit}>
           

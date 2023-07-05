@@ -41,7 +41,13 @@ const NavBarComponent = () => {
               <ul className="dropdown-menu">
                 <li>
                   <Link to="/nuevoCargo" className="dropdown-item" >
-                    Cargo Agente
+                    Cargos Agente
+                  </Link>
+                </li>
+
+                <li>
+                  <Link to="/modidedicacion" className="dropdown-item" >
+                    Modificar Dedicación Cargo
                   </Link>
                 </li>
               

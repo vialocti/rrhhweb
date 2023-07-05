@@ -135,7 +135,9 @@ if (resp===200){
 
 }
 
-
+   const cerrar=()=>{
+    funcion()
+   }
   //pulsamos boton agregar o modificar
   const onHandleSubmit =(e)=>{
     
@@ -180,10 +182,23 @@ if (resp===200){
 
 return (
     <div className='container mt-2'>
-    {tipo==='A'
-     ?<CabTitulo>Ingreso Datos Reconocimiento Antiguedad</CabTitulo>
-     :<CabTitulo>Modificar Datos Reconocimiento Antiguedad</CabTitulo>
-    }
+
+    <div className="row">
+                <div className="col-md-10">
+                {tipo==='A'
+                    ?<CabTitulo>Ingreso Datos Reconocimiento Antiguedad</CabTitulo>
+                    :<CabTitulo>Modificar Datos Reconocimiento Antiguedad</CabTitulo>
+                }
+                    
+                </div>    
+                    <div className="col-md-1"></div>
+                <div className="col-md-1">
+                    <button  onClick={cerrar} className='btn btn-info'>
+                        X
+                    </button>
+                </div>    
+    </div>
+    
 <main>
 
 <FormularioD onSubmit={onHandleSubmit}>

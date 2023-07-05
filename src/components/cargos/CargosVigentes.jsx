@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react'
+import React from 'react'
 
 import { useAgenteCargos } from '../../hooks/useAgenteCargos'
 import CargosConsulta from './CargosConsulta'

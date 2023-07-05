@@ -85,15 +85,17 @@ const LicenciaMuestra = ({licenciasag}) => {
        
        <thead>
          <tr>
-           <th>ID</th>
+           
            <th>Legajo</th>
            <th>Nro.Cargo</th>
-           <th>Nro.CargoG</th>
+           <th>Ppal</th>
+           <th>NIvel</th>         
            <th>Motivo</th>
            <th>Fecha Inicio</th>
            <th>Fecha Fin</th>
            <th>Nro Res.</th>
            <th>Afecta Haberes</th>
+           <th>EstadoCarg.</th>
            <th></th>
          
          </tr>
@@ -102,10 +104,11 @@ const LicenciaMuestra = ({licenciasag}) => {
        {licencias.map((ele,ind) =>
        
        <tr key={ind}>
-           <td>{ele.row_id}</td>
+           
            <td>{ele.nleg} </td>
            <td>{ele.nc} </td>
-           <td>{ele.ncg} </td>
+           <td>{ele.ppal}</td>
+           <td>{ele.nv}</td>
            <td>{ele.mot}</td>
            <td>{ele.fechai}</td>
            <td>{ele.fechaf}</td>
@@ -114,7 +117,9 @@ const LicenciaMuestra = ({licenciasag}) => {
            <td>NO</td>
            :
            <td>SI</td>
-           }
+           }  
+           
+            <td>{ele.ec}</td>
            <td>
             <button
               onClick={()=>eliminarLicencia(ele.row_id, ele.nleg)}

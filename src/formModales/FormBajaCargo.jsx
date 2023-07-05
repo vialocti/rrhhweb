@@ -162,28 +162,45 @@ const FormBajaCargo = ({dato,funcion,materias,idmat}) => {
     }
 
 
+    const cerrar =()=>{
     
+      //setValores()
+      funcion()
+    }
     
 
 
   return (
 
     <div className='container'>
+    
     <div className='row'>
 
-      <h2>Baja de Cargo </h2>
+        <div className="col-md-6">
+        <h2>Baja de Cargo </h2>
+        </div>
+        <div className="col-md-4"></div>
+        <div className="col-md-1">
+              <button  onClick={cerrar} className='btn btn-info'>
+                  Cerrar
+              </button>
+        </div>
       
-    </div>
 
-    <div>
-      <h5>Colaborador: {nombre}</h5>
+
+
     </div>
-    <div>
-            {propuesta.length > 5?<h5>Carrera: {propuesta}</h5>:null}
-    </div>
-    <div>
-      {matname.length > 5?<h5>Actividad: {matname} </h5>:null
-      }
+    <div className="row">
+        <div>
+          <h6>Colaborador: {nombre}</h6>
+        </div>
+        <div>
+                {propuesta.length > 5?<h6>Carrera: {propuesta}</h6>:null}
+        </div>
+        <div>
+          {matname.length > 5?<h6>Actividad: {matname} </h6>:null
+          }
+        </div>
     </div>
     <br/>
     <div className='row'>

@@ -1,9 +1,9 @@
 import React,{useEffect,useState} from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash} from '@fortawesome/free-solid-svg-icons'
+import { faDownload, faTrash, faUpDown} from '@fortawesome/free-solid-svg-icons'
 import Swal from 'sweetalert2'
 import axios from 'axios'
-import { deleteAdicionalAgente } from '../../services/f_axioscargos'
+import { bajaAdicionalAgente, deleteAdicionalAgente, getAdicionalAgente, modiCargo } from '../../services/f_axioscargos'
 
 
 
@@ -77,6 +77,41 @@ const AdicionalMuestra = ({adicionalAg}) => {
     });
   }
 
+
+
+
+  const bajaAdicional =async (id,legajo,idcargo)=>{
+    
+    
+    Swal
+    .fire({
+        title: `Registro Adicional Agente:${legajo}`,
+        text: `¿Dar de Baja Adicional ?, Recuerde Modificar Adicional en Cargo`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: "Sí, Dar de Baja",
+        cancelButtonText: "Cancelar",
+    })
+    .then(async resultado => {
+        if (resultado.value) {
+            // Hicieron click en "Sí"
+            const resu = await bajaAdicionalAgente(id)
+            //console.log(resu)
+            if (resu.status===200){
+              const newAdicionales =await getAdicionalAgente(legajo)
+              setAdicionales(newAdicionales)
+              let datos={adic:'0'}
+              const resucar= await modiCargo(idcargo,datos,1)
+              if(resucar===2000){console.log('ok')}
+            }
+            
+        } else {
+            // Dijeron que no
+            
+        }
+    });
+  }
+
   return (
     
         <div className="table-wrapper-scroll-y my-custom-scrollbar">
@@ -85,9 +120,11 @@ const AdicionalMuestra = ({adicionalAg}) => {
        
        <thead>
          <tr>
-           <th>ID</th>
-           <th>Legajo</th>
+           
+           
            <th>Nro.Cargo</th>
+           <th>Ppal</th>
+           <th>Nivel</th>
            <th>Nro.Resol.</th>
            <th>Fecha Inicio</th>
            <th>Fecha Fin</th>
@@ -102,21 +139,34 @@ const AdicionalMuestra = ({adicionalAg}) => {
        {adicionales.map((ele,ind) =>
        
        <tr key={ind}>
-           <td>{ele.id_row}</td>
-           <td>{ele.legajo} </td>
+           
+           
            <td>{ele.nc} </td>
+           <td>{ele.ppal}</td>
+           <td>{ele.nv}</td>
            <td>{ele.nrores} </td>
            <td>{ele.fechai}</td>
            <td>{ele.fechaf}</td>
            <td>{ele.observacion}</td>
-           {ele.tipoA==='1'?
+           {ele.tipoA===1?
            <td>FC-DC</td>
-           :ele.tipoA==='2'?
+           :ele.tipoA===2?
            <td>FC-ND</td>
            :<td>FC-GS</td>
            }
            <td>{ele.vigente}</td>
            
+           {
+          ele.vigente==='S'
+          ?<td>
+           <button
+              onClick={()=>bajaAdicional(ele.id_row, ele.legajo,ele.row_id)}
+            >
+               <FontAwesomeIcon icon={faDownload} />
+              </button>
+           </td>
+          :null
+          }
            <td>
             <button
               onClick={()=>eliminarAdicional(ele.id_row, ele.legajo)}

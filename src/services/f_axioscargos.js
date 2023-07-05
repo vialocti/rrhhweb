@@ -1,9 +1,9 @@
 import axios from 'axios'
 
 
-const uri = 'http://200.12.136.74:4000/cargos/'
+//const uri = 'http://200.12.136.74:4000/cargos/'
 const urib = 'http://200.12.136.74:4000/biometrico/'
-//const uri = 'http://localhost:5000/cargos/'
+const uri = 'http://localhost:5000/cargos/'
 
 export async function getLastNroCargo(legajo) {
 
@@ -170,6 +170,17 @@ export async function getAdicionalAgente(legajo) {
 export async function deleteAdicionalAgente(id, legajo) {
     try {
         const resu = await axios.delete(`${uri}deladicional/${id}/${legajo}`)
+        return resu
+    } catch (error) {
+        console.log(error)
+    }
+}
+export async function bajaAdicionalAgente(id) {
+    let dato = {
+        vigente: 'N',
+    }
+    try {
+        const resu = await axios.put(`${uri}/bajaAdicional/${id}`, dato)
         return resu
     } catch (error) {
         console.log(error)
