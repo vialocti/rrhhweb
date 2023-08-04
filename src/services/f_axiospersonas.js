@@ -233,7 +233,95 @@ export async function asistenciaPersona(claustro, fechaini, fechafin, legajo) {
     }
 }
 
+//###########################################################
+//remplazo de los useHOok de datos
+//traer datos agente para ficha
+//datos principales
+export async function traerAgenteApi(legajo) {
+    //console.log(legajo)
+
+    try {
+        //console.log(`${urlbio}agente_leg/${legajo}`)
+        const resu = await axios.get(`${uri}agente_leg/${legajo}`)
+        //console.log(resu.data[0])
+        return resu.data[0]
 
 
+    } catch (err) {
+        console.log(err)
+
+
+    }
+
+
+}
+
+//datos agente 
+export const traerDatosAgenteApi = async (legajo) => {
+    console.log('b')
+
+    try {
+        //
+        const resu = await axios.get(`${uric}datosAgente/${legajo}`)
+        console.log(resu)
+        return resu.data[0]
+    } catch (err) {
+        console.log(err)
+    }
+
+}
+
+
+// datos contactos
+
+export const traerDatosDomiContaAgenteApi = async (legajo) => {
+    //const urlcargos='http://200.12.136.74:4000/cargos/'
+
+    try {
+        //console.log(`${urlbio}agente_leg/${legajo}`)
+        const resu = await axios.get(`${uric}datosDomiContactoAgente/${legajo}`)
+        //console.log(data)
+        return resu.data[0]
+    } catch (err) {
+        console.log(err)
+    }
+
+
+}
+
+//datos familia
+export const traerDatosFamiliaAgenteApi = async (legajo) => {
+
+
+    try {
+        //console.log(`${urlbio}agente_leg/${legajo}`)
+        const resu = await axios.get(`${uric}datosFamiliaAgente/${legajo}`)
+        //
+        return resu.data
+    } catch (err) {
+        console.log(err)
+    }
+
+
+
+}
+
+//datos antiguedad
+
+export const traerDatosAntiguedadAgenteApi = async (legajo) => {
+
+    //const urlcargos = 'http://200.12.136.74:4000/cargos/'
+
+    try {
+        //console.log(`${urlbio}agente_leg/${legajo}`)
+        const resu = await axios.get(`${uric}datosAntiguedadAgente/${legajo}`)
+        //console.log(data)
+        return resu.data[0]
+    } catch (err) {
+        console.log(err)
+    }
+
+
+}
 
 

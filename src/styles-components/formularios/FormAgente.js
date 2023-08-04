@@ -13,7 +13,23 @@ const Formulario = styled.form`
     gap: 40px;
     padding: 8px;
     border: solid 2px rgb(126,126,126);
+    border-radius: 2ch;
 
+    @media(max-width:900px){
+        grid-template-columns: 1fr;
+    }
+`
+
+const FormularioNP = styled.form`
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    padding: 20px;
+    border: solid 2px rgb(0,126,126);
+    border-radius: 2ch;
+    height: 80%;
+    background-image: linear-gradient(#AAAAAA,#FFFFFF );
+    
     @media(max-width:900px){
         grid-template-columns: 1fr;
     }
@@ -121,9 +137,9 @@ const ContenedorBoton = styled.div`
 const Boton = styled.button`
         height: 45px;
         line-height:45px;
-        width:70% ;
+        width:40% ;
         color: #FFF;
-        background: #04B;
+        background: #2222FF;
         font-weight: bold;
         border: none;
         border-radius: 8px;
@@ -131,7 +147,7 @@ const Boton = styled.button`
         transition: .1s ease all;
 
         &:hover{
-            box-shadow: 3px 0px 30px rgba(1,150,150,1);
+            box-shadow: 3px 0px 30px rgba(120,120,255,1);
         }
 
     `
@@ -139,9 +155,9 @@ const Boton = styled.button`
 const BotonC = styled.button`
         height: 45px;
         line-height:45px;
-        width:30% ;
+        width:40% ;
         color: #FFF;
-        background: #88B;
+        background: #66FF66;
         font-weight: bold;
         border: none;
         border-radius: 8px;
@@ -149,7 +165,7 @@ const BotonC = styled.button`
         transition: .1s ease all;
 
         &:hover{
-            box-shadow: 3px 0px 30px rgba(120,150,150,1);
+            box-shadow: 3px 0px 30px rgba(120,255,120,1);
         }
 
     `
@@ -172,12 +188,13 @@ const SelectorV = styled.select`
     
     `
 const CabTitulo = styled.h4`
-        width: 90%;
+        width: 100%;
         text-align:center;
-  
+        border-radius: 5px;
         background-color:blue;
         padding: 5px;
         color:white;
+        box-shadow: 3px 0px 30px rgba(120,120,255,1);
         
 `
 const CabSubTitulo = styled.h5`
@@ -191,7 +208,7 @@ const CabSubTitulo = styled.h5`
 `
 
 const CabTituloAgente = styled.h5`
-        width: 90%;
+        width: 100%;
         text-align:left;
         background-color:blue;
         padding: 5px;
@@ -229,6 +246,7 @@ export {
     CabTituloCargo,
     BotonC,
     CabSubTitulo,
-    FormularioD
+    FormularioD,
+    FormularioNP,
 
 }

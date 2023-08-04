@@ -6,6 +6,7 @@ import { useGetMaterias } from '../../hooks/useGetMaterias'
 import { useSelector } from 'react-redux'
 import { getLastNroCargo, grabarCargo } from '../../services/f_axioscargos'
 import Swal from 'sweetalert2'
+import CargosConsulta from './CargosConsulta'
 //import { traerAgentes } from '../../services/f_axiospersonas'
 
 
@@ -532,7 +533,8 @@ const FormularioCargo = () => {
         
     </div>
     :
-    <div className='container'>
+    <div className='container-fluid '>
+    <CargosConsulta tipoCargo={'V'} title={'Cargos Vigentes'} tipo={1}/>    
     <ContenedorBoton>
         <Boton onClick={mostrar}>Nuevo Cargo</Boton>
     </ContenedorBoton>

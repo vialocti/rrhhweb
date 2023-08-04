@@ -47,7 +47,7 @@ const AdicionalMuestra = ({adicionalAg}) => {
   }
 */
 
-  const eliminarAdicional =async (id, legajo)=>{
+  const eliminarAdicional =async (id, legajo,idcargo)=>{
     
     
     Swal
@@ -67,6 +67,9 @@ const AdicionalMuestra = ({adicionalAg}) => {
             if (resu.status===200){
               const newAdicionales =adicionales.filter(adic=>adic.id_row !== id)
               setAdicionales(newAdicionales)
+              let datos={adic:'0'}
+              const resucar= await modiCargo(idcargo,datos,1)
+              if(resucar===2000){console.log('ok')}
               
             }
             
@@ -169,7 +172,7 @@ const AdicionalMuestra = ({adicionalAg}) => {
           }
            <td>
             <button
-              onClick={()=>eliminarAdicional(ele.id_row, ele.legajo)}
+              onClick={()=>eliminarAdicional(ele.id_row, ele.legajo,ele.row_id)}
             >
                <FontAwesomeIcon icon={faTrash} />
               </button>

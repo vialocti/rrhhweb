@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { useAgenteInfoAntiguedad } from '../../hooks/useAgenteInfoAntiguedad'
+import React, { useEffect, useState } from 'react'
+//import { useAgenteInfoAntiguedad } from '../../hooks/useAgenteInfoAntiguedad'
 
 
 import { CabSubTitulo} from '../../styles-components/formularios/FormAgente'
@@ -9,13 +9,43 @@ import { useSelector } from 'react-redux'
 import { useModal } from '../../hooks/useModal'
 import { ModalComponente } from '../ModalComponente'
 import FormAgenteAntiguedad from '../../formModales/agentes/FormAgenteAntiguedad'
+import { traerDatosAntiguedadAgenteApi } from '../../services/f_axiospersonas'
 
 const DatosAntiguedad = () => {
   const [tipo, setTipo] = useState('')
   const legajo=useSelector(state=>state.agente.legajo)
-  const [isOpen,openModal,closeModal] = useModal()
+//  const [isOpen,openModal,closeModal] = useModal()
+  const [isOpen,modi,openModal,closeModal,modifica] = useModal()
+  const[datosAntiguedadAgente, setDatosAntiguedadAgente]= useState(null)
   
-  const {datosAntiguedadAgente,loading,error} = useAgenteInfoAntiguedad()
+  //const {datosAntiguedadAgente,loading,error} = useAgenteInfoAntiguedad()
+
+  useEffect(() => {
+    
+    
+    const getAgenteAntInfo = async()=>{
+    setDatosAntiguedadAgente(await traerDatosAntiguedadAgenteApi(legajo))
+    }
+    
+    if(legajo){
+    getAgenteAntInfo()
+    }
+  }, [modi])
+  
+  useEffect(() => {
+    
+    
+    const getAgenteAntInfo = async()=>{
+    setDatosAntiguedadAgente(await traerDatosAntiguedadAgenteApi(legajo))
+    }
+    
+    if(legajo){
+    getAgenteAntInfo()
+    }
+  }, [legajo])
+  
+
+
 
   const handleNewDato=()=>{
     setTipo('A')
@@ -27,8 +57,8 @@ const DatosAntiguedad = () => {
     openModal()
   }
   
-  if(loading) return <p>Cargando datos .....</p>
-  if(error) return <p>Error de Carga</p>
+  //if(loading) return <p>Cargando datos .....</p>
+  //if(error) return <p>Error de Carga</p>
   
   
     
@@ -36,7 +66,7 @@ const DatosAntiguedad = () => {
     
         <div className='container-fluid'>
           <ModalComponente isOpen={isOpen} closeModal={closeModal}>
-             <FormAgenteAntiguedad legajo={legajo} funcion={closeModal} tipo={tipo} datos={datosAntiguedadAgente} />
+             <FormAgenteAntiguedad legajo={legajo} modifica={modifica} funcion={closeModal} tipo={tipo} datos={datosAntiguedadAgente} />
           </ModalComponente>
         {datosAntiguedadAgente?
         <>

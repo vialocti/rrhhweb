@@ -15,7 +15,7 @@ const Wrapper = styled.section`
 padding: 10px;
 background:lightgray;
 margin:10px;
-border:1px solid peachpuff;
+border:1px solid #CCAACC;
 border-radius: 10px;
 `
 

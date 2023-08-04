@@ -4,7 +4,7 @@ import InputC from '../../elementos/InputComponent'
 import Swal from 'sweetalert2'
 import {modificarDatosFamiliar, grabarDatosFamiliar } from '../../services/f_axiospersonas'
 
-const FormDatosFamilia = ({legajo,funcion,tipo,datos}) => {
+const FormDatosFamilia = ({legajo,modifica,funcion,tipo,datos}) => {
   const expresiones={
     nombre: /^[,a-zA-ZÀ-ÿ\s]{1,50}$/,
     fechanac:/^\d{4}([-/.])(0?[1-9]|1[0-1-2])\1(3[01]|[12][0-9]|0?[1-9])$/,
@@ -91,7 +91,7 @@ if (resp===200){
         if (resultado.value) {
             // Hicieron click en "Sí"
             funcion()
-              
+            modifica()              
             
         }});
 
@@ -138,6 +138,7 @@ if (resp===200){
   }
   const cerrar=()=>{
     funcion()
+    modifica()
    }
 
 

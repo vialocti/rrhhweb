@@ -10,7 +10,7 @@ import {grabarCargo} from '../services/f_axioscargos';
 import { useSelector } from 'react-redux';
 import { useGetMaterias } from '../hooks/useGetMaterias';
 
-const FormAltaExtension = ({dato, nrocargoG,funcion,materias,idmat}) => {
+const FormAltaExtension = ({dato,modifica, nrocargoG,funcion,materias,idmat}) => {
 
     const nombre = useSelector(state=>state.agente.nombre)
     const navigate = useNavigate()
@@ -98,7 +98,12 @@ const FormAltaExtension = ({dato, nrocargoG,funcion,materias,idmat}) => {
     }
    
 
-  
+    const grabarcargoext =async (cargoNew)=>{
+        await grabarCargo(cargoNew)
+        modifica()
+        funcion()
+
+    }
     //console.log(materias)
     //grabar cargo renovacion
     const grabarNuevoCargo =async ()=>{
@@ -159,9 +164,7 @@ const FormAltaExtension = ({dato, nrocargoG,funcion,materias,idmat}) => {
         .then(resultado => {
             if (resultado.value) {
                 // Hicieron click en "Sí"
-              grabarCargo(cargoNew)
-              // console.log(cargoNew)
-              funcion()
+                grabarcargoext(cargoNew)
                   
                 
             } else {
@@ -202,6 +205,7 @@ const FormAltaExtension = ({dato, nrocargoG,funcion,materias,idmat}) => {
     
     //setValores()
     funcion()
+    modifica()
   }
 
   const changeCargo=()=>{

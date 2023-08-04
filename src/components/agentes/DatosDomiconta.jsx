@@ -1,6 +1,6 @@
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 
-import {useAgenteInfoDomiConta} from '../../hooks/useAgenteInfoDomiConta'
+//import {useAgenteInfoDomiConta} from '../../hooks/useAgenteInfoDomiConta'
 import { useModal } from '../../hooks/useModal'
 
 import { CabSubTitulo, Label } from '../../styles-components/formularios/FormAgente'
@@ -9,13 +9,43 @@ import FormDomiContacto from '../../formModales/agentes/FormDomiContacto'
 import { useSelector } from 'react-redux'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit } from '@fortawesome/free-regular-svg-icons'
+import { traerDatosDomiContaAgenteApi } from '../../services/f_axiospersonas'
 
 const DatosDomiconta = () => {
   
   const [tipo, setTipo] = useState('')
+  const [datosDomiContaAgente, setDatosDomiContaAgente] = useState(null)
   const legajo=useSelector(state=>state.agente.legajo)
-  const [isOpen,openModal,closeModal] = useModal()
+  //const [isOpen,openModal,closeModal] = useModal()
+  const [isOpen,modi,openModal,closeModal,modifica] = useModal()
+
+  //traerDatosDomiContaAgenteApi
+
+  useEffect(() => {
+    
+    
+    const getAgenteDCInfo = async()=>{
+    setDatosDomiContaAgente(await traerDatosDomiContaAgenteApi(legajo))
+    }
+    
+    if(legajo){
+    getAgenteDCInfo()
+    }
+  }, [modi])
   
+  useEffect(() => {
+    
+    
+    const getAgenteDCInfo = async()=>{
+    setDatosDomiContaAgente(await traerDatosDomiContaAgenteApi(legajo))
+    }
+    
+    if(legajo){
+    getAgenteDCInfo()
+    }
+  }, [legajo])
+
+
     const handleNewDato=()=>{
       setTipo('A')
       openModal()
@@ -25,11 +55,11 @@ const DatosDomiconta = () => {
       setTipo('U')
       openModal()
     }
-    const {loading,error,datosDomiContaAgente} = useAgenteInfoDomiConta()
+   // const {loading,error,datosDomiContaAgente} = useAgenteInfoDomiConta()
    
-    if(loading) return <p>Cargando datos .....</p>
-    if(error) return <p>Error de Carga</p> 
-    console.log(datosDomiContaAgente)
+    //if(loading) return <p>Cargando datos .....</p>
+    //if(error) return <p>Error de Carga</p> 
+    //console.log(datosDomiContaAgente)
 
 
 
@@ -37,7 +67,7 @@ const DatosDomiconta = () => {
     <div className='container-fluid'>
     
     <ModalComponente isOpen={isOpen} closeModal={closeModal}>
-        <FormDomiContacto legajo={legajo} funcion={closeModal} tipo={tipo} datos={datosDomiContaAgente}/>
+        <FormDomiContacto legajo={legajo} modifica={modifica} funcion={closeModal} tipo={tipo} datos={datosDomiContaAgente}/>
     </ModalComponente>
 
 

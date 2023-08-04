@@ -7,7 +7,7 @@ import { Boton, CabTitulo, ContenedorBoton } from '../../styles-components/formu
 import { grabarDatosPerDomi, modificarDatosPerDomi, traerCodLugar } from '../../services/f_axiospersonas'
 //import { useNavigate } from 'react-router-dom'
 
-const FormDomiContacto = ({legajo,funcion,tipo,datos}) => {
+const FormDomiContacto = ({legajo,modifica,funcion,tipo,datos}) => {
     
     //console.log(tipo, datos)
     const expresiones = {
@@ -33,7 +33,18 @@ const FormDomiContacto = ({legajo,funcion,tipo,datos}) => {
     
     
     useEffect(() => {
+        const limpiardatos=()=>{
+            setDomicilio({campo:'',valido:null})
+            setCpostal({campo:'',valido:null})
+            setTelefono({campo:'',valido:null})
+            setTelefonocontacto({campo:'',valido:null})
+            setTelefonomovil({campo:'',valido:null})
+            setEmaili({campo:'',valido:null})
+            setEmailp({campo:'',valido:null})
+            
+        }
          if(datos){
+            limpiardatos()
             setDomicilio({campo:datos.domicilio,valido:'true'})
             setCpostal({campo:datos.cp,valido:'true'})
             setTelefono({campo:datos.telefonoFijo,valido:'true'})
@@ -44,14 +55,7 @@ const FormDomiContacto = ({legajo,funcion,tipo,datos}) => {
             setLocalidad({campo:datos.localidad,valido:'true'})
         }
         if (tipo==='A'){
-            setDomicilio({campo:'',valido:null})
-            setCpostal({campo:'',valido:null})
-            setTelefono({campo:'',valido:null})
-            setTelefonocontacto({campo:'',valido:null})
-            setTelefonomovil({campo:'',valido:null})
-            setEmaili({campo:'',valido:null})
-            setEmailp({campo:'',valido:null})
-            
+            limpiardatos()
         }
         
     }, [datos,tipo])
@@ -96,6 +100,7 @@ const FormDomiContacto = ({legajo,funcion,tipo,datos}) => {
                 if (resultado.value) {
                     // Hicieron click en "Sí"
                     funcion()
+                    modifica()
                       
                     
                 }});
@@ -147,6 +152,7 @@ const FormDomiContacto = ({legajo,funcion,tipo,datos}) => {
 
    const cerrar=()=>{
     funcion()
+    modifica()
    }
   return (
     <div className='container mt-2'>

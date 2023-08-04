@@ -4,10 +4,12 @@ import { Boton, CabTitulo, ContenedorBoton, FormularioD, LabelF, SelectorV } fro
 import InputC from '../../elementos/InputComponent'
 import Swal from 'sweetalert2'
 import { modificarPersona } from '../../services/f_axiospersonas'
+//import { useNavigate } from 'react-router-dom'
 
-const FormAgentePrincipal = ({funcion,datos}) => {
+const FormAgentePrincipal = ({modifica,funcion,datos}) => {
     //legajo,tipodocumento,nrodocumento,apellido,condicion,nrocuil,area,sede
-    console.log(datos)
+  
+    //console.log(datos)
     const expresiones = {
         //usuario: /^[a-zA-Z0-9\_\-]{4,16}$/, // Letras, numeros, guion y guion_bajo
         nombre: /^[,a-zA-ZÀ-ÿ\s]{1,50}$/, // Letras y espacios, pueden llevar acentos.
@@ -34,13 +36,14 @@ const FormAgentePrincipal = ({funcion,datos}) => {
    const [asistencia, setAsistencia]=useState('A')
 
 
-
    
 
-
    useEffect(() => {
-     
+ 
     if(datos){
+        
+     
+        limpiar()
         setLegajo({campo:datos.legajo, valido:'true'})
         setNombre({campo:datos.apellido, valido:'true'})
         setNrocuil({campo:datos.nrocuil, valido:'true'})
@@ -55,7 +58,17 @@ const FormAgentePrincipal = ({funcion,datos}) => {
      
    }, [datos])
    
-
+   const limpiar=()=>{
+        setLegajo({campo:'', valido:null})
+        setNombre({campo:'', valido:null})
+        setNrocuil({campo:'', valido:null})
+        setNrodoc({campo:'', valido:null})
+        setArea('Docentes')
+        setClaustro('1')
+        setSede('1')
+        setTipod('1')
+        setAsistencia('A')
+   }
 
    const grabarDatosAgentePrincipal = async ()=>{
 
@@ -87,6 +100,8 @@ if (resp===200){
         if (resultado.value) {
             // Hicieron click en "Sí"
             funcion()
+            modifica()
+            
                         
         }});
   
@@ -97,6 +112,7 @@ if (resp===200){
 
 
    const cerrar =()=>{
+    limpiar()
     funcion()
    }
    const onHandleChangeTD =()=>{
@@ -183,8 +199,8 @@ if (resp===200){
                 <LabelF htmlFor='tipod'>Tipo Documento</LabelF>
                 <SelectorV name="tipod" id='tipod' value={tipod} onChange={onHandleChangeTD}>
                     <option value="1">DNI</option>
-                    <option value="2">LE</option>
-                    <option value="3">LC</option>
+                    <option value="2">LC</option>
+                    <option value="3">LE</option>
                 </SelectorV>
             </div>
             <div>

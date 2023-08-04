@@ -29,6 +29,7 @@ const FormAdicional = ({agente}) => {
  const [fechaini,setFechaini]=useState(new Date())
  const [fechafin,setFechafin]=useState(new Date())
  const [adicionalAg, setAdicionalAg] = useState([])
+ const [historicos, setHistoricos] = useState(false)
  //const [nroid, setNroid]= useState(0)
  
 
@@ -67,21 +68,25 @@ const FormAdicional = ({agente}) => {
   tipoA:"",
   nrores:"",
   observacion: "",
-  vigente:""
+  vigente:"",
+  ncg:"",
+  ppal:"",
+  nv:"",
+  row_id:""
  }
 
  //const nroregistroC=''
-  const {loading,error,cargosAgente} = useAgenteCargos()
+  const {loading,error,cargosAgente,cargoshAgente} = useAgenteCargos()
  
    if(loading) return <p>Cargando datos .....</p>
     if(error) return <p>Error de Carga</p>  
    
 
 
-const modiFicaCargo =async (id,datosModi)=>{
+const modiFicaCargo =async (id,datosModi,archi)=>{
+    //console.log(id,datosModi,archi)
+    const resu = await modiCargo(id,datosModi,archi)
   
-  
-  const resu = await modiCargo(id,datosModi,1)
   if (resu.status===200){
     console.log('oooooo')
     setAdicionalAg([])
@@ -91,14 +96,19 @@ const modiFicaCargo =async (id,datosModi)=>{
 
 const grabarDatos = async(e)=>{
   e.preventDefault()
-
+  let ta=1
   if (fechafin-fechaini < 0){
     alert('La Fecha Final no puede ser menor a la Fecha Inicial')
   }else if (document.getElementById('nroresu').value.trim()===''){
     alert('El Nro de Resolución no puede ser vacio')
   }else{
   let nroscargo=document.getElementById('cargo').value.split('/')
-  let id = nroscargo[1]
+  console.log(nroscargo)
+  let id = nroscargo[2]
+  values.row_id=nroscargo[2]
+  values.ppal=nroscargo[3]
+  values.nv=nroscargo[4]
+  values.ncg = nroscargo[1]
   values.fecha_inicio= formatearfecha(fechaini)
   values.fecha_fin= formatearfecha(fechafin)
   values.legajo = agente
@@ -108,20 +118,33 @@ const grabarDatos = async(e)=>{
   values.observacion=document.getElementById('observa').value.trim()
   values.vigente="S"
 
-  //console.log(values)
+  console.log(values)
   const resu = await grabarAdicionalFC(values)
   
   if(resu.status===200){
     const datosModi={
       adic:document.getElementById('motivo').value
     }
-   modiFicaCargo(id,datosModi)
+  
+   if(historicos) {
+     ta=2
+   }else{
+     ta=1
+    }
+    modiFicaCargo(id,datosModi,ta)
+  }else{
+    console.log(resu.status)
   }
   
-  }
+}
 
 }
 
+const onHandleChangeHis=()=>{
+  let valueH=document.getElementById('cargosh').value==='2'?true:false
+  
+  setHistoricos(valueH) 
+}
  
 const formatearfecha = (fecha)=>{
 
@@ -157,18 +180,32 @@ const onChangeFf = (fecha)=>{
     
        <div className='container'>
         
-         <form>
+         <div className='card' style={{padding:3}}>
+         <form >
           
              
             <div className="row">
                 <div className="col-md-4">
-                      <label className='h5'> Cargo </label>
-                      <select id="cargo" className='form-control'>
-                        {cargosAgente.map((ele,index)=>(
-                      <option key={index} value={ele.nc + '/' + ele.row_id}>NC:{ele.nc} - CA:{ele.ca} - PPAL:{ele.ppal} - NV:{ele.nv} - IdMAT:{ele.pl}{ele.mat}</option>
-                        ))}
-          
-                      </select>
+                {!historicos
+                   ?<> 
+                  <label className='h5'> Cargos Vigentes </label>
+                  <select id="cargo" className='form-control'>
+                    {cargosAgente.map((ele,index)=>(
+                  <option key={index} value={ele.nc + '/' + ele.ncg + '/' + ele.row_id + '/' + ele.ppal + '/' + ele.nv}>NC:{ele.nc} - CA:{ele.ca} - PPAL:{ele.ppal} - NV:{ele.nv} - IdMAT:{ele.pl}{ele.mat}</option>
+                    ))}
+      
+                  </select>
+                  </>  
+                  :<>
+                  <label className='h5'style={{'color':'red'}}> Cargos Historicos </label>
+                  <select id="cargo" className='form-control'>
+                    {cargoshAgente.map((ele,index)=>(
+                  <option key={index} value={ele.nc + '/' + ele.ncg + '/'+ ele.row_id + '/'+ ele.ppal + '/' + ele.nv}>NC:{ele.nc} - CA:{ele.ca} - PPAL:{ele.ppal} - NV:{ele.nv} - IdMAT:{ele.pl}{ele.mat}</option>
+                    ))}
+      
+                  </select>  
+                  </>
+                  }
                      <br/>
                       <label className='h5'> Adicional </label>
                       <select id="motivo" className='form-control'>
@@ -227,12 +264,11 @@ const onChangeFf = (fecha)=>{
              
               </div>
               <div className="col-md-3">
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
+              <label className='h5'> Cargos Historicos ? </label>
+                    <select id="cargosh" className='form-control' onChange={onHandleChangeHis}>
+                    <option value='1'>NO</option>
+                    <option value='2'>SI</option>
+                </select> 
                 <br />  
                 <div style={{marginTop:'15px',marginLeft:'15px'}}>
                   <button  type='buttom'  className='btn btn-primary' style={{marginTop:20}} onClick={grabarDatos}>
@@ -248,11 +284,12 @@ const onChangeFf = (fecha)=>{
               
 
         
-    </form>           
+    </form>    
+    </div>       
     </div>
 
   <br/>
-  <CabTitulo style={{marginLeft:'10px'}}>Adicionales Registrados</CabTitulo>
+  <CabTitulo>Adicionales Registrados</CabTitulo>
 
  <div className="row">
     

@@ -3,7 +3,7 @@ import React, {useState, useEffect } from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 
 import axios from 'axios'
-import { addAgente } from '../../dominio/store/agente-slice'
+//import { addAgente } from '../../dominio/store/agente-slice'
 import '../../css/estilosforminasistencia.css'
 
 //import FormInasistencia from '../../components/inasistencia/FormInasistencia'
@@ -34,7 +34,7 @@ const AdicionalesPage = () => {
 
   
   return (
-    <div className="container-fluid">
+    <div className="container">
     
     <BuscarPersona />
     {/**
@@ -47,10 +47,10 @@ const AdicionalesPage = () => {
   <div className='row'>
   {legajo
    ?<>
-    <CabTitulo style={{marginLeft:'20px'}}>Registro de Adicionales</CabTitulo>
+    <CabTitulo>Registro de Adicionales</CabTitulo>
     <CabeceraFuncion_simple /> 
    </>
-    :<CabTitulo style={{marginLeft:'20px'}}>Registro de Adicionales</CabTitulo>
+    :<CabTitulo>Registro de Adicionales</CabTitulo>
    }  
   
   </div>  

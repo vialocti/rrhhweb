@@ -1,5 +1,5 @@
-import React,{useState} from 'react'
-import {useAgenteInfoPersonal} from '../../hooks/useAgenteInfoPersonal'
+import React,{useEffect, useState} from 'react'
+//import {useAgenteInfoPersonal} from '../../hooks/useAgenteInfoPersonal'
 
 import { CabSubTitulo, Label } from '../../styles-components/formularios/FormAgente'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -8,14 +8,50 @@ import { useModal } from '../../hooks/useModal'
 import { useSelector } from 'react-redux'
 import { ModalComponente } from '../ModalComponente'
 import FormDatosPersonales from '../../formModales/agentes/FormDatosPersonales'
+import { traerDatosAgenteApi } from '../../services/f_axiospersonas'
 
 const DatosPersonales = () => {
   
 
   const [tipo, setTipo] = useState('')
   const legajo=useSelector(state=>state.agente.legajo)
-  const [isOpen,openModal,closeModal] = useModal()
-  const {datosAgente,loading,error} = useAgenteInfoPersonal()
+  const [datosAgente, setDatosAgente]= useState(null)
+  //const [isOpen,openModal,closeModal] = useModal()
+  const [isOpen,modi,openModal,closeModal,modifica] = useModal()
+
+  //const {datosAgente,loading,error} = useAgenteInfoPersonal() traerDatosAgenteApi
+
+
+  useEffect(() => {
+    
+    
+    const getDatosAgenteInfo = async()=>{
+    setDatosAgente(await traerDatosAgenteApi(legajo))
+    }
+    
+    if(legajo){
+    getDatosAgenteInfo()
+    }
+  }, [modi])
+  
+  useEffect(() => {
+    
+    
+    const getDatosAgenteInfo = async()=>{
+    setDatosAgente(await traerDatosAgenteApi(legajo))
+    
+    }
+    
+    if(legajo){
+    getDatosAgenteInfo()
+    }
+  }, [legajo])
+
+
+
+
+
+
   
   const handleNewDato=()=>{
     setTipo('A')
@@ -26,14 +62,14 @@ const DatosPersonales = () => {
     setTipo('U')
     openModal()
   }
-  if(loading) return <p>Cargando datos .....</p>
-  if(error) return <p>Error de Carga</p>
-  
+  //if(loading) return <p>Cargando datos .....</p>
+  //if(error) return <p>Error de Carga</p>
+  //console.log(datosAgente)
     
     return (
     <div className='container-fluid'>
         <ModalComponente isOpen={isOpen} closeModal={closeModal} >
-          <FormDatosPersonales legajo={legajo} funcion={closeModal} tipo={tipo} datos={datosAgente} /> 
+          <FormDatosPersonales legajo={legajo} modifica={modifica} funcion={closeModal} tipo={tipo} datos={datosAgente} /> 
         </ModalComponente>
         {datosAgente?
         <>

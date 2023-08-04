@@ -4,7 +4,7 @@ import { Boton, CabTitulo, ContenedorBoton, FormularioD } from '../../styles-com
 import InputC from '../../elementos/InputComponent'
 import { grabarDatosAntiguedad, modificarDatosAntiguedad } from '../../services/f_axiospersonas'
 
-const FormAgenteAntiguedad = ({legajo,funcion,tipo,datos}) => {
+const FormAgenteAntiguedad = ({legajo,modifica,funcion,tipo,datos}) => {
 
   const expresiones = {
     nroresord: /^[a-zA-Z0-9\_\ \-/]{4,20}$/, // Letras, numeros, guion y guion_bajo
@@ -126,6 +126,7 @@ if (resp===200){
         if (resultado.value) {
             // Hicieron click en "Sí"
             funcion()
+            modifica()
               
             
         }});
@@ -137,6 +138,7 @@ if (resp===200){
 
    const cerrar=()=>{
     funcion()
+    modifica()
    }
   //pulsamos boton agregar o modificar
   const onHandleSubmit =(e)=>{

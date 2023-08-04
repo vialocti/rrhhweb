@@ -1,9 +1,9 @@
 import axios from 'axios'
 
 
-//const uri = 'http://200.12.136.74:4000/cargos/'
+const uri = 'http://200.12.136.74:4000/cargos/'
 const urib = 'http://200.12.136.74:4000/biometrico/'
-const uri = 'http://localhost:5000/cargos/'
+//const uri = 'http://localhost:5000/cargos/'
 
 export async function getLastNroCargo(legajo) {
 
@@ -37,7 +37,7 @@ export async function grabarCargoHistorico(cargoHist, nroreg, legajo) {
         const resu = await axios.post(`${uri}addcargoH`, cargoHist)
         if (resu.statusText === 'OK') {
             console.log('Mayonesa')
-            darBajaCargo(nroreg, legajo)
+            await darBajaCargo(nroreg, legajo)
         }
     } catch (error) {
         console.log(error)
@@ -60,7 +60,7 @@ export async function darBajaCargo(nroreg, legajo) {
 //modificar datos cargos
 //
 export async function modiCargo(nroreg, datos, archi) {
-    //console.log(nroreg, datos,archi)
+    console.log(nroreg, datos, archi)
     try {
         if (archi === 1) {
             const resu = await axios.put(`${uri}modiCargo/${nroreg}`, datos)
@@ -146,6 +146,7 @@ export async function grabarAdicionalFC(values) {
     try {
         //console.log(`${uri}addCargo`)
         const resu = await axios.post(`${uri}addAdicionalFC`, values)
+        console.log(resu)
         return resu
     } catch (error) {
         console.log(error)
@@ -185,4 +186,34 @@ export async function bajaAdicionalAgente(id) {
     } catch (error) {
         console.log(error)
     }
+}
+
+//cargos contemporaneos
+export const traerCargosAgenteApi = async (legajo) => {
+
+
+    try {
+
+        const resu = await axios.get(`${uri}cargosvigentes/${legajo}`)
+        //console.log(data)
+        return resu.data
+    } catch (err) {
+        console.log(err)
+
+    }
+
+}
+
+//cargos History
+export const traerCargosHAgenteApi = async (legajo) => {
+
+    try {
+
+        const resu = await axios.get(`${uri}cargoshistoricos/${legajo}`)
+
+        return resu.data
+    } catch (err) {
+        console.log(err)
+    }
+
 }

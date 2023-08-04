@@ -1,5 +1,5 @@
-import React,{useState} from 'react'
-import {useAgenteInfoFamilia} from '../../hooks/useAgenteInfoFamilia'
+import React,{useEffect, useState} from 'react'
+//import {useAgenteInfoFamilia} from '../../hooks/useAgenteInfoFamilia'
 
 import { CabSubTitulo, Label } from '../../styles-components/formularios/FormAgente'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -8,19 +8,51 @@ import { ModalComponente } from '../ModalComponente'
 import FormDatosFamilia from '../../formModales/agentes/FormDatosFamilia'
 import { useSelector } from 'react-redux'
 import { useModal } from '../../hooks/useModal'
+import { traerDatosFamiliaAgenteApi } from '../../services/f_axiospersonas'
 //import { faAdd } from '@fortawesome/free-solid-svg-icons'
 
 const DatosFamilia = () => {
   const legajo=useSelector(state=>state.agente.legajo)
-  const [isOpen,openModal,closeModal] = useModal()
+  //const [isOpen,openModal,closeModal] = useModal()
+  const [isOpen,modi,openModal,closeModal,modifica] = useModal()
+
   
-  const {datosFamiliaAgente,loading,error} = useAgenteInfoFamilia()
+  //const {datosFamiliaAgente,loading,error} = useAgenteInfoFamilia()
 
   const[tipo, setTipo]= useState('')
   const [datosFamiliar,setDatoFamiliar]=useState([])
+  const [datosFamiliaAgente, setDatosFamiliaAgente]=useState(null)
 
-  if(loading) return <p>Cargando datos .....</p>
-  if(error) return <p>Error de Carga</p>
+  useEffect(() => {
+    
+    
+    const getAgenteFamInfo = async()=>{
+    setDatosFamiliaAgente(await traerDatosFamiliaAgenteApi(legajo))
+    }
+    
+    if(legajo){
+    getAgenteFamInfo()
+    }
+  }, [modi])
+  
+  useEffect(() => {
+    
+    
+    const getAgenteFamInfo = async()=>{
+    setDatosFamiliaAgente(await traerDatosFamiliaAgenteApi(legajo))
+    }
+    
+    if(legajo){
+    getAgenteFamInfo()
+    }
+  }, [legajo])
+  
+  
+  
+  
+  
+  //if(loading) return <p>Cargando datos .....</p>
+  //if(error) return <p>Error de Carga</p>
   //console.log(datosFamiliaAgente)
   
   const convertir =(fn)=>{
@@ -42,9 +74,9 @@ const DatosFamilia = () => {
     
         <div className='container-fluid'>
           <ModalComponente isOpen={isOpen} closeModal={closeModal}>
-            <FormDatosFamilia legajo={legajo} funcion={closeModal} tipo={tipo} datos={datosFamiliar} />
+            <FormDatosFamilia legajo={legajo} modifica={modifica} funcion={closeModal} tipo={tipo} datos={datosFamiliar} />
           </ModalComponente>
-        {datosFamiliaAgente.length > 0?
+        {datosFamiliaAgente?datosFamiliaAgente.length > 0?
         <>
         <div className='row'>
           <CabSubTitulo>Datos Familiares<button onClick={handleNewDato} style={{marginLeft:'10px'}}><FontAwesomeIcon icon={faUser} /></button></CabSubTitulo>
@@ -84,7 +116,8 @@ const DatosFamilia = () => {
     <label>Sin Datos Familiares del Colaborador</label>
     <button className='button' onClick={handleNewDato}>Agregar</button>
     </div>
-    }          
+    :null  
+  }
     </div>
     
   )

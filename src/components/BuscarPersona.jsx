@@ -78,7 +78,7 @@ const BuscarPersona = () => {
 
   return (
     <Wrapper>
-    <div className='container ml-4'>
+    <div className='container m-1'>
 
 
             <div className='row'>

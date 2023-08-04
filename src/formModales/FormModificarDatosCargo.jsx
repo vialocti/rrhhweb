@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 //import { useGetMaterias } from '../hooks/useGetMaterias';
 
 
-const FormModificarDatosCargo = ({dato,funcion, idmat, materias, cargospl}) => {
+const FormModificarDatosCargo = ({dato,modifica,funcion, idmat, materias, cargospl}) => {
 
     const nombre = useSelector(state=>state.agente.nombre)
     //const navigate = useNavigate()
@@ -259,10 +259,15 @@ const changeAdicional=()=>{
  
 }
 
+const grabarDatosModi =async ()=>{
+      await modiCargo(nroReg,datosModi,1)
+      cerrar()
+}
+
   
     //console.log(materias)
     //grabar cargo renovacion
-    const updateCargo =async ()=>{
+    const updateCargo =()=>{
       
       datosModi={
         rempla:remplazo.campo,
@@ -297,8 +302,7 @@ const changeAdicional=()=>{
         .then(resultado => {
             if (resultado.value) {
               //console.log(datosModi)
-               modiCargo(nroReg,datosModi,1)
-               cerrar()
+               grabarDatosModi()
                //funcion()
                //navigate('/fichaAgente')
                   
@@ -365,6 +369,7 @@ const changeAdicional=()=>{
   const cerrar =()=>{
     
     setValores()
+    modifica()
     funcion()
   }
    

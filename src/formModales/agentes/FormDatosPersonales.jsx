@@ -4,7 +4,7 @@ import { grabarDatosPer, modificarDatosPer, traerCodLugar } from '../../services
 import InputC from '../../elementos/InputComponent'
 import Swal from 'sweetalert2'
 
-const FormDatosPersonales = ({legajo,funcion,tipo,datos}) => {
+const FormDatosPersonales = ({legajo,modifica,funcion,tipo,datos}) => {
   
   
   const expresiones ={
@@ -56,7 +56,22 @@ const FormDatosPersonales = ({legajo,funcion,tipo,datos}) => {
 
   useEffect(() => {
     
+   const limpiardatos =()=>{
+      setFechnac({campo:'', valido:null})
+      setFifce({campo:'', valido:null})
+      setFiunc({campo:'', valido:null})
+      setFiapn({campo:'', valido:null})
+      setGs('A')
+      setLugarN('1')
+      setSexo('1')
+      setNacionalidad('1')
+      setRh('+')
+      setEcivil('1')
+   }
+
+
     if(datos){
+      limpiardatos()
       setFechnac({campo:datos.fechanac?convertirFecha(datos.fechanac):'',valido:'true'})
       setFifce({campo:datos.fechaIFCE?convertirFecha(datos.fechaIFCE):'',valido:'true'})
       setFiunc({campo:datos.fechaIUNC?convertirFecha(datos.fechaIUNC):'',valido:'true'})
@@ -70,16 +85,7 @@ const FormDatosPersonales = ({legajo,funcion,tipo,datos}) => {
     }
 
     if(tipo==='A'){
-      setFechnac({campo:'', valido:null})
-      setFifce({campo:'', valido:null})
-      setFiunc({campo:'', valido:null})
-      setFiapn({campo:'', valido:null})
-      setGs('A')
-      setLugarN('1')
-      setSexo('1')
-      setNacionalidad('1')
-      setRh('+')
-      setEcivil('1')
+      limpiardatos()
 
     }
     const getDatosU =async ()=>{
@@ -129,6 +135,7 @@ const FormDatosPersonales = ({legajo,funcion,tipo,datos}) => {
             if (resultado.value) {
                 // Hicieron click en "Sí"
                 funcion()
+                modifica()
                   
                 
             }});
@@ -169,6 +176,7 @@ const FormDatosPersonales = ({legajo,funcion,tipo,datos}) => {
 
   const cerrar=()=>{
     funcion()
+    modifica()
    }
   
   const onHandleChangeSX =()=>{

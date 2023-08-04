@@ -10,7 +10,7 @@ import { darBajaCargo, grabarCargo, grabarCargoHistorico } from '../services/f_a
 import { useSelector } from 'react-redux';
 
 
-const FormRenovacionCargo = ({dato, nrocargoG,funcion,materias,idmat}) => {
+const FormRenovacionCargo = ({dato,modifica ,nrocargoG,funcion,materias,idmat}) => {
 
     const nombre = useSelector(state=>state.agente.nombre)
     //const navigate = useNavigate()
@@ -111,6 +111,13 @@ const FormRenovacionCargo = ({dato, nrocargoG,funcion,materias,idmat}) => {
     //console.log(materias)
     //grabar cargo renovacion
     const grabarNuevoCargo =async ()=>{
+
+      const grabacambios=async ()=>{
+        await grabarCargo(cargoNew)
+        await grabarCargoHistorico(cargoHis,nroReg,legajo)
+        funcion()
+        modifica()
+    }
       let miCheckbox = document.getElementById('cp')
       let carrera=''
       let pl=''
@@ -184,15 +191,15 @@ const FormRenovacionCargo = ({dato, nrocargoG,funcion,materias,idmat}) => {
             confirmButtonText: "Sí, Grabar",
             cancelButtonText: "Cancelar",
         })
-        .then(resultado => {
+        .then (resultado => {
             if (resultado.value) {
                 // Hicieron click en "Sí"
               //console.warn(cargoNew)
               //darBajaC(tprenovacion) 
-              grabarCargo(cargoNew)
-              grabarCargoHistorico(cargoHis,nroReg,legajo)
-               // cerrarForm()
-               funcion()
+               grabacambios()
+              
+               //cerrarForm()
+              
                //navigate('/fichaAgente')
                   
                 
@@ -202,6 +209,7 @@ const FormRenovacionCargo = ({dato, nrocargoG,funcion,materias,idmat}) => {
                 
             }
         });
+      
    }
 
     const handleSubmit =(e)=>{
@@ -246,6 +254,7 @@ const FormRenovacionCargo = ({dato, nrocargoG,funcion,materias,idmat}) => {
     
       //setValores()
       funcion()
+      modifica()
     } 
 
   return (

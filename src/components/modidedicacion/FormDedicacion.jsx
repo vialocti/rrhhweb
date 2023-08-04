@@ -1,12 +1,32 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { useAgenteCargos } from '../../hooks/useAgenteCargos'
 import { faUpDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { ModalComponente } from '../ModalComponente'
+import { useSelector } from 'react-redux'
+import { getLastNroCargo } from '../../services/f_axioscargos'
+import FormCambioDedicacion from '../../formModales/FormCambioDedicacion'
+import { useModal } from '../../hooks/useModal'
 //import CargosConsulta from './CargosConsulta'
 
 const FormDedicacion = () => {
+
+    const {legajo}=useSelector(state=>state.agente) 
+    const {materias}=useSelector(state=>state.datosfce)
+    const [dato, setDato] = useState(null)
+    const [nrocargos, setNrocargos] =useState('')
+    const [idMat, setIdMat]= useState('')
+    const [isOpen,openModal,closeModal] = useModal()
   
+    useEffect(() => {
+        const cargardatos=async()=>{
+          setNrocargos(await getLastNroCargo(legajo))
+          
+          }
+          //console.log(materias)
+          cargardatos()
+      }, [])
  
   const {loading,error,cargosAgente} = useAgenteCargos()
  
@@ -16,12 +36,21 @@ const FormDedicacion = () => {
 
 
   const CargoModificarDedicacion=(ele)=>{
-    alert(ele.row_id)
+    if(ele.legajo > 0){
+        setDato(ele)
+        setIdMat(ele.pl+ele.mat)
+        openModal()
+      }
+    
   }
   return (
     <>
     {cargosAgente.length > 0
     ?<div className='container'>
+         <ModalComponente isOpen={isOpen} closeModal={closeModal}>
+         <FormCambioDedicacion dato={dato}  nrocargoG={nrocargos} funcion={closeModal} materias={materias} idmat={idMat}/>
+         </ModalComponente>
+
          <div  className='row'>
          
                     

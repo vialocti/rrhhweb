@@ -11,7 +11,8 @@ const NewCargo = () => {
 
   const legajo = useSelector(state=>state.agente.legajo)
   const nombre = useSelector(state=>state.agente.nombre)
-  console.log(nombre)
+  //console.log(nombre)
+  // <CargosVigentes page={1} legajo={legajo}/>
   return (
     
     <>
@@ -19,7 +20,7 @@ const NewCargo = () => {
     <BuscarPersona />
     {legajo?<>
       <CabeceraFuncion titulo={`Operación: Alta, Baja o Renovación de Cargos`} />
-      <CargosVigentes page={1}/>
+     
       <FormularioCargo />
       <br/>
     </>:null

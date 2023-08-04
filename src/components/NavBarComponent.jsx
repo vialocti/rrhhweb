@@ -202,10 +202,7 @@ const NavBarComponent = () => {
             </li>
 
           </ul>
-          <div className="d-flex" role="search">
-      
-            <h6 style={{color:'blue'}}>Buscar</h6>
-        </div>
+         
         </div>
       </div>
     </nav>

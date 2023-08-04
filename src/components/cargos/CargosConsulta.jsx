@@ -8,7 +8,7 @@ import {  CabTituloCargo } from '../../styles-components/formularios/FormAgente'
 import {useModal} from '../../hooks/useModal'
 import { ModalComponente } from '../ModalComponente'
 //import RenovacionCargoForm from '../../formModales/RenovacionCargoForm'
-import { getLastNroCargo, modiCargo } from '../../services/f_axioscargos'
+import { getLastNroCargo, modiCargo, traerCargosAgenteApi, traerCargosHAgenteApi} from '../../services/f_axioscargos'
 import { useSelector } from 'react-redux'
 //import BajaCargoForm from '../../formModales/BajaCargoForm'
 import FormRenovacionCargo from '../../formModales/FormRenovacionCargo'
@@ -23,26 +23,54 @@ import { useGetMaterias } from '../../hooks/useGetMaterias'
 
 const CargosConsulta = (props) => {
   
+  
+  
+  const {tipoCargo,title,tipo} = props
+  
   const {legajo}=useSelector(state=>state.agente) 
   const {materias}=useSelector(state=>state.datosfce)
-  const [isOpen,openModal,closeModal] = useModal()
+  //const [isOpen,openModal,closeModal] = useModal()
+  const [isOpen,modi,openModal,closeModal,modifica] = useModal()
   const [tipoOpera, setTipoOpera] = useState('R')
   const [dato, setDato] = useState(null)
   const [nrocargos, setNrocargos] =useState('')
   const [idMat, setIdMat]= useState('')
+
+  const [cargos, setCargos]= useState(null)
   
 
   useEffect(() => {
     const cargardatos=async()=>{
-      setNrocargos(await getLastNroCargo(legajo))
-      
+        setNrocargos(await getLastNroCargo(legajo))
+        if(tipoCargo==='V'){
+            setCargos(await traerCargosAgenteApi(legajo))
+            console.log('buscando vig')
+        }else if(tipoCargo==='H'){
+            console.log('buscando hist')
+            setCargos(await traerCargosHAgenteApi(legajo))
+   
       }
+    }
       //console.log(materias)
       cargardatos()
-  }, [])
+  }, [legajo])
   
+  useEffect(()=>{
+  
+    const cargardatos=async()=>{
+    if(tipoCargo==='V'){
+      setCargos(await traerCargosAgenteApi(legajo))
+      
+      }else if(tipoCargo==='H'){
+      setCargos(await traerCargosHAgenteApi(legajo))
+      
+    }
+    }
+    cargardatos()
+  },[modi]) 
 
-    const {cargos, title,tipo} = props
+ 
+    
    // console.log(cargos)
    
    const mostrarmat =(id_mat)=>{
@@ -115,6 +143,7 @@ const CargosConsulta = (props) => {
 
    const CargoModificar =(ele)=>{
     if(ele.legajo > 0){
+
         setDato(ele)
         setIdMat(ele.pl+ele.mat)
         setTipoOpera('M')
@@ -123,14 +152,7 @@ const CargosConsulta = (props) => {
    }
    
    const CargoModificarH =(ele)=>{
-    /*Swal.fire({
-      text:"No Modificar cargo dado de Baja",
-      icon:'info'
-
-    }
-
-    )
-    */
+   
      if(ele.legajo > 0){
         setDato(ele)
         setIdMat(ele.pl+ele.mat)
@@ -167,19 +189,19 @@ const CargosConsulta = (props) => {
       <ModalComponente isOpen={isOpen} closeModal={closeModal}>
           
          { tipoOpera==='R'?
-         <FormRenovacionCargo dato={dato}  nrocargoG={nrocargos} funcion={closeModal} materias={materias} idmat={idMat} />
+         <FormRenovacionCargo dato={dato}  modifica={modifica} nrocargoG={nrocargos} funcion={closeModal} materias={materias} idmat={idMat} />
         
           :tipoOpera==='B'?
-          <FormBajaCargo dato={dato} funcion={closeModal} materias={materias} idmat={idMat}/>
+          <FormBajaCargo dato={dato} modifica={modifica} funcion={closeModal} materias={materias} idmat={idMat}/>
           :tipoOpera==='U'?
-            <FormCargoMayorResponzabilidad dato={dato} nrocargoG={nrocargos} funcion={closeModal}/>
+            <FormCargoMayorResponzabilidad dato={dato} modifica={modifica} nrocargoG={nrocargos} funcion={closeModal}/>
           
             :tipoOpera==='M'?
 
-          <FormModificarDatosCargo dato={dato} funcion={closeModal} idmat={idMat} materias={materias} cargospl={cargospl}/>
+          <FormModificarDatosCargo dato={dato} modifica={modifica} funcion={closeModal} idmat={idMat} materias={materias} cargospl={cargospl}/>
           :tipoOpera==='H'?
-          <FormModificarDatosCargoH dato={dato} funcion={closeModal} idmat={idMat} materias={materias} cargospl={cargospl}/>
-          :<FormAltaExtension dato={dato}  nrocargoG={nrocargos} funcion={closeModal} materias={materias} idmat={idMat}/>
+          <FormModificarDatosCargoH dato={dato} modifica={modifica} funcion={closeModal} idmat={idMat} materias={materias} cargospl={cargospl}/>
+          :<FormAltaExtension dato={dato}  modifica={modifica} nrocargoG={nrocargos} funcion={closeModal} materias={materias} idmat={idMat}/>
         }
       </ModalComponente> 
     <CabTituloCargo>{title}</CabTituloCargo>   
@@ -211,7 +233,7 @@ const CargosConsulta = (props) => {
           </tr>
         </thead>
         <tbody>
-        {cargos.map((ele, ind) =>
+        {cargos?cargos.map((ele, ind) =>
           
           <tr key={ind}>
               <td>{ele.nc} </td>
@@ -242,7 +264,7 @@ const CargosConsulta = (props) => {
                >
                <FontAwesomeIcon icon={faRegistered} />
               </button>
-               :null }
+               :null}
               </td>
               <td>
                 <button
@@ -297,7 +319,7 @@ const CargosConsulta = (props) => {
           </tr>
 
           
-          )}
+          ):null}
           </tbody>
       </table>
     </div>

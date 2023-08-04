@@ -7,7 +7,7 @@ import InputC from '../elementos/InputComponent'
 import { grabarCargoHistorico } from '../services/f_axioscargos'
 import { Formulario, Label, SelectorV } from '../styles-components/formularios/FormAgente'
 
-const FormBajaCargo = ({dato,funcion,materias,idmat}) => {
+const FormBajaCargo = ({dato,modifica,funcion,materias,idmat}) => {
 
 
     const nombre = useSelector(state=>state.agente.nombre)
@@ -103,7 +103,8 @@ const FormBajaCargo = ({dato,funcion,materias,idmat}) => {
         motbj:motivoB,
         rempl:dato.rempla
       }
-      grabarCargoHistorico(cargoHis,nroReg,legajo)        
+        await grabarCargoHistorico(cargoHis,nroReg,legajo)        
+        modifica()
         funcion()
       }
     
@@ -166,6 +167,7 @@ const FormBajaCargo = ({dato,funcion,materias,idmat}) => {
     
       //setValores()
       funcion()
+      modifica()
     }
     
 

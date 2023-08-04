@@ -1,5 +1,5 @@
 import React,{useState} from 'react'
-import { Boton, CabTitulo, ContenedorBoton, Formulario,LabelF,SelectorV} from '../../styles-components/formularios/FormAgente'
+import { Boton, BotonC, CabTitulo, ContenedorBoton, FormularioNP,LabelF,SelectorV} from '../../styles-components/formularios/FormAgente'
 //import '../../css/estilosform.css'
 import InputC from '../../elementos/InputComponent'
 import axios from 'axios'
@@ -168,6 +168,11 @@ const NewAgente = () => {
        
    }
 
+
+   const irHome =()=>{
+           navigate('/')
+   }
+
    return (
     <div className='container mt-2'>
 
@@ -175,7 +180,7 @@ const NewAgente = () => {
     
     <main>
         
-        <Formulario onSubmit={onHandleSubmit}>
+        <FormularioNP onSubmit={onHandleSubmit}>
            <div>
             <InputC 
                 tipo='text'
@@ -290,7 +295,10 @@ const NewAgente = () => {
                     </SelectorV>
                 </div>
 
-            
+                <div>
+                    
+                </div>
+
                 <div>
                             
           
@@ -300,8 +308,17 @@ const NewAgente = () => {
                 
              </ContenedorBoton>
              </div>
+
+             <div>
+              
+              
+            <ContenedorBoton>
+                <BotonC type='button' onClick={irHome}>Salir</BotonC>
+                
+            </ContenedorBoton>
+            </div>
              
-        </Formulario>
+        </FormularioNP>
     </main>
   
   </div>

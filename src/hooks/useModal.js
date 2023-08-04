@@ -1,8 +1,10 @@
-import {useState} from 'react'
+import { useState } from 'react'
 
-export const useModal =(initialState=false)=>{
+export const useModal = (initialState = false) => {
     const [isOpen, setIsOpen] = useState(initialState)
-    const openModal =()=>setIsOpen(true)
-    const closeModal =()=>setIsOpen(false)
-    return [isOpen,openModal,closeModal]
+    const [modi, setModi] = useState(false)
+    const openModal = () => setIsOpen(true)
+    const closeModal = () => setIsOpen(false)
+    const modifica = () => setModi(!modi)
+    return [isOpen, modi, openModal, closeModal, modifica]
 }
