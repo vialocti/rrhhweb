@@ -1,7 +1,7 @@
 import React,{useEffect, useState} from 'react'
 //import {useAgenteInfoPersonal} from '../../hooks/useAgenteInfoPersonal'
 
-import { CabSubTitulo, Label } from '../../styles-components/formularios/FormAgente'
+import { CabSubTitulo, Label, LabelM } from '../../styles-components/formularios/FormAgente'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit } from '@fortawesome/free-regular-svg-icons'
 import { useModal } from '../../hooks/useModal'
@@ -78,42 +78,42 @@ const DatosPersonales = () => {
         </div>
         <div className="row">
             <div className='col-md-2'>
-                Fecha Nacimiento<Label>{datosAgente.fechanac}</Label>
+                Fecha Nacimiento<LabelM>{datosAgente.fechanac}</LabelM>
               </div>
 
               <div className='col-md-2'>
-                Lugar Nacimiento<Label>{datosAgente.lugarn}</Label>
+                Lugar Nacimiento<LabelM>{datosAgente.lugarn}</LabelM>
               </div>
 
             <div className='col-md-2'>
-                Nacionalidad<Label> {datosAgente.nacionalidad}</Label>
+                Nacionalidad<LabelM> {datosAgente.nacionalidad}</LabelM>
             </div>
 
             <div className='col-md-2'>
-                Sexo<Label> {datosAgente.sexo==='1'?'M':datosAgente.sexo==='2'?'F':null}</Label>
+                Sexo<LabelM> {datosAgente.sexo==='1'?'M':datosAgente.sexo==='2'?'F':null}</LabelM>
             </div>
 
              <div className='col-md-2'>
-                Grupo y Factor Sanguineo<Label>{datosAgente.gs}{datosAgente.rh}</Label>
+                Grupo y Factor Sanguineo<LabelM>{datosAgente.gs}{datosAgente.rh}</LabelM>
               </div>
           </div>
           <div className="row">
 
             <div className='col-md-2'>
-              Estado Civil<Label>{datosAgente.ecivil}</Label>
+              Estado Civil<LabelM>{datosAgente.ecivil}</LabelM>
             </div>  
             <div className='col-md-2'>
-              Ingreso FCE<Label>{datosAgente.fechaIFCE}</Label>
+              Ingreso FCE<LabelM>{datosAgente.fechaIFCE}</LabelM>
             </div>
           
             
             <div className='col-md-2'>
-            Ingreso UNcuyo<Label>{datosAgente.fechaIUNC}</Label>
+            Ingreso UNcuyo<LabelM>{datosAgente.fechaIUNC}</LabelM>
             </div>
 
                       
             <div className='col-md-2'>
-            Ingreso APN<Label>{datosAgente.fechaIAPN}</Label>
+            Ingreso APN<LabelM>{datosAgente.fechaIAPN}</LabelM>
             </div>
 
            

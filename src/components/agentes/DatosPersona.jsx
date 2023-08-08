@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 
 //import { useSelector} from 'react-redux'
 //import { AgenteConsulta } from '../../dominio/store/agente-thunx'
-import { CabSubTitulo, Label } from '../../styles-components/formularios/FormAgente'
+import { CabSubTitulo, Label, LabelEt, LabelF, LabelM } from '../../styles-components/formularios/FormAgente'
 //import {useAgenteInfo} from '../../hooks/useAgenteInfo'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEdit } from '@fortawesome/free-regular-svg-icons'
@@ -73,39 +73,60 @@ return (
              <FormAgentePrincipal modifica={modifica} funcion={closeModal} datos={agente} />
         </ModalComponente>
          
-         <div className='row'>
-          <CabSubTitulo>Datos Principales Agente <button onClick={handleModiDatos} style={{'marginLeft':'10px'}}><FontAwesomeIcon icon={faEdit} /></button></CabSubTitulo>
-        </div>
+        
+          
+      
 
       {agente?
-        <div className="row">
+        <div className="card">
+          <div className='card-header'>
+            <div className="row">
+               <div className="col-md-10">
+               <CabSubTitulo>Datos Principales Agente </CabSubTitulo>
+               </div>
+               <div className="col-md-2">
+               <button className='btn btn-secondary'onClick={handleModiDatos} style={{'marginLeft':'10px'}}>Editar <FontAwesomeIcon icon={faEdit} style={{marginLeft:'5px'}}/></button>
+               </div>
+            </div>
+          </div>
              
-
-            <div className='col-md-1'>
-            T.Doc.<Label> {agente.tipodocumento==='1'?'DNI':agente.tipodocumento==='2'?'LC':'LE'}</Label>
+          <div className='card-body'>
+            <div className='row'>
+               
+                <div className='col-md-3' style={{display:'flex', flexDirection:'column', alignContent:'flex-start'}}>
+                <LabelEt>Tipo Documento</LabelEt><LabelM> {agente.tipodocumento==='1'?'DNI':agente.tipodocumento==='2'?'LC':'LE'}</LabelM>
+                </div>
+                <div className="col-md-1"></div>
+                <div className='col-md-3'>
+                  <LabelEt>Número Documento</LabelEt><LabelM>{agente.nrodocumento}</LabelM>
+                </div>
+                <div className="col-md-1"></div>
+                <div className='col-md-3'>
+                <LabelEt>Número Cuil</LabelEt><LabelM >{agente.nrocuil}</LabelM>
+                </div>
+                 <div className="col-md-1"></div>
             </div>
 
-            <div className='col-md-2'>
-              Nro.Doc.<Label>{agente.nrodocumento}</Label>
+            <div className="row">   
+                 
+                  <div className='col-md-3'>
+                    <LabelEt>Sede</LabelEt> <LabelM> {agente.sede==='1'?'Mendoza':agente.sede==='2'?'San Rafael':agente.sede==='3'?'Gral.Alvear':'Este'}</LabelM>
+                  </div>  
+                  <div className="col-md-1"></div>
+                  <div className='col-md-3'>
+                  <LabelEt>Claustro</LabelEt><LabelM>{agente.condicion==='1'?'Docente':'No Docente'}</LabelM>
+                  </div>
+
+                  <div className="col-md-1"></div>
+
+                  <div className='col-md-3'>
+                    <LabelEt>Area Trabajo</LabelEt><LabelM> {agente.area}</LabelM>
+                  </div>
+            <div className="col-md-1"></div>
+                 
+            </div>
             </div>
 
-            <div className='col-md-2'>
-            Cuil<Label>{agente.nrocuil}</Label>
-            </div>
-
-            
-                     
-            
-            <div className='col-md-2'>
-            Claustro<Label>{agente.condicion==='1'?'Docente':'No Docente'}</Label>
-            </div>
-
-            
-
-            <div className='col-md-4'>
-              Area Trabajo<Label> {agente.area}</Label>
-            </div>
-            
          </div>
         :null}
         

@@ -38,10 +38,10 @@ const FichaAgentePage = () => {
         <Tab eventKey='antiguedad' title='Datos Antiguedad'>
         <DatosAntiguedad />    
         </Tab>
-        <Tab eventKey='cargosv' title='Cargos Vigetes'>
+        <Tab eventKey='cargosv' title='Cargos Vigentes'>
         <CargosVigentes page={2} legajo={legajo} />    
         </Tab>
-        <Tab eventKey='cargosh' title='Cargos historicos'>
+        <Tab eventKey='cargosh' title='Cargos Historicos'>
           <CargosHistoricos legajo={legajo}/>
         </Tab>
       </Tabs>

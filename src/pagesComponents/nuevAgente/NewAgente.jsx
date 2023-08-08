@@ -35,6 +35,7 @@ const NewAgente = () => {
    const [sede, setSede] = useState('1')
    const [tipod, setTipod] = useState('1')
    const [claustro, setClaustro] = useState('1') 
+   const[nuevo, setNuevo]= useState(false)
    
    const navigate = useNavigate()
 
@@ -55,7 +56,7 @@ const NewAgente = () => {
             }).then(resultado => {
                 if (resultado.value) {
                     // Hicieron click en "Sí"
-                    navigate('/')
+                    setNuevo(true)
                       
                     
                 }});
@@ -172,6 +173,13 @@ const NewAgente = () => {
    const irHome =()=>{
            navigate('/')
    }
+
+   const irInfo =()=>{
+    navigate('/fichaAgente')
+    }
+    const irCargo =()=>{
+    navigate('/nuevoCargo')
+    }
 
    return (
     <div className='container mt-2'>
@@ -299,7 +307,7 @@ const NewAgente = () => {
                     
                 </div>
 
-                <div>
+            <div>
                             
           
               
@@ -308,6 +316,33 @@ const NewAgente = () => {
                 
              </ContenedorBoton>
              </div>
+
+            
+
+            {nuevo?
+            <div style={{display:'flex', width:'400px'}}>
+                <div>
+                                
+                        
+                    <ContenedorBoton style={{width:'200px'}}>
+                        <Boton type='button' onClick={irCargo}>Ir Cargos</Boton>
+                    
+                    </ContenedorBoton>
+                </div>
+
+                <div>
+                    
+                    <ContenedorBoton style={{width:'200px'}}>
+                        <BotonC type='button' onClick={irInfo}>Ir a Info</BotonC>
+                        
+                    </ContenedorBoton>
+                </div>
+             
+            </div>
+            :null }
+
+
+
 
              <div>
               

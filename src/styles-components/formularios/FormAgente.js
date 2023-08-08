@@ -229,6 +229,24 @@ const LabelF = styled.label`
         margin-top: 5px;
         margin-bottom: 12px;
     `
+const LabelM = styled.h5`
+        font-weight: bold;
+        border:solid;
+        border-color: gray;
+        margin-top: 2px;
+        margin-bottom: 6px;
+        padding-left:6px;
+`
+const LabelEt = styled.label`
+    display: block;
+    font-weight: 600;
+    
+    padding: 1px;
+    min-height: 20px;
+    
+`
+
+
 export {
     Formulario,
     Label,
@@ -248,5 +266,7 @@ export {
     CabSubTitulo,
     FormularioD,
     FormularioNP,
+    LabelM,
+    LabelEt,
 
 }

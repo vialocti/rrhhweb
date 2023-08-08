@@ -22,7 +22,83 @@ const FindPersonaComponent = () => {
   const [patronb, setPatronb] = useState('')
   const [fechai,setFechai]=useState(new Date())
   const [fechaf,setFechaf]=useState(new Date())
-  
+  const [dias, setDias]=useState(0)
+  const [horas, setHoras]=useState(0)
+  const [minutos, setMinutos]=useState(0)
+  const [promedio, setPromedio]=useState('')
+
+
+
+
+  const calculoex=(h,m,dias)=>{
+
+    setHoras(h)
+    setMinutos(m)
+    setDias(dias)
+    
+    let promhoras=0
+    let minutos=0
+    let promminutos=0
+    promhoras= Math.trunc(h /dias)
+    minutos = m + (h - dias * Math.trunc(h/dias)) * 60
+    promminutos= minutos / dias
+    if(Math.ceil(promminutos)===60){
+      setPromedio(promhoras + ' horas' + ' con ' + Math.floor(promminutos) +' minutos')
+    }else{
+      setPromedio(promhoras + ' horas' + ' con ' + Math.ceil(promminutos) +' minutos')
+    }
+     
+
+
+  }
+
+
+  const calcularprom=()=>{
+    let horasp=0
+    let minutosp=0
+    let hinicio=[]
+    let hfin=[]
+    let horasT=0
+    let minutosT=0
+    let promedio=0.0
+    let unicos=[]
+
+    if(asistencia.length>0){
+    //console.log(asistencia) 
+    for(let i=0;i<asistencia.length;i++){
+        
+      if(!unicos.includes(asistencia[i].fecha)){
+        unicos.push(asistencia[i].fecha)
+
+        }
+        hinicio= asistencia[i].Hentrada.split(':')
+        hfin=asistencia[i].Hsalida.split(':')
+        if(Number(hfin[1])<Number(hinicio[1])){
+           minutosp=Number(hfin[1]) + 60 - Number(hinicio[1])
+           horasp=Number(hfin[0]) - Number(hinicio[0]) -1
+        }else{
+          minutosp=Number(hfin[1]) - Number(hinicio[1])
+          horasp=Number(hfin[0]) - Number(hinicio[0]) 
+        }
+        horasT+=horasp
+        minutosT+=minutosp
+       // console.log(horasp, minutosp)    
+    }
+    //promedio=calculoex(horasT,minutosT)
+    //
+
+    if(minutosT>59){
+      let horasR=0
+      horasR = minutosT / 60
+      //console.log(minutosT, horasT, (horasR) ,Math.trunc(horasR) )
+      minutosT=60 * (horasR-Math.trunc(horasR)) 
+      horasT+=Math.trunc(horasR)
+    
+    }
+    calculoex(horasT, Math.ceil(minutosT),unicos.length)
+    
+  }
+  }
 
 
   useEffect(() => {
@@ -30,7 +106,8 @@ const FindPersonaComponent = () => {
     const getAsistencia = async  () => {
       try{
         const res = await axios.get(ruta)
-        await setAsistencia(res.data)
+        setAsistencia(res.data)
+       
         
         
     }catch(error){
@@ -41,6 +118,12 @@ const FindPersonaComponent = () => {
 
     getAsistencia()
   }, [ruta])
+
+  useEffect(() => {
+    calcularprom()
+    //console.log(promedio)
+  }, [asistencia,promedio])
+  
   
    useEffect(()=>{
     const buscarAgentes =async ()=>{
@@ -204,11 +287,28 @@ const FindPersonaComponent = () => {
         :null}
         </Col>
       </Row>
-     
+      {promedio!==''?
+         <Row> 
+          <CabTitulo style={{marginLeft:'20px'}}>Información Asistencia Colaborador</CabTitulo>
+           <Col xs={12} md={4} style={{marginLeft:'15px'}}>
+              <h5>Dias Registrados:{dias}</h5>
+           </Col>
+           <Col xs={12} md={4} style={{padding:'5px'}}>
+                <h5>Tiempo Total:{horas} Horas con {minutos} Minutos</h5>
+           </Col>
+
+           <Col xs={12} md={3} style={{padding:'5px'}}>
+               <h5>Promedio:{promedio}</h5>
+           </Col>
+           
+         </Row>
+       :null
+      }
       <Row>
-      <CabTitulo style={{marginLeft:'20px'}}>Información Asistencia Colaborador</CabTitulo>
+     
       </Row>
       <Row>
+      <CabTitulo style={{marginLeft:'20px'}}>Registros</CabTitulo>
       {asistencia.length > 0 ? <ReporteAsistenciaPage datosasistencia={asistencia} />: null} 
       </Row>
     </Container>

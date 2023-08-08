@@ -10,7 +10,7 @@ import {grabarCargo} from '../services/f_axioscargos';
 import { useSelector } from 'react-redux';
 import { useGetMaterias } from '../hooks/useGetMaterias';
 
-const FormCambioDedicacion = ({dato, nrocargoG,funcion,materias,idmat}) => {
+const FormCambioDedicacion = ({dato,modifica,nrocargoG,funcion,materias,idmat}) => {
 
     const nombre = useSelector(state=>state.agente.nombre)
     const navigate = useNavigate()
@@ -195,6 +195,7 @@ const FormCambioDedicacion = ({dato, nrocargoG,funcion,materias,idmat}) => {
     
     //setValores()
     funcion()
+    modifica()
   }
 
   const changeCargo=()=>{

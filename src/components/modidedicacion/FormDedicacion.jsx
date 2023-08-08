@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 
-import { useAgenteCargos } from '../../hooks/useAgenteCargos'
+//import { useAgenteCargos } from '../../hooks/useAgenteCargos'
 import { faUpDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { ModalComponente } from '../ModalComponente'
 import { useSelector } from 'react-redux'
-import { getLastNroCargo } from '../../services/f_axioscargos'
+import { getLastNroCargo, traerCargosAgenteApi } from '../../services/f_axioscargos'
 import FormCambioDedicacion from '../../formModales/FormCambioDedicacion'
 import { useModal } from '../../hooks/useModal'
 //import CargosConsulta from './CargosConsulta'
@@ -17,21 +17,24 @@ const FormDedicacion = () => {
     const [dato, setDato] = useState(null)
     const [nrocargos, setNrocargos] =useState('')
     const [idMat, setIdMat]= useState('')
-    const [isOpen,openModal,closeModal] = useModal()
+    const [cargosAgente, setCargosAgente] = useState(null)
+    //const [isOpen,openModal,closeModal] = useModal()
+    const [isOpen,modi,openModal,closeModal,modifica] = useModal()
   
     useEffect(() => {
         const cargardatos=async()=>{
           setNrocargos(await getLastNroCargo(legajo))
+          setCargosAgente(await traerCargosAgenteApi(legajo))
           
           }
           //console.log(materias)
           cargardatos()
-      }, [])
+      }, [modi])
  
-  const {loading,error,cargosAgente} = useAgenteCargos()
+  //const {loading,error,cargosAgente} = useAgenteCargos()
  
-  if(loading) return <p>Cargando datos .....</p>
-    if(error) return <p>Error de Carga</p> 
+  //if(loading) return <p>Cargando datos .....</p>
+  //  if(error) return <p>Error de Carga</p> 
   //console.log(cargosAgente)
 
 
@@ -45,10 +48,10 @@ const FormDedicacion = () => {
   }
   return (
     <>
-    {cargosAgente.length > 0
+    {cargosAgente?cargosAgente.length > 0
     ?<div className='container'>
          <ModalComponente isOpen={isOpen} closeModal={closeModal}>
-         <FormCambioDedicacion dato={dato}  nrocargoG={nrocargos} funcion={closeModal} materias={materias} idmat={idMat}/>
+         <FormCambioDedicacion dato={dato} modifica={modifica} nrocargoG={nrocargos} funcion={closeModal} materias={materias} idmat={idMat}/>
          </ModalComponente>
 
          <div  className='row'>
@@ -112,7 +115,7 @@ const FormDedicacion = () => {
 
 
     </div>
-    :null
+    :null:null
    }
     </>
     )

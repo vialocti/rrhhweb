@@ -9,7 +9,9 @@ import { ModalComponente } from '../ModalComponente'
 
 const ReporteAsistenciaPage = ({datosasistencia}) => {
   
-  const [isOpen,openModal,closeModal] = useModal()
+  //const [isOpen,openModal,closeModal] = useModal()
+  const [isOpen,modi,openModal,closeModal,modifica] = useModal()
+
   
   const [asistencia, setAsistencia] = useState([])
   const [dato, setDato] = useState(null)
