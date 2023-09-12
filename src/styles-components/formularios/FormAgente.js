@@ -38,7 +38,7 @@ const FormularioD = styled.form`
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 40px;
-    padding: 8px;
+    padding: 2px;
     border: solid 2px rgb(10,10,126);
 
     @media(max-width:900px){
@@ -46,6 +46,21 @@ const FormularioD = styled.form`
     }
 
 `
+const FormularioV = styled.form`
+    display: grid;
+    grid-template-columns: 0.5fr 0.2fr 3fr 0.2fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 10px;
+    padding: 20px;
+    border: solid 2px rgb(10,10,126);
+
+    @media(max-width:900px){
+        grid-template-columns: 1fr;
+    }
+
+`
+
+
 const Label = styled.label`
     display: block;
     font-weight: 700;
@@ -72,6 +87,7 @@ const Input = styled.input`
     padding: 0 40px 0 10px;
     transition: .3s ease all;
     border:3px solid transparent;
+    
 
     &:focus{
         border:3px solid ${colores.borde};
@@ -127,7 +143,7 @@ const IconoValidacion = styled(FontAwesomeIcon)`
 
 const ContenedorBoton = styled.div`
         margin-top: 35px;
-        margin-left: 50px;
+        margin-left: 10px;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -137,7 +153,7 @@ const ContenedorBoton = styled.div`
 const Boton = styled.button`
         height: 45px;
         line-height:45px;
-        width:40% ;
+        width:90% ;
         color: #FFF;
         background: #2222FF;
         font-weight: bold;
@@ -180,7 +196,7 @@ const MensageExito = styled.p`
 const SelectorV = styled.select`
         
         width:100%;
-        background:'#FFF';
+        background-color:'#FFF';
         border-radius: 4px;
         height: 35px;
         line-height: 35px;
@@ -265,6 +281,7 @@ export {
     BotonC,
     CabSubTitulo,
     FormularioD,
+    FormularioV,
     FormularioNP,
     LabelM,
     LabelEt,

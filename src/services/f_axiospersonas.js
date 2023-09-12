@@ -3,7 +3,7 @@ import axios from 'axios'
 const uri = 'http://200.12.136.74:4000/biometrico/'
 const uric = 'http://200.12.136.74:4000/cargos/'
 //const uri = 'hhtp://localhost:5000/biometrico/'
-//const uric = 'http://localhost:5000/cargos/'
+//const uric = 'http://localhost:4000/cargos/'
 
 //datos primarios persona
 export async function datosAgente(legajo) {
@@ -164,7 +164,10 @@ export async function modificarDatosPerDomi(legajo, datosperdomi) {
 //datos antiguedad
 //agregar datos antiguedad
 export async function grabarDatosAntiguedad(datosperant) {
+    console.log(datosperant)
+
     try {
+        console.log(`${uric}addADatosAnt`)
         const resu = await axios.post(`${uric}addADatosAnt`, datosperant)
         return resu.status
     } catch (error) {
@@ -187,6 +190,7 @@ export async function modificarDatosAntiguedad(legajo, datosperant) {
 //datos familiares
 //agregar datos familiares
 export async function grabarDatosFamiliar(datosfam) {
+    console.log(datosAgente)
     try {
         const resu = await axios.post(`${uric}addADatosFam`, datosfam)
         return resu.status
@@ -258,7 +262,7 @@ export async function traerAgenteApi(legajo) {
 
 //datos agente 
 export const traerDatosAgenteApi = async (legajo) => {
-    console.log('b')
+    //console.log('b')
 
     try {
         //
@@ -292,7 +296,6 @@ export const traerDatosDomiContaAgenteApi = async (legajo) => {
 //datos familia
 export const traerDatosFamiliaAgenteApi = async (legajo) => {
 
-
     try {
         //console.log(`${urlbio}agente_leg/${legajo}`)
         const resu = await axios.get(`${uric}datosFamiliaAgente/${legajo}`)
@@ -301,10 +304,78 @@ export const traerDatosFamiliaAgenteApi = async (legajo) => {
     } catch (err) {
         console.log(err)
     }
-
-
-
 }
+
+//datos de estudios
+export const traerDatosEstudiosAgenteApi = async (legajo) => {
+
+    try {
+        const resu = await axios.get(`${uric}estudios/${legajo}`)
+        //console.log(resu.data)
+        return resu.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const agregarDatosEstudio = async (values) => {
+    console.log(values)
+    try {
+        const resu = await axios.post(`${uric}addADatosEst`, values)
+        return resu.status
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const modificarDatosEstudio = async (id, values) => {
+    //console.log(values)
+    //console.log(`${uric}modiADatosEst/${id}`)
+    try {
+        const resu = await axios.put(`${uric}modiADatosEst/${id}`, values)
+        return resu.status
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+//utiles estudio
+//titulos
+export const traerDatosTitulosApi = async (legajo) => {
+
+    try {
+        const resu = await axios.get(`${uric}titulos`)
+        console.log(resu.data)
+        return resu.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+//instituciones
+export const traerDatosInstitucionesApi = async () => {
+
+    try {
+        const resu = await axios.get(`${uric}instituciones`)
+        //console.log(resu.data)
+        return resu.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+//establecimientos
+export const traerDatosEstablecimientosApi = async (insti) => {
+
+    try {
+        const resu = await axios.get(`${uric}establecimientos/${insti}`)
+        console.log(resu.data)
+        return resu.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
 
 //datos antiguedad
 

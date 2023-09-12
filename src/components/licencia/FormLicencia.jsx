@@ -190,7 +190,7 @@ const onHandleChangeHis =()=>{
                   <label className='h5'> Cargos Vigentes </label>
                   <select id="cargo" className='form-control'>
                     {cargosAgente.map((ele,index)=>(
-                  <option key={index} value={ele.nc + '/' + ele.ncg}>NC:{ele.nc} - CA:{ele.ca} - PPAL:{ele.ppal} - NV:{ele.nv} - IdMAT:{ele.pl}{ele.mat}</option>
+                  <option key={index} value={ele.nc + '/' + ele.ncg}>NC:{ele.nc}  CA:{ele.ca}  RA:{ele.nresa}  NV:{ele.nv}  MAT:{ele.pl}{ele.mat}</option>
                     ))}
       
                   </select>
@@ -199,7 +199,7 @@ const onHandleChangeHis =()=>{
                   <label className='h5'style={{'color':'red'}}> Cargos Historicos </label>
                   <select id="cargo" className='form-control'>
                     {cargoshAgente.map((ele,index)=>(
-                  <option key={index} value={ele.nc + '/' + ele.ncg}>NC:{ele.nc} - CA:{ele.ca} - PPAL:{ele.ppal} - NV:{ele.nv} - IdMAT:{ele.pl}{ele.mat}</option>
+                  <option key={index} value={ele.nc + '/' + ele.ncg}>NC:{ele.nc}  CA:{ele.ca}  RA:{ele.nresa}  NV:{ele.nv}  MAT:{ele.pl}{ele.mat}</option>
                     ))}
       
                   </select>  

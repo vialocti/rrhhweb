@@ -4,7 +4,7 @@ import axios from 'axios'
 const uri = 'http://200.12.136.74:4000/cargos/'
 const urib = 'http://200.12.136.74:4000/biometrico/'
 //const uri = 'http://localhost:5000/cargos/'
-
+//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
 export async function getLastNroCargo(legajo) {
 
 
@@ -118,6 +118,20 @@ export async function getLicenciasReporte(fecha_i, fecha_f) {
         //console.log(`${uri}${legajo}`)
         const data = await axios.get(`${urib}licencias/${fecha_i}/${fecha_f}`)
 
+        return data.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export async function getLicenciaM(legajo, nc, ncg) {
+
+    console.log(legajo, nc, ncg)
+
+    try {
+        //console.log(`${uri}${legajo}`)
+        const data = await axios.get(`${urib}licenciaMuestra/${legajo}/${nc}/${ncg}`)
+        console.log(data.data)
         return data.data
     } catch (error) {
         console.log(error)

@@ -280,7 +280,7 @@ const grabarDatosModi =async ()=>{
         car:carreraI.campo,
         mat:matI.campo,
         titular:document.getElementById('titular').value,
-        st:dato.st!=='MR'?document.getElementById('situacion').value:'MR',
+        st:document.getElementById('situacion').value,
         adic:adicional,
         ppal:ppal==='0'?dato.ppal:ppal,
         nv:nivel==='0'?dato.nv:nivel.length===1?'0'+nivel:nivel,  
@@ -483,6 +483,7 @@ const grabarDatosModi =async ()=>{
                     <option value="8">Asignacion</option>
                     <option value="9">Beca Nv JTP </option>
                     <option value="10">Cargo Función Crítica</option>
+                    <option value="11">Interino Mayor Responsabilidad</option>
                 </SelectorV>
           </div>
           

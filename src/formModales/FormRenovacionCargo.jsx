@@ -23,7 +23,8 @@ const FormRenovacionCargo = ({dato,modifica ,nrocargoG,funcion,materias,idmat}) 
         fechaB:/^\d{4}([-/.])(0?[1-9]|1[0-1-2])\1(3[01]|[12][0-9]|0?[1-9])$/,
         fechaBN:/^\d{4}([-/.])(0?[1-9]|1[0-1-2])\1(3[01]|[12][0-9]|0?[1-9])$/,
     }
-
+    
+    //console.log(idmat)
     const [fechaA, setFechaA] = useState({campo:'', valido:null})
     const [fechaB, setFechaB] = useState({campo:'', valido:null})
     const [fechaBN, setFechaBN] = useState({campo:'', valido:null})
@@ -39,10 +40,16 @@ const FormRenovacionCargo = ({dato,modifica ,nrocargoG,funcion,materias,idmat}) 
     const [propuesta, setPropuesta]=useState('')
     const [car, setCar]=useState('')
     
-
+     
     const buscarMat=(idm)=>{
+     
+
       let [materia] =materias.filter(materia => materia.id_materia == idm)
+      //console.log(materia)
       setMatname(materia.materia)
+      if(materia.car ===0){
+        setPropuesta('PERSONAL APOYO')
+      }
       if(materia.car ===2){
         setPropuesta('CONTADOR PUBLICO NACIONAL')
       }else if(materia.car === 3){
@@ -74,8 +81,13 @@ const FormRenovacionCargo = ({dato,modifica ,nrocargoG,funcion,materias,idmat}) 
         setResoB({campo:dato.nresa ,valido:'true'})
       }
       if (materias) {
-        setActividades(materias.filter(materia => materia.pl == 4))
+        
+        //setActividades(materias.filter(materia => materia.pl == 4))
+        
+        setActividades(materias)
+        
         if(idmat){
+          //console.log(materias)
           buscarMat(idmat)
         }else{
           setMatname('')

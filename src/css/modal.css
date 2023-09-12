@@ -19,12 +19,13 @@
 .modal-container{
     padding:5px;
     position:relative;
-    background-color:#CCCCCC;
+    background-color:#AAAAAA;
     min-width:80%;
     max-width:100%;
     min-height:50%;
     max-height:100%;
     overflow-y:auto;
+    border-radius:15px;
     
 }
 

@@ -92,27 +92,28 @@ const grabarDatosAntiguedadx =async ()=>{
  
  
     const datosperant ={
-        fechrecd:fechard.campo===''?null:fechard.campo,
-        fechrecnd:fecharnd.campo===''?null:fecharnd.campo,
+        fechrecd:fechard.campo,
+        fechrecnd:fecharnd.campo,
         nresd:nroresord.campo,
         nresnd:nroresornd.campo,
-        aad:aniord.campo,
-        aand:aniornd.campo,
-        mad:mesrd.campo,
-        mand:mesrnd.campo,
-        dad:diard.campo,
-        dand:diarnd.campo
+        aad:aniord.campo===''?'0':aniord.campo,
+        aand:aniornd.campo===''?'0':aniornd.campo,
+        mad:mesrd.campo===''?'0':mesrd.campo,
+        mand:mesrnd.campo===''?'0':mesrnd.campo,
+        dad:diard.campo===''?'0':diard.campo,
+        dand:diarnd.campo===''?'0':diarnd.campo
     }
-
+    //console.log(datosperant)
     let resp=null
     if (tipo==='A'){
         datosperant.legajo=legajo
+        //  console.log(datosperant)
         resp = await grabarDatosAntiguedad(datosperant)
     }else{
         
         resp = await modificarDatosAntiguedad(legajo,datosperant)
     }
-   console.log(datosperant)
+   //
     
     //const resp=400
 //console.log(resp)

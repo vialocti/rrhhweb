@@ -29,7 +29,7 @@ const FormDedicacion = () => {
           }
           //console.log(materias)
           cargardatos()
-      }, [modi])
+      }, [modi, legajo])
  
   //const {loading,error,cargosAgente} = useAgenteCargos()
  
@@ -97,11 +97,12 @@ const FormDedicacion = () => {
               <td>{ele.fechaBaja}</td>
               <td>{ele.st}</td>
               <td>
-                <button
+                {ele.es==='1'?<button
               onClick={()=>CargoModificarDedicacion(ele)}
             >
-               <FontAwesomeIcon icon={faUpDown} />
-              </button>
+               <FontAwesomeIcon icon={faUpDown} /> 
+              </button>:null}
+
               </td>
               
                     

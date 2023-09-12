@@ -3,7 +3,7 @@ import React,{useEffect, useState} from 'react'
 //import {useAgenteInfoDomiConta} from '../../hooks/useAgenteInfoDomiConta'
 import { useModal } from '../../hooks/useModal'
 
-import { CabSubTitulo, Label } from '../../styles-components/formularios/FormAgente'
+import { CabSubTitulo, Label, LabelEt, LabelM } from '../../styles-components/formularios/FormAgente'
 import { ModalComponente} from '../ModalComponente'
 import FormDomiContacto from '../../formModales/agentes/FormDomiContacto'
 import { useSelector } from 'react-redux'
@@ -72,26 +72,33 @@ const DatosDomiconta = () => {
 
 
     {datosDomiContaAgente?
-    <>
-    <div className='row'>
-          <CabSubTitulo>Datos de Contacto <button onClick={handleModiDatos} style={{'marginLeft':'10px'}}><FontAwesomeIcon icon={faEdit} /></button> </CabSubTitulo>
-          
-    </div>
+    <div className='card'>
+      <div className="card-header">
+        <div className='row'>
+            <div className="col-md-10">
+              <CabSubTitulo>Datos de Contacto</CabSubTitulo>
+            </div>
+            <div className="col-md-2">
+            <button className='btn btn-secondary'onClick={handleModiDatos} style={{'marginLeft':'10px'}}>Editar <FontAwesomeIcon icon={faEdit} style={{marginLeft:'5px'}}/></button>
 
+            </div>
+        </div>
+    </div>
+    <div className="card-body">
     <div className="row">
-          <div className='col-md-4'>
-            Domicilio<Label>{datosDomiContaAgente.domicilio}</Label>
+          <div className='col-md-5'>
+          <LabelEt>Domicilio</LabelEt><LabelM>{datosDomiContaAgente.domicilio}</LabelM>
           </div>
 
         <div className='col-md-4'>
-          Localidad<Label> {datosDomiContaAgente.localidad}</Label>
+        <LabelEt>Localidad</LabelEt><LabelM> {datosDomiContaAgente.localidad}</LabelM>
         </div>
 
-        <div className='col-md-2'>
-        C.Postal.<Label> {datosDomiContaAgente.cp}</Label>
+        <div className='col-md-1'>
+        <LabelEt>C.Postal</LabelEt><LabelM> {datosDomiContaAgente.cp}</LabelM>
         </div>
         <div className='col-md-2'>
-          Telefono<Label>{datosDomiContaAgente.telefonoFijo}</Label>
+        <LabelEt>Telefono</LabelEt><LabelM>{datosDomiContaAgente.telefonoFijo}</LabelM>
         </div>
        
         
@@ -100,25 +107,26 @@ const DatosDomiconta = () => {
      <div className='row'>
      
      <div className='col-md-2'>
-           Telef.Movil<Label>{datosDomiContaAgente.telefonoCelular}</Label>
+     <LabelEt>Telef.Movil</LabelEt><LabelM>{datosDomiContaAgente.telefonoCelular}</LabelM>
         </div>
        
         <div className='col-md-2'>
-           Telef.Contacto<Label>{datosDomiContaAgente.telefonocontacto}</Label>
+        <LabelEt>Telef.Contacto</LabelEt><LabelM>{datosDomiContaAgente.telefonocontacto}</LabelM>
         </div>
             
         <div className='col-md-4'>
-        Email Personal<Label>{datosDomiContaAgente.emailpersonal}</Label>
+        <LabelEt>Email Personal</LabelEt><LabelM>{datosDomiContaAgente.emailpersonal}</LabelM>
         </div>
         <div className='col-md-4'>
-        Email Institucional<Label>{datosDomiContaAgente.emailinstitucional}</Label>
+        <LabelEt>Email Institucional</LabelEt><LabelM>{datosDomiContaAgente.emailinstitucional}</LabelM>
         </div>
           
        <div className="row">
        
        </div>
      </div>
-     </>
+     </div>
+     </div>
      :
      <div className='row'>
      <label>Sin Datos Domicilio y Contacto</label>

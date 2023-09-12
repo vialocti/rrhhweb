@@ -368,6 +368,7 @@ const FormularioCargo = () => {
                     <option value="8">Asignacion</option>
                     <option value="9">Beca Nv JTP </option>
                     <option value="10">Cargo Función Crítica</option>
+                    <option value="11">Interino Mayor Responsabilidad</option>
                 </SelectorV>
 
             </div>

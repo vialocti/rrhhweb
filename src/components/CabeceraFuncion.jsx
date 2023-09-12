@@ -13,8 +13,9 @@ return (
     <div className='container-fluid'>
        
        <CabTitulo>{titulo}</CabTitulo>
+       {legajo?
       <CabTituloAgente>Colaborador:{nombre} - Legajo:{legajo}</CabTituloAgente>
-      
+      :null}
 
    </div>
 

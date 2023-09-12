@@ -20,6 +20,7 @@ import FindInasLicComponent from '../pagesComponents/inasistencias/FindInasLicCo
 import AdicionalesPage from '../pagesComponents/adicionales/AdicionalesPage'
 import FindAusentesNDComponent from '../pagesComponents/ausentes/FindAusentesNDComponent'
 import ModiDedicacionPage from '../pagesComponents/modidedicacion/ModiDedicacionPage'
+import EstablecimientoPage from '../pagesComponents/utillidades/estudios/EstablecimientoPage'
 
 
 const AppRoutes = () => {
@@ -47,7 +48,8 @@ const AppRoutes = () => {
 
             <Route exact path='/catedraver' element={<BusquedaCatedra/>} />
             <Route exact path ='/modidedicacion' element={<ModiDedicacionPage/>}/>
-
+            
+            <Route exact path='/establecimientos' element={<EstablecimientoPage/>} />
             <Route path='*' element={<NotFoundPage />} />
 
         </Routes>

@@ -20,8 +20,8 @@ const LoginPage = () => {
 
   const onHandleSubmit = (e)=>{
       e.preventDefault()
-      //if (user === 'rrhh.fce.uncu.edu.ar' && passw === 'bombita-2413'){
-        if (user === 'rrhh.fce.uncu.edu.ar' && passw === 'a'){
+      if (user === 'rrhh.fce.uncu.edu.ar' && passw === 'bombita-2413'){
+        //if (user === 'rrhh.fce.uncu.edu.ar' && passw === 'a'){
           setLogin(true)
       
         }else{

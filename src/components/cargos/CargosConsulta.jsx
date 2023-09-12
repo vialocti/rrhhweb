@@ -8,7 +8,7 @@ import {  CabTituloCargo } from '../../styles-components/formularios/FormAgente'
 import {useModal} from '../../hooks/useModal'
 import { ModalComponente } from '../ModalComponente'
 //import RenovacionCargoForm from '../../formModales/RenovacionCargoForm'
-import { getLastNroCargo, modiCargo, traerCargosAgenteApi, traerCargosHAgenteApi} from '../../services/f_axioscargos'
+import { getLastNroCargo, getLicenciaM, modiCargo, traerCargosAgenteApi, traerCargosHAgenteApi} from '../../services/f_axioscargos'
 import { useSelector } from 'react-redux'
 //import BajaCargoForm from '../../formModales/BajaCargoForm'
 import FormRenovacionCargo from '../../formModales/FormRenovacionCargo'
@@ -38,7 +38,7 @@ const CargosConsulta = (props) => {
 
   const [cargos, setCargos]= useState(null)
   
-
+  //console.log(materias)
   useEffect(() => {
     const cargardatos=async()=>{
         setNrocargos(await getLastNroCargo(legajo))
@@ -72,6 +72,19 @@ const CargosConsulta = (props) => {
  
     
    // console.log(cargos)
+
+   const mostrarLicencia =async (nc, ncg)=>{
+    
+      const resu = await getLicenciaM(legajo,nc,ncg)
+      if(resu.length>0){
+      Swal.fire({
+      
+        text: `(${resu[0].mot})${resu[0].Motivo}`,
+        
+        timer: 2000
+      })
+    }
+    }
    
    const mostrarmat =(id_mat)=>{
    
@@ -251,7 +264,7 @@ const CargosConsulta = (props) => {
               <td>{ele.fechaBaja}</td>
               <td>{ele.nresb}</td>
               <td>{ele.mb}</td>
-              <td>{ele.st}</td>
+              <td onMouseDown={ele.st?()=>mostrarLicencia(ele.nc,ele.ncg):null}>{ele.st}</td>
               <td>{ele.adic}</td>
               <td onMouseDown ={ele.rempla !==0  ? ()=>mostrarAgente(ele.rempla):null}>{ele.rempla !==0?ele.rempla:''}</td>
               

@@ -69,11 +69,20 @@ const DatosAntiguedad = () => {
              <FormAgenteAntiguedad legajo={legajo} modifica={modifica} funcion={closeModal} tipo={tipo} datos={datosAntiguedadAgente} />
           </ModalComponente>
         {datosAntiguedadAgente?
-        <>
-        <div className='row'>
-          <CabSubTitulo>Datos Antiguedad Reconocida <button onClick={handleModiDatos} style={{'marginLeft':'10px'}}><FontAwesomeIcon icon={faEdit} /></button></CabSubTitulo>
+        <div className='card'>
+          <div className="card-header">
+            <div className='row'>
+                <div className="col-md-10">
+                  <CabSubTitulo>Datos Antiguedad Reconocida </CabSubTitulo>
+                </div>
+                <div className="col-md-2">
+                <button className='btn btn-secondary'onClick={handleModiDatos} style={{'marginLeft':'10px'}}>Editar <FontAwesomeIcon icon={faEdit} style={{marginLeft:'5px'}}/></button>
+
+                </div>
+            </div>
         </div>
-        <div className='row' style={{margin:'10px'}}>
+        <div className="card-body">
+          <div className='row' style={{margin:'10px'}}>
         <table className="table" >
             <thead>
                 <tr>
@@ -110,7 +119,8 @@ const DatosAntiguedad = () => {
             </tbody> 
         </table>    
         </div>
-        </>
+        </div>
+        </div>
     :
     <div className='row'>
     <label>Sin Datos de Reconocimeinto de Antiguedad</label>

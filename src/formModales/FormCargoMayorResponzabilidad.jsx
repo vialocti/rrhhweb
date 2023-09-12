@@ -97,12 +97,12 @@ const FormCargoMayorResponzabilidad = ({dato,modifica, nrocargoG,funcion}) => {
         legajo: dato.legajo,
         ncargo: dato.nc,
         sede: dato.inst,
-        tcargo: '2',
+        tcargo: '11',
         claustro: dato.es,
         ppal: dato.ppal,
         nivel: nivel,
         adic: dato.adic,
-        st:'MR',
+        st:'',
         car:carrera,
         plan: pl,
         codmat: matc,
@@ -193,10 +193,10 @@ const FormCargoMayorResponzabilidad = ({dato,modifica, nrocargoG,funcion}) => {
   return (
     <div className='container'>
           <div className='row'>
-             <div className="col-md-6">
+             <div className="col-md-8">
              <h2> Alta Cargo Por Mayor Responzabilidad </h2>
              </div>
-             <div className="col-md-4"></div>
+             <div className="col-md-3"></div>
              <div className="col-md-1">
              <button  onClick={cerrar} className='btn btn-info'>
                   Cerrar

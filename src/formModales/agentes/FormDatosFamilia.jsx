@@ -6,7 +6,7 @@ import {modificarDatosFamiliar, grabarDatosFamiliar } from '../../services/f_axi
 
 const FormDatosFamilia = ({legajo,modifica,funcion,tipo,datos}) => {
   const expresiones={
-    nombre: /^[,a-zA-ZÀ-ÿ\s]{1,50}$/,
+    nombre: /^[,a-zA-ZÀ-ÿ\s]{1,90}$/,
     fechanac:/^\d{4}([-/.])(0?[1-9]|1[0-1-2])\1(3[01]|[12][0-9]|0?[1-9])$/,
     nrodoc: /^\d{7,9}$/,
   }
@@ -24,8 +24,8 @@ const FormDatosFamilia = ({legajo,modifica,funcion,tipo,datos}) => {
     setNombre({campo:'',valido:null})
     setFechanac({campo:'',valido:null})
     setNrodoc({campo:'',valido:null})
-    setTdoc(datos.tdoc)
-    setVinculo(datos.vinculo)
+    setTdoc('1')
+    setVinculo('1')
   }, [])
   
   //console.log(datos)
@@ -41,16 +41,17 @@ const FormDatosFamilia = ({legajo,modifica,funcion,tipo,datos}) => {
       setNombre({campo:'',valido:null})
       setFechanac({campo:'',valido:null})
       setNrodoc({campo:'',valido:null})
-      setTdoc(datos.tdoc)
-      setVinculo(datos.vinculo)
+      setTdoc('1')
+      setVinculo('1')
     }
   
     if(tipo==='A'){
       setNombre({campo:'',valido:null})
       setFechanac({campo:'',valido:null})
       setNrodoc({campo:'',valido:null})
-      setTdoc(datos.tdoc)
-      setVinculo(datos.vinculo)}
+      setTdoc('1')
+      setVinculo('1')
+    }
 
   }, [datos,tipo])
 
@@ -68,7 +69,7 @@ const FormDatosFamilia = ({legajo,modifica,funcion,tipo,datos}) => {
       fechanac:fechanac.campo
 
     }
-
+    //console.log(datosfamiliar)
     let resp=null
     if (tipo==='A'){
         datosfamiliar.legajo=legajo
@@ -170,7 +171,7 @@ if (resp===200){
             estado={nombre}
             cambiarEstado={setNombre}
             label='Nombre'
-            leyendaErr='nombre solo text no mayor a 60'
+            leyendaErr='nombre solo text no mayor a 90'
             expreg={expresiones.nombre}
 
             
@@ -193,8 +194,12 @@ if (resp===200){
                     <option value="2">Esposa</option>
                     <option value="3">Hijo</option>
                     <option value="4">Hija</option>
+                    <option value="5">Madre</option>
+                    <option value="6">Padre</option>
+                    <option value="7">Hermano/a</option>
+                    <option value="8">Abuelo/a</option>
                 </SelectorV>
-          </div>
+          </div>  
 
           <div>
           <InputC 

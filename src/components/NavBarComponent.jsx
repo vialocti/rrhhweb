@@ -195,6 +195,32 @@ const NavBarComponent = () => {
               </ul>
             </li>
 
+            <li className="nav-item dropdown">
+              <a
+                className="nav-link dropdown-toggle"
+                href="/"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Utilidades
+              </a>
+              <ul className="dropdown-menu">
+                <li>
+                  <Link to="/establecimientos" className="dropdown-item" >
+                    Instituciones
+                  </Link>
+                </li>
+                                
+                <li>
+                  <Link to="/" className="dropdown-item" >
+                    Titulos 
+                  </Link>
+                </li>
+                
+              </ul>
+            </li>
+
             <li className="nav-item">
               <a className="nav-link" href="/">
                 Salir

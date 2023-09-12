@@ -11,7 +11,7 @@ const FormDomiContacto = ({legajo,modifica,funcion,tipo,datos}) => {
     
     //console.log(tipo, datos)
     const expresiones = {
-       domicilio: /^[,a-zA-ZA0-9_.:áéíóú-\s]{1,60}$/, // Letras y espacios, pueden llevar acentos.
+       domicilio: /^[,a-zA-ZA0-9_.:áéíóú-\s]{1,80}$/, // Letras y espacios, pueden llevar acentos.
        localidad:/^[,a-zA-ZA0-9_.:áéíóú\s-]{1,60}$/,
        emailp: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
        emaili: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
@@ -86,13 +86,21 @@ const FormDomiContacto = ({legajo,modifica,funcion,tipo,datos}) => {
             }
 
             
-            
-            
+             let texto=''
+             if(tipo==='A'){
+                texto='Alta Datos Domicilio - Contacto'
+              }else{
+                texto='Modificar Datos Domicilio - Contacto'    
+                }
             //const resp=400
         //console.log(resp)
         if (resp===200){
             Swal.fire({
-                title: 'Alta Datos Domicilio - Contacto',
+               
+                
+                
+                title: texto,
+                
                 text: 'Datos Grabados',
                 icon: 'info',
                                 
@@ -224,7 +232,7 @@ const FormDomiContacto = ({legajo,modifica,funcion,tipo,datos}) => {
                 cambiarEstado={setTelefono}
                 label='Nro.Telefono'
                 leyendaErr='El nro de telefono debe ser numerico sin puntos'
-                expreg={expresiones.telefono}
+                
              
             />
             </div>
@@ -252,7 +260,7 @@ const FormDomiContacto = ({legajo,modifica,funcion,tipo,datos}) => {
                 cambiarEstado={setTelefonocontacto}
                 label='Nro.Telefono Contacto'
                 leyendaErr='El nro de telefono debe ser numerico sin puntos'
-                expreg={expresiones.telefonocontacto}
+              
              
             />
             </div>
@@ -280,7 +288,7 @@ const FormDomiContacto = ({legajo,modifica,funcion,tipo,datos}) => {
                 cambiarEstado={setEmaili}
                 label='Email Institucional'
                 leyendaErr='incorrecto formato de email'
-                expreg={expresiones.emaili}
+               
             />
            </div>
                 
@@ -295,10 +303,10 @@ const FormDomiContacto = ({legajo,modifica,funcion,tipo,datos}) => {
               
              <ContenedorBoton>
                 {tipo ==='A'
-                ?<Boton type='submit'>Grabar Datos</Boton>
-                :<Boton type='submit'>Modificar Datos</Boton>
+                ?<Boton type='submit'>Grabar Nuevo</Boton>
+                :<Boton type='submit'>Grabar Modificacion</Boton>
                 }
-             </ContenedorBoton>
+            </ContenedorBoton>
              </div>
              
         </FormularioD>

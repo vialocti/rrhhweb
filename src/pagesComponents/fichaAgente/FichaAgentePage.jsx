@@ -10,6 +10,7 @@ import CargosVigentes from '../../components/cargos/CargosVigentes'
 import CargosHistoricos from '../../components/cargos/CargosHistoricos'
 import DatosAntiguedad from '../../components/agentes/DatosAntiguedad'
 import { Tab, Tabs } from 'react-bootstrap'
+import DatosEstudio from '../../components/agentes/DatosEstudio'
 
 const FichaAgentePage = () => {
   const legajo =useSelector(state=>state.agente.legajo)
@@ -34,6 +35,9 @@ const FichaAgentePage = () => {
         </Tab>
         <Tab eventKey='familia' title='Datos Familia'>
           <DatosFamilia />    
+        </Tab>
+        <Tab eventKey='estudios' title='Datos Estudios'>
+          <DatosEstudio />    
         </Tab>
         <Tab eventKey='antiguedad' title='Datos Antiguedad'>
         <DatosAntiguedad />    
