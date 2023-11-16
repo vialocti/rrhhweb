@@ -2,7 +2,7 @@ import React,{useState,useEffect} from 'react'
 import Swal from 'sweetalert2'
 import InputC from '../../elementos/InputComponent'
 
-import { FormularioD, LabelF, SelectorV } from '../../styles-components/formularios/FormAgente'
+import { FormularioD } from '../../styles-components/formularios/FormAgente'
 import { Boton, CabTitulo, ContenedorBoton } from '../../styles-components/formularios/FormAgente'
 import { grabarDatosPerDomi, modificarDatosPerDomi, traerCodLugar } from '../../services/f_axiospersonas'
 //import { useNavigate } from 'react-router-dom'
@@ -126,8 +126,10 @@ const FormDomiContacto = ({legajo,modifica,funcion,tipo,datos}) => {
 
     const onHandleSubmit =(e)=>{
         e.preventDefault()
-        
+         grabarDatosContacto()
+         /*
         if(
+            
             domicilio.valido==='true' && 
             cpostal.valido === 'true' && 
             emailp.valido === 'true' &&
@@ -141,13 +143,21 @@ const FormDomiContacto = ({legajo,modifica,funcion,tipo,datos}) => {
         
         {
          //console.log('vamos')
-        grabarDatosContacto()
+       
 
         } else{
             Swal.fire({
                 title: 'Informacion Datos Contacto',
-                text: 'Datos Basicos Incompletos',
+                text: 'Datos Basicos Incompletos o errones',
                 icon: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#f33',
+                confirmButtonText: 'Grabar ?'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                    grabarDatosContacto()
+                }
                 
                 
             });
@@ -155,7 +165,7 @@ const FormDomiContacto = ({legajo,modifica,funcion,tipo,datos}) => {
             
             
         }
-       
+       */
    }
 
    const cerrar=()=>{
@@ -232,7 +242,7 @@ const FormDomiContacto = ({legajo,modifica,funcion,tipo,datos}) => {
                 cambiarEstado={setTelefono}
                 label='Nro.Telefono'
                 leyendaErr='El nro de telefono debe ser numerico sin puntos'
-                
+                expreg={expresiones.telefono}
              
             />
             </div>
@@ -260,6 +270,7 @@ const FormDomiContacto = ({legajo,modifica,funcion,tipo,datos}) => {
                 cambiarEstado={setTelefonocontacto}
                 label='Nro.Telefono Contacto'
                 leyendaErr='El nro de telefono debe ser numerico sin puntos'
+                expreg={expresiones.telefonocontacto}
               
              
             />
@@ -288,6 +299,7 @@ const FormDomiContacto = ({legajo,modifica,funcion,tipo,datos}) => {
                 cambiarEstado={setEmaili}
                 label='Email Institucional'
                 leyendaErr='incorrecto formato de email'
+                expreg={expresiones.emaili}
                
             />
            </div>

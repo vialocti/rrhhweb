@@ -213,7 +213,7 @@ const NavBarComponent = () => {
                 </li>
                                 
                 <li>
-                  <Link to="/" className="dropdown-item" >
+                  <Link to="/titulos" className="dropdown-item" >
                     Titulos 
                   </Link>
                 </li>

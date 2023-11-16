@@ -43,14 +43,14 @@ const FormAgentePrincipal = ({modifica,funcion,datos}) => {
     if(datos){
         
      
-        limpiar()
+        //limpiar()
         setLegajo({campo:datos.legajo, valido:'true'})
         setNombre({campo:datos.apellido, valido:'true'})
         setNrocuil({campo:datos.nrocuil, valido:'true'})
         setNrodoc({campo:datos.nrodocumento, valido:'true'})
         setArea(datos.area)
         setClaustro(datos.condicion)
-        setSede(datos.sede)
+        setSede(datos.sede?datos.sede:'1')
         setTipod(datos.tipodocumento)
         setAsistencia(datos.asistencia==='P'?'A':datos.asistencia)
     }
@@ -112,7 +112,7 @@ if (resp===200){
 
 
    const cerrar =()=>{
-    limpiar()
+    modifica()
     funcion()
    }
    const onHandleChangeTD =()=>{
@@ -154,7 +154,8 @@ if (resp===200){
         Swal.fire({
             title: 'Informacion Datos Principales',
             text: 'Datos Basicos Incompletos',
-            icon: 'info'
+            icon: 'info', 
+           
             
             
         });
@@ -285,7 +286,7 @@ if (resp===200){
                         <option value="Dirección_General_de_Gestión_Académica">Dirección General de Gestión Académica</option>
                         <option value="ECONET">ECONET</option>
                         <option value="Secretaría_de_Administración_y_Finanzas">Secretaría de Administración y Finanzas</option>
-                        <option value="Secretaria_de_Asustos_Estudiantiles">Secretaria de Asustos Estudiantiles</option>
+                        <option value="Secretaria_de_Bienestar">Secretaria de Bienestar</option>
                         <option value="Secretaría_de_Extensión_y_RRII">Secretaría de Extensión y RRII</option>
                         <option value="Secretaría_de_Posgrado_e_Investigación">Secretaría de Posgrado e Investigación</option>
                         <option value="Sede_Este">Sede Este</option>

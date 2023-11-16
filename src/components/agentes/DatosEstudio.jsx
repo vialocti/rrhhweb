@@ -10,6 +10,9 @@ import { useSelector } from 'react-redux'
 import { useModal } from '../../hooks/useModal'
 import { traerDatosEstudiosAgenteApi} from '../../services/f_axiospersonas'
 import FormDatosEstudio from '../../formModales/agentes/FormDatosEstudio'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import Swal from 'sweetalert2'
+import { deleteDatoEstudio } from '../../services/f_axioscargos'
 //import { faAdd } from '@fortawesome/free-solid-svg-icons'
 
 const DatosEstudio = () => {
@@ -73,6 +76,46 @@ const DatosEstudio = () => {
     openModal()
   }
 
+
+  //
+
+  const eliminarRegistro =async(id, legajo)=>{
+    
+    let resp=''
+   
+      resp = await deleteDatoEstudio(id, legajo)
+
+    
+    modifica()
+    //console.log(resp)
+  }
+
+
+   //
+   const eliminarEstudio = (id, legajo, nombre) =>{
+
+    Swal
+    .fire({
+        title: `Nro y Legajo:${id} - ${legajo}`,
+        text: `¿Eliminar Titulo: ${nombre}?`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: "Sí, eliminar",
+        cancelButtonText: "Cancelar",
+    })
+    .then(resultado => {
+        if (resultado.value) {
+            // Hicieron click en "Sí"
+            eliminarRegistro(id, legajo)
+            
+        } else {
+            // Dijeron que no
+            
+        }
+    });
+
+  }
+
   
   return (
        
@@ -121,6 +164,12 @@ const DatosEstudio = () => {
                             <td>{ele.esta}</td>
                             <td>{ele.adi}</td>
                           <td><button onClick={()=>{handleModiDatos(index)}}><FontAwesomeIcon icon={faEdit} /></button></td>
+                          <td>
+                                    <button onClick ={()=>eliminarEstudio(ele.id_row, ele.legajo,ele.titulo)}>
+                                      <FontAwesomeIcon icon={faTrash} />
+                                    </button>
+                                  </td>
+                        
                         </tr>
                     )}
                 </tbody> 

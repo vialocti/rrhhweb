@@ -267,7 +267,7 @@ export const traerDatosAgenteApi = async (legajo) => {
     try {
         //
         const resu = await axios.get(`${uric}datosAgente/${legajo}`)
-        console.log(resu)
+        //console.log(resu)
         return resu.data[0]
     } catch (err) {
         console.log(err)
@@ -319,7 +319,7 @@ export const traerDatosEstudiosAgenteApi = async (legajo) => {
 }
 
 export const agregarDatosEstudio = async (values) => {
-    console.log(values)
+    //console.log(values)
     try {
         const resu = await axios.post(`${uric}addADatosEst`, values)
         return resu.status
@@ -352,7 +352,38 @@ export const traerDatosTitulosApi = async (legajo) => {
         console.log(error)
     }
 }
+
+
+//agregar datos titulo
+export const agregarDatosTitulo = async (values) => {
+
+    try {
+        const resu = await axios.post(`${uric}addTitulo`, values)
+        return resu.status
+
+    } catch (error) {
+        console.log(error)
+    }
+
+}
+
+
+//modificar datos titulo
+export const modificarDatosTitulo = async (id, values) => {
+    //console.log(values)
+    //console.log(`${uric}modiADatosEst/${id}`)
+    try {
+        const resu = await axios.put(`${uric}modiTitulo/${id}`, values)
+        return resu.status
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+
 //instituciones
+//traerdatos
 export const traerDatosInstitucionesApi = async () => {
 
     try {
@@ -363,6 +394,33 @@ export const traerDatosInstitucionesApi = async () => {
         console.log(error)
     }
 }
+
+//agregar datos instituciones
+export const agregarDatosInstitucion = async (values) => {
+
+    try {
+        const resu = await axios.post(`${uric}addInstitucion`, values)
+        return resu.status
+
+    } catch (error) {
+        console.log(error)
+    }
+
+}
+
+//modificar datos institucion
+export const modificarDatosInstitucion = async (id, values) => {
+    //console.log(values)
+    //console.log(`${uric}modiADatosEst/${id}`)
+    try {
+        const resu = await axios.put(`${uric}modiInstitucion/${id}`, values)
+        return resu.status
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
 //establecimientos
 export const traerDatosEstablecimientosApi = async (insti) => {
 
@@ -370,6 +428,31 @@ export const traerDatosEstablecimientosApi = async (insti) => {
         const resu = await axios.get(`${uric}establecimientos/${insti}`)
         console.log(resu.data)
         return resu.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+//agregar datos establecimiento
+export const agregarDatosEstablecimiento = async (values) => {
+
+    try {
+        const resu = await axios.post(`${uric}addEstablecimiento`, values)
+        return resu.status
+
+    } catch (error) {
+        console.log(error)
+    }
+
+}
+
+//modificar datos institucion
+export const modificarDatosEstablecimiento = async (id, values) => {
+    //console.log(values)
+    //console.log(`${uric}modiADatosEst/${id}`)
+    try {
+        const resu = await axios.put(`${uric}modiEstablecimiento/${id}`, values)
+        return resu.status
     } catch (error) {
         console.log(error)
     }

@@ -146,8 +146,8 @@ if (resp===200){
     
     e.preventDefault()
     grabarDatosAntiguedadx()
-    /*
     
+    /*
     if(
         fechard.valido==='true' && 
         fecharnd.valido === 'true' &&
@@ -170,11 +170,19 @@ if (resp===200){
             title: 'Informacion Datos Contacto',
             text: 'Datos Basicos Incompletos',
             icon: 'info',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#f33',
+            confirmButtonText: 'Grabar ?'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              grabarDatosAntiguedad()
+            }
             
             
         });
-
-        
+  
+           
         
     }
    */

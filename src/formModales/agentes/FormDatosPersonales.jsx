@@ -165,10 +165,9 @@ const FormDatosPersonales = ({legajo,modifica,funcion,tipo,datos}) => {
     } else{
         Swal.fire({
             title: 'Informacion Personales Agente',
-            text: 'Datos Basicos Incompletos',
+            text: 'Datos Basicos Incompletos o Incorrectos',
             icon: 'info',
-            
-            
+          
         });   
     }
 

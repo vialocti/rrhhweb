@@ -122,6 +122,15 @@ if (resp===200){
                 text: 'Datos Basicos Incompletos',
                 icon: 'info',
                 
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#f33',
+                confirmButtonText: 'Grabar ?'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  grabarDatosFamiliarx()
+                }
+                                
                 
             });
 
@@ -164,7 +173,7 @@ if (resp===200){
         <FormularioD onSubmit={onHandleSubmit}>
           
           <div>
-            <InputC
+            <InputC 
             tipo='text'
             name='nombre'
             infoplace='APELLIDO, Nombres'

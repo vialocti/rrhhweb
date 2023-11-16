@@ -1,7 +1,7 @@
 import React from 'react'
 import CabeceraFuncion from '../../components/CabeceraFuncion'
 import BuscarPersona from '../../components/BuscarPersona'
-import CargosVigentes from '../../components/cargos/CargosVigentes'
+//import CargosVigentes from '../../components/cargos/CargosVigentes'
 import FormularioCargo from '../../components/cargos/FormularioCargo'
 import { useSelector } from 'react-redux'
 

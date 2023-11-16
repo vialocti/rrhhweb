@@ -21,6 +21,7 @@ import AdicionalesPage from '../pagesComponents/adicionales/AdicionalesPage'
 import FindAusentesNDComponent from '../pagesComponents/ausentes/FindAusentesNDComponent'
 import ModiDedicacionPage from '../pagesComponents/modidedicacion/ModiDedicacionPage'
 import EstablecimientoPage from '../pagesComponents/utillidades/estudios/EstablecimientoPage'
+import TitulosPage from '../pagesComponents/utillidades/estudios/TitulosPage'
 
 
 const AppRoutes = () => {
@@ -50,6 +51,7 @@ const AppRoutes = () => {
             <Route exact path ='/modidedicacion' element={<ModiDedicacionPage/>}/>
             
             <Route exact path='/establecimientos' element={<EstablecimientoPage/>} />
+            <Route exact path='/titulos' element={<TitulosPage/>} />
             <Route path='*' element={<NotFoundPage />} />
 
         </Routes>

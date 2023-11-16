@@ -19,6 +19,9 @@ const Formulario = styled.form`
         grid-template-columns: 1fr;
     }
 `
+const FormularioI = styled(Formulario)`
+    grid-template-columns: 0.5fr 2fr 0.5fr;
+`
 
 const FormularioNP = styled.form`
     display: grid;
@@ -283,6 +286,7 @@ export {
     FormularioD,
     FormularioV,
     FormularioNP,
+    FormularioI,
     LabelM,
     LabelEt,
 

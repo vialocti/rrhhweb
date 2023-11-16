@@ -484,6 +484,7 @@ const grabarDatosModi =async ()=>{
                     <option value="9">Beca Nv JTP </option>
                     <option value="10">Cargo Función Crítica</option>
                     <option value="11">Interino Mayor Responsabilidad</option>
+                    <option value="12">Interino Ordenanza 36</option>
                 </SelectorV>
           </div>
           

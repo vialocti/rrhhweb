@@ -190,6 +190,8 @@ export async function deleteAdicionalAgente(id, legajo) {
         console.log(error)
     }
 }
+
+//baja adicional
 export async function bajaAdicionalAgente(id) {
     let dato = {
         vigente: 'N',
@@ -230,4 +232,50 @@ export const traerCargosHAgenteApi = async (legajo) => {
         console.log(err)
     }
 
+}
+
+
+//
+//borrar un establecimiento /delEstablecimineto/:id
+export async function deleteEstablecimiento(id) {
+    console.log(id)
+    try {
+        const resu = await axios.delete(`${uri}delEstablecimiento/${id}`)
+        console.log(resu)
+        return resu
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+//borrar una institucion /delInstitucion/:id
+export async function deleteInstitucion(id) {
+    try {
+        const resu = await axios.delete(`${uri}delInstitucion/${id}`)
+        return resu
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+//borrar un titulo /delTitulo/:id/
+export async function deleteTitulo(id) {
+    try {
+        const resu = await axios.delete(`${uri}delTitulo/${id}`)
+        return resu
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+//borrar un dato estudio /delADatoEst/:id/:legajo
+export async function deleteDatoEstudio(id, legajo) {
+    try {
+        const resu = await axios.delete(`${uri}delADatoEst/${id}/${legajo}`)
+        return resu
+    } catch (error) {
+        console.log(error)
+    }
 }
